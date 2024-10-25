@@ -183,7 +183,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/main/pub/home",
+    path: "/main/pub/home:productorId?",
     name: "productor",
     component: Home,
     props: () => ({

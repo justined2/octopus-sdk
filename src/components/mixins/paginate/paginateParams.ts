@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 export const paginateParams = defineComponent({
   methods: {
     checkPage(): boolean{
-      return ['podcasts', 'emissions', 'participants', 'playlists'].includes(this.$route.name?.toString()??"");
+      return ['podcasts', 'emissions', 'participants', 'playlists', 'productors'].includes(this.$route.name?.toString()??"");
     },
     updatePaginateSize(ps:number){
       if(this.checkPage()){
