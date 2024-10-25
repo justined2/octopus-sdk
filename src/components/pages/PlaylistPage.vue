@@ -52,6 +52,7 @@ import { useGeneralStore } from "../../stores/GeneralStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import { mapActions, mapState } from "pinia";
 import { orgaComputed } from "../mixins/orgaComputed";
+import { seoTitleUrl } from "../mixins/seoTitleUrl";
 import ClassicLoading from "../form/ClassicLoading.vue";
 import PodcastList from "../display/playlist/PodcastList.vue";
 import classicApi from "../../api/classicApi";
@@ -83,14 +84,12 @@ export default defineComponent({
     ClassicLoading,
     PodcastmakerHeader,
   },
-  mixins: [displayMethods, handle403, orgaComputed, imageProxy],
+  mixins: [displayMethods, handle403, orgaComputed, imageProxy, seoTitleUrl],
 
   props: {
     playlistId: { default: undefined, type: Number },
     isEducation: { default: false, type: Boolean },
   },
-
-  emits: ["playlistTitle"],
   data() {
     return {
       loaded: false as boolean,
@@ -165,7 +164,7 @@ export default defineComponent({
           return;
         }
         this.contentToDisplayUpdate(this.playlist);
-        this.$emit("playlistTitle", this.playlist.title);
+        this.updatePathParams(this.playlist.title);
       } catch (error) {
         this.handle403(error as AxiosError);
         this.initError();

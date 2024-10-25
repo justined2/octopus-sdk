@@ -62,22 +62,20 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
-    path: "/main/pub/search/:query?/:productor?",
+    path: "/main/pub/search/:query?",
     name: "search",
     component: SearchPage,
     props: (route: RouteLocationNormalized) => ({
-      productor: route.params.productor,
       queryRoute: route.params.query,
     }),
   },
   {
-    path: "/main/pub/podcasts/:productor?:iabId?:rubriquesId?",
+    path: "/main/pub/podcasts/",
     name: "podcasts",
     component: PodcastsPage,
     props: (route: RouteLocationNormalized) => ({
-      productor: route.params.productor,
-      iabId: route.params.iabId,
-      rubriquesId: route.params.rubriquesId,
+      pr: route.query.pr ? parseInt(route.query.pr.toString(), 10) : undefined,
+      ps: route.query.ps ? parseInt(route.query.ps.toString(), 10) : undefined,
     }),
   },
   {
@@ -99,51 +97,35 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
-    path: "/main/pub/emission/:emissionId/:productor?",
+    path: "/main/pub/emission/:emissionId(\\d+):title([^?]*)?:productor?",
     name: "emission",
     component: EmissionPage,
     props: (route: RouteLocationNormalized) => ({
-      firstRoute: route.query.first
-        ? parseInt(route.query.first.toString(), 10)
-        : 0,
-      sizeRoute: route.query.size
-        ? parseInt(route.query.size.toString(), 10)
-        : 12,
       emissionId: parseInt(route.params.emissionId.toString(), 10),
-      productor: route.params.productor,
     }),
   },
   {
-    path: "/main/pub/podcast/:podcastId/:productor?",
+    path: "/main/pub/podcast/:podcastId(\\d+):title([^?]*)?:productor?",
     name: "podcast",
     component: PodcastPage,
     props: (route: RouteLocationNormalized) => ({
-      podcastId: parseInt(route.params.podcastId.toString(), 10),
-      productor: route.params.productor,
+      podcastId: parseInt(route.params.podcastId.toString(), 10)
     }),
   },
   {
-    path: "/main/pub/video/:podcastId/:productor?",
+    path: "/main/pub/video/:podcastId(\\d+):title([^?]*)?:productor?",
     name: "video",
     component: VideoPage,
     props: (route: RouteLocationNormalized) => ({
       podcastId: parseInt(route.params.podcastId.toString(), 10),
-      productor: route.params.productor,
     }),
   },
   {
-    path: "/main/pub/participant/:participantId/:productor?",
+    path: "/main/pub/participant/:participantId(\\d+):title([^?]*)?:productor?",
     name: "participant",
     component: ParticipantPage,
     props: (route: RouteLocationNormalized) => ({
-      firstRoute: route.query.first
-        ? parseInt(route.query.first.toString(), 10)
-        : 0,
-      sizeRoute: route.query.size
-        ? parseInt(route.query.size.toString(), 10)
-        : 12,
       participantId: parseInt(route.params.participantId.toString(), 10),
-      productor: route.params.productor,
     }),
   },
   {
@@ -151,12 +133,6 @@ const routes: Array<RouteRecordRaw> = [
     name: "category",
     component: CategoryPage,
     props: (route: RouteLocationNormalized) => ({
-      firstRoute: route.query.first
-        ? parseInt(route.query.first.toString(), 10)
-        : 0,
-      sizeRoute: route.query.size
-        ? parseInt(route.query.size.toString(), 10)
-        : 12,
       iabId: parseInt(route.params.iabId.toString(), 10),
       productor: route.params.productor,
     }),
@@ -185,12 +161,11 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
-    path: "/main/pub/radio/:canalId/:productor?",
+    path: "/main/pub/radio/:canalId(\\d+):title([^?]*)?:productor?",
     name: "radio",
     component: RadioPage,
     props: (route: RouteLocationNormalized) => ({
       canalId: parseInt(route.params.canalId.toString(), 10),
-      productor: route.params.productor,
     }),
   },
   {
@@ -218,12 +193,11 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
-    path: "/main/pub/playlist/:playlistId/:productor?",
+    path: "/main/pub/playlist/:playlistId(\\d+):title([^?]*)?:productor?",
     name: "playlist",
     component: PlaylistPage,
     props: (route: RouteLocationNormalized) => ({
       playlistId: parseInt(route.params.playlistId.toString(), 10),
-      productor: route.params.productor,
     }),
   },
   //Fake route to avoid errors

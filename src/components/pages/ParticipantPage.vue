@@ -57,6 +57,7 @@ import classicApi from "../../api/classicApi";
 import { state } from "../../stores/ParamSdkStore";
 import { useApiStore } from "../../stores/ApiStore";
 import displayMethods from "../mixins/displayMethods";
+import { seoTitleUrl } from "../mixins/seoTitleUrl";
 import imageProxy from "../mixins/imageProxy";
 import { orgaComputed } from "../mixins/orgaComputed";
 import { handle403 } from "../mixins/handle403";
@@ -81,11 +82,10 @@ export default defineComponent({
     EditBox,
     ClassicLoading,
   },
-  mixins: [displayMethods, handle403, orgaComputed, imageProxy],
+  mixins: [displayMethods, handle403, orgaComputed, imageProxy, seoTitleUrl],
   props: {
     participantId: { default: undefined, type: Number },
   },
-  emits: ["participantTitle"],
   data() {
     return {
       loaded: false as boolean,
@@ -160,7 +160,7 @@ export default defineComponent({
     },
     updateParticipant(participant: Participant): void {
       this.participant = participant;
-      this.$emit("participantTitle", this.name);
+      this.updatePathParams(this.name);
     },
   },
 });

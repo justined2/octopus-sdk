@@ -55,6 +55,7 @@ import { state } from "../../../stores/ParamSdkStore";
 import PaginateParams from "./PaginateParams.vue";
 import PaginateSection from "./PaginateSection.vue";
 import resizePhone from "../../mixins/resizePhone";
+import {paginateParams} from "../../mixins/paginateParams";
 import { defineComponent } from "vue";
 import { usePlayerStore } from "../../../stores/PlayerStore";
 import { mapState } from "pinia";
@@ -65,7 +66,7 @@ export default defineComponent({
     PaginateParams,
     ClassicLoading,
   },
-  mixins: [resizePhone],
+  mixins: [resizePhone, paginateParams],
   props: {
     first: { default: 0, type: Number },
     rowsPerPage: { default: 30, type: Number },
@@ -114,10 +115,12 @@ export default defineComponent({
     changeFirst(firstValue: number) {
       this.scrollToTop();
       this.$emit("update:first", firstValue);
+      this.updatePaginateRank(firstValue);
     },
     changeSize(sizeValue: number) {
       this.scrollToTop();
       this.$emit("update:rowsPerPage", sizeValue);
+      this.updatePaginateSize(sizeValue);
     },
     scrollToTop() {
       const element = document.getElementById(this.id);

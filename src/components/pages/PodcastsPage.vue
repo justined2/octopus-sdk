@@ -23,8 +23,8 @@
     />
     <PodcastList
       :show-count="true"
-      :first="0"
-      :size="30"
+      :first="pr"
+      :size="ps"
       :organisation-id="orgaArray"
       :query="searchPattern"
       :monetization="monetization"
@@ -63,6 +63,8 @@ export default defineComponent({
     productor: { default: undefined, type: String },
     isEducation: { default: false, type: Boolean },
     searchInit: { default: "", type: String },
+    pr: { default: 0, type: Number },
+    ps: { default: 30, type: Number },
   },
   data() {
     return {

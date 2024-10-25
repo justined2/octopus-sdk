@@ -101,6 +101,7 @@ import { state } from "../../stores/ParamSdkStore";
 import displayMethods from "../mixins/displayMethods";
 import imageProxy from "../mixins/imageProxy";
 import { orgaComputed } from "../mixins/orgaComputed";
+import { seoTitleUrl } from "../mixins/seoTitleUrl";
 import { handle403 } from "../mixins/handle403";
 import { Emission } from "@/stores/class/general/emission";
 import ClassicLoading from "../form/ClassicLoading.vue";
@@ -150,12 +151,11 @@ export default defineComponent({
     PodcastPlayButton,
     PodcastmakerHeader,
   },
-  mixins: [displayMethods, handle403, orgaComputed, imageProxy],
+  mixins: [displayMethods, handle403, orgaComputed, imageProxy, seoTitleUrl],
   props: {
     emissionId: { default: undefined, type: Number },
     isEducation: { default: false, type: Boolean },
   },
-  emits: ["emissionTitle"],
 
   data() {
     return {
@@ -240,7 +240,7 @@ export default defineComponent({
           return;
         }
         this.contentToDisplayUpdate(this.emission);
-        this.$emit("emissionTitle", this.name);
+        this.updatePathParams(this.name);
         this.loaded = true;
         this.handleAnnotations();
       } catch (error) {
