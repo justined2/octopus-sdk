@@ -316,7 +316,7 @@ export default defineComponent({
           !this.editRight
         ) {
           this.error = true;
-        }else{
+        } else {
           this.updatePathParams(this.podcast.title);
         }
         this.loaded = true;

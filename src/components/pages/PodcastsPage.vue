@@ -23,7 +23,7 @@
     />
     <PodcastList
       :show-count="true"
-      :first="pr"
+      :first="paginateFirst"
       :size="ps"
       :organisation-id="orgaArray"
       :query="searchPattern"
@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { orgaComputed } from "../mixins/orgaComputed";
+import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
 import PodcastList from "../display/podcasts/PodcastList.vue";
 import ProductorSearch from "../display/filter/ProductorSearch.vue";
 import AdvancedSearch from "../display/filter/AdvancedSearch.vue";
@@ -58,7 +59,7 @@ export default defineComponent({
     ProductorSearch,
     AdvancedSearch,
   },
-  mixins: [orgaComputed],
+  mixins: [orgaComputed, paginateParamInit],
   props: {
     productor: { default: undefined, type: String },
     isEducation: { default: false, type: Boolean },

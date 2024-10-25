@@ -92,7 +92,10 @@ export default defineComponent({
       );
     },
     changed(): string {
-      return `${this.first}|${this.size}|${this.organisationId}|${this.query}`;
+      return `${this.organisationId}|${this.query}`;
+    },
+    changePaginate(): string {
+      return `${this.first}|${this.size}`;
     },
     sort(): string {
       return !this.query ? "NAME" : "SCORE";
@@ -102,6 +105,10 @@ export default defineComponent({
     },
   },
   watch: {
+    changePaginate() {
+      this.dfirst = this.first;
+      this.dsize = this.size;
+    },
     changed(): void {
       this.reloadList();
     },

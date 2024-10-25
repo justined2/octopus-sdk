@@ -7,7 +7,6 @@
       :to="{
         name: 'podcast',
         params: { podcastId: podcastId },
-        query: { productor: filterOrgaId },
       }"
       class="text-dark flex-grow-1 title-podcast-item"
     >
@@ -32,7 +31,6 @@
         :to="{
           name: 'productor',
           params: { productorId: podcastOrganisationId },
-          query: { productor: filterOrgaId },
         }"
         class="text-dark producer-podcast-item"
       >

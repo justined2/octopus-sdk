@@ -68,7 +68,6 @@
                   :to="{
                     name: 'podcast',
                     params: { podcastId: planningItem.podcastId },
-                    query: { productor: filterOrgaId },
                   }"
                 >
                   <img
@@ -113,8 +112,6 @@
 </template>
 
 <script lang="ts">
-import { useFilterStore } from "../../../stores/FilterStore";
-import { mapState } from "pinia";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
@@ -160,7 +157,6 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState(useFilterStore, ["filterOrgaId"]),
     startOfDay(): string {
       return dayjs(this.daySelected).startOf("date").toISOString();
     },

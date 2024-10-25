@@ -128,7 +128,6 @@ export default defineComponent({
         this.$router.push({
           name: "category",
           params: { iabId: category.id.toString() },
-          query: { productor: this.filterOrgaId },
         });
         return;
       }

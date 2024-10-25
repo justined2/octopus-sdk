@@ -5,7 +5,6 @@
         :to="{
           name: 'podcast',
           params: { podcastId: podcastId },
-          query: { productor: filterOrgaId },
         }"
         class="mt-3 mb-3 width-fit-content"
       >
@@ -242,7 +241,7 @@ export default defineComponent({
           !this.editRight;
         if (privateAccess || notValid) {
           this.error = true;
-        } else{
+        } else {
           this.updatePathParams(this.podcast.title);
           if (this.podcast.conferenceId) {
             await this.fetchConferenceStatus();
@@ -250,11 +249,14 @@ export default defineComponent({
               this.fetchConferenceStatus();
             }, 3000);
             this.playerPlay(
-              { ...this.podcast, ...{ conferenceId: this.podcast.conferenceId } },
+              {
+                ...this.podcast,
+                ...{ conferenceId: this.podcast.conferenceId },
+              },
               true,
             );
           }
-        } 
+        }
       } catch (error) {
         this.handle403(error as AxiosError);
         this.error = true;

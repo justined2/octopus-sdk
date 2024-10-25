@@ -4,6 +4,7 @@ import {
   RouteLocationNormalized,
   RouteRecordRaw,
 } from "vue-router";
+import { useFilterStore } from "../stores/FilterStore";
 
 /*--------------------------------------------------------------------------
 Composants publics
@@ -37,29 +38,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/",
-    name: "backoffice",
-    component: Home,
-  },
-  {
-    path: "/",
-    name: "createAccount",
-    component: Home,
-  },
-  {
     path: "/main/pub/error",
     name: "error",
     component: error403Page,
   },
   {
-    path: "/main/pub/home:productor?:iabId?:rubriquesId?",
+    path: "/main/pub/home",
     name: "home",
     component: Home,
-    props: (route: RouteLocationNormalized) => ({
-      productor: route.params.productor,
-      iabId: route.params.iabId,
-      rubriquesId: route.params.rubriquesId,
-    }),
   },
   {
     path: "/main/pub/search/:query?",
@@ -79,21 +65,21 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
-    path: "/main/pub/emissions/:productor?:iabId?:rubriquesId?",
+    path: "/main/pub/emissions/",
     name: "emissions",
     component: EmissionsPage,
     props: (route: RouteLocationNormalized) => ({
-      productor: route.params.productor,
-      iabId: route.params.iabId,
-      rubriquesId: route.params.rubriquesId,
+      pr: route.query.pr ? parseInt(route.query.pr.toString(), 10) : undefined,
+      ps: route.query.ps ? parseInt(route.query.ps.toString(), 10) : undefined,
     }),
   },
   {
-    path: "/main/pub/participants/:productor?",
+    path: "/main/pub/participants",
     name: "participants",
     component: ParticpantsPage,
     props: (route: RouteLocationNormalized) => ({
-      productor: route.params.productor,
+      pr: route.query.pr ? parseInt(route.query.pr.toString(), 10) : undefined,
+      ps: route.query.ps ? parseInt(route.query.ps.toString(), 10) : undefined,
     }),
   },
   {
@@ -169,6 +155,34 @@ const routes: Array<RouteRecordRaw> = [
     }),
   },
   {
+    path: "/main/pub/playlists/",
+    name: "playlists",
+    component: PlaylistsPage,
+    props: (route: RouteLocationNormalized) => ({
+      pr: route.query.pr ? parseInt(route.query.pr.toString(), 10) : undefined,
+      ps: route.query.ps ? parseInt(route.query.ps.toString(), 10) : undefined,
+    }),
+  },
+  {
+    path: "/main/pub/playlist/:playlistId(\\d+):title([^?]*)?:productor?",
+    name: "playlist",
+    component: PlaylistPage,
+    props: (route: RouteLocationNormalized) => ({
+      playlistId: parseInt(route.params.playlistId.toString(), 10),
+    }),
+  },
+  //Fake route to avoid errors
+  {
+    path: "/",
+    name: "backoffice",
+    component: Home,
+  },
+  {
+    path: "/",
+    name: "createAccount",
+    component: Home,
+  },
+  {
     path: "/main/pub/home",
     name: "productor",
     component: Home,
@@ -184,23 +198,6 @@ const routes: Array<RouteRecordRaw> = [
       productorId: 0,
     }),
   },
-  {
-    path: "/main/pub/playlists/:productor?",
-    name: "playlists",
-    component: PlaylistsPage,
-    props: (route: RouteLocationNormalized) => ({
-      productor: route.params.productor,
-    }),
-  },
-  {
-    path: "/main/pub/playlist/:playlistId(\\d+):title([^?]*)?:productor?",
-    name: "playlist",
-    component: PlaylistPage,
-    props: (route: RouteLocationNormalized) => ({
-      playlistId: parseInt(route.params.playlistId.toString(), 10),
-    }),
-  },
-  //Fake route to avoid errors
   {
     path: "/main/pub/contact",
     component: Home,
@@ -224,10 +221,18 @@ const routes: Array<RouteRecordRaw> = [
   },
   { path: "/:pathMatch(.*)*", component: PageNotFound },
 ];
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes: routes,
   scrollBehavior(): { left: number; top: number } {
     return { left: 0, top: 0 };
   },
 });
+//Do in frontoffice but not podcastmakers
+router.beforeEach((to) => {
+  const filterStore = useFilterStore();
+  if(filterStore.filterOrgaId !== to.query.productor){
+    return { path: to.path, query:{...to.query, ...{productor: filterStore.filterOrgaId}}, params: to.params, name:to.name};
+  }
+})
+export default router;

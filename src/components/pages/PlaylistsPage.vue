@@ -16,8 +16,8 @@
     />
     <PlaylistList
       :show-count="true"
-      :first="first"
-      :size="size"
+      :first="paginateFirst"
+      :size="ps"
       :query="searchPattern"
       :organisation-id="organisationId"
     />
@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
 import PlaylistList from "../display/playlist/PlaylistList.vue";
 import { useAuthStore } from "../../stores/AuthStore";
 import { useFilterStore } from "../../stores/FilterStore";
@@ -39,14 +40,15 @@ export default defineComponent({
     ProductorSearch,
     PlaylistList,
   },
+  mixins: [paginateParamInit],
   props: {
     productor: { default: undefined, type: String },
+    pr: { default: 0, type: Number },
+    ps: { default: 30, type: Number },
   },
 
   data() {
     return {
-      first: 0 as number,
-      size: 30 as number,
       searchPattern: "" as string,
       organisationId: undefined as string | undefined,
     };

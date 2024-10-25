@@ -83,7 +83,6 @@ export default defineComponent({
 
   computed: {
     ...mapState(useFilterStore, [
-      "filterOrgaId",
       "filterRubrique",
       "filterIab",
       "filterRubriquage",
@@ -105,13 +104,11 @@ export default defineComponent({
         return {
           name: "category",
           params: { iabId: this.iabId },
-          query: { productor: this.filterOrgaId },
         };
       }
       return {
         name: "podcasts",
         query: {
-          productor: this.filterOrgaId,
           iabId: this.filterIab?.id,
           rubriquesId: this.rubriqueQueryParam,
         },

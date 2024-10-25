@@ -27,7 +27,6 @@ import { defineComponent } from "vue";
 import { RouteLocationRaw } from "vue-router";
 import { mapState } from "pinia";
 import { usePlayerStore } from "../../../../stores/PlayerStore";
-import { useFilterStore } from "../../../../stores/FilterStore";
 import { useVastStore } from "../../../../stores/VastStore";
 export default defineComponent({
   name: "PlayerImage",
@@ -45,7 +44,6 @@ export default defineComponent({
       "podcastImage",
     ]),
     ...mapState(useVastStore, ["linkAdvertising"]),
-    ...mapState(useFilterStore, ["filterOrgaId"]),
     podcastShareUrl(): RouteLocationRaw | string {
       if (this.playerRadio?.podcast?.podcastId) {
         return {
@@ -53,14 +51,12 @@ export default defineComponent({
           params: {
             podcastId: this.playerRadio?.podcast?.podcastId.toString(),
           },
-          query: { productor: this.filterOrgaId },
         };
       }
       if (this.playerPodcast) {
         return {
           name: "podcast",
           params: { podcastId: this.playerPodcast.podcastId.toString() },
-          query: { productor: this.filterOrgaId },
         };
       }
       return "";

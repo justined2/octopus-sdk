@@ -46,9 +46,6 @@
               :to="{
                 name: 'emission',
                 params: { emissionId: podcast.emission.emissionId },
-                query: {
-                  productor: filterOrgaId,
-                },
               }"
             >
               {{ podcast.emission.name }}
@@ -69,9 +66,6 @@
               :to="{
                 name: 'productor',
                 params: { productorId: podcast.organisation.id },
-                query: {
-                  productor: filterOrgaId,
-                },
               }"
             >
               {{ podcast.organisation.name }}

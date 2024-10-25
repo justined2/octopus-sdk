@@ -118,8 +118,11 @@ export default defineComponent({
         Math.min(this.dfirst + this.dsize, this.totalCount),
       );
     },
+    changePaginate(): string {
+      return `${this.first}|${this.size}`;
+    },
     changed(): string {
-      return `${this.first}|${this.size}|${this.organisation}|${this.emissionId}|${this.sortCriteria}|${this.sort}
+      return `${this.organisation}|${this.emissionId}|${this.sortCriteria}|${this.sort}
       ${this.iabId}|${this.participantId}|${this.query}|${this.monetization}|${this.popularSort}|
       ${this.rubriqueId}|${this.rubriquageId}|${this.before}|${this.after}|${this.includeHidden}|${this.noRubriquageId}|${this.notValid}|
       ${this.withVideo}`;
@@ -150,6 +153,10 @@ export default defineComponent({
     },
   },
   watch: {
+    changePaginate() {
+      this.dfirst = this.first;
+      this.dsize = this.size;
+    },
     changed(): void {
       this.reloadList();
     },
