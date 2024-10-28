@@ -226,6 +226,21 @@ input:not([class^="vs__"]), button:not([class^="vs__"]), select:not([class^="vs_
 				height: 2.2rem !important;
       }
 	}
+	.btn-round-light {
+		font-size: 1.2rem;
+		width: 2.2rem;
+  	height: 2.2rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color : #555555;
+		flex-shrink: 0;
+		border-radius: 50% !important;
+		background: transparent;
+		&:hover {
+			background: #dddddd;
+		}
+	}
 
 	.btn-rss {
 			background: #ddd !important;

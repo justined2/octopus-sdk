@@ -93,6 +93,7 @@ import initSDK from "./src/components/mixins/init.ts";
 import tagOfMixins from "./src/components/mixins/tagOfMixins.ts";
 import resizePhone from "./src/components/mixins/resizePhone.ts";
 import debounce from "./src/components/mixins/debounce.ts";
+import downloadMixins from "./src/components/mixins/download.ts";
 
 
 //helper
@@ -138,5 +139,6 @@ export {
     useAuthStore,
     getApiUrl,
     ModuleApi,
-    classicApi
+    classicApi,
+    downloadMixins
 };

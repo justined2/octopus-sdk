@@ -113,7 +113,10 @@
             </div>
             <ErrorMessage v-if="'' !== errorMessage" :message="errorMessage" />
           </div>
-          <LikeSection :edit-right="editRight" :podcast="podcast" />
+          <div class="d-flex align-items-center flex-wrap">
+            <LikeSection :edit-right="editRight" :podcast="podcast" />
+            <DownloadPodcastButton v-if="isDownloadButton" :podcast="podcast"/>
+          </div>
         </div>
       </div>
     </div>
@@ -178,6 +181,9 @@ const SubscribeButtons = defineAsyncComponent(
 const LikeSection = defineAsyncComponent(
   () => import("../comments/like/LikeSection.vue"),
 );
+const DownloadPodcastButton = defineAsyncComponent(
+  () => import("./DownloadPodcastButton.vue"),
+);
 const Countdown = defineAsyncComponent(() => import("../live/CountDown.vue"));
 const TagList = defineAsyncComponent(() => import("./TagList.vue"));
 import resizePhone from "../../mixins/resizePhone";
@@ -196,6 +202,7 @@ export default defineComponent({
     Countdown,
     LikeSection,
     PodcastRawTranscript,
+    DownloadPodcastButton
   },
 
   mixins: [displayMethods, orgaComputed, resizePhone, podcastView],
@@ -265,6 +272,9 @@ export default defineComponent({
     },
     isEditBox(): boolean {
       return !((state.generalParameters.podcastmaker as boolean) ?? false);
+    },
+    isDownloadButton(): boolean {
+      return (state.podcastPage.downloadButton as boolean);
     },
   },
   methods: {

@@ -1,5 +1,4 @@
 const state: ParamStore = {
-  //TODO init dans le main API store et AuthStore
   generalParameters: {
     forceOrganisationId: undefined,//"ecbd98d9-79bd-4312-ad5e-fc7c1c4a191c",
     podcastmaker: false,
@@ -11,6 +10,7 @@ const state: ParamStore = {
   podcastPage: {
     ShareButtons: true,
     mainRubrique: 0,
+    downloadButton: false
   },
   emissionsPage: {
     itemPlayer: false,
@@ -35,6 +35,7 @@ export interface ParamStore {
   podcastPage:  {
     ShareButtons?: boolean;
     mainRubrique?: number;
+    downloadButton?:boolean;
   };
   emissionsPage: {
     itemPlayer?: boolean;
