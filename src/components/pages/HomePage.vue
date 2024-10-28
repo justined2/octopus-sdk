@@ -41,7 +41,6 @@
           :to="{
             name: 'podcasts',
             query: {
-              productor: filterOrgaId,
               iabId: filterIab?.id,
               rubriquesId: rubriqueQueryParam,
             },

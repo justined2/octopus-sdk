@@ -9,9 +9,6 @@
       :to="{
         name: 'participant',
         params: { participantId: participant.participantId },
-        query: {
-          productor: filterOrgaId,
-        },
       }"
     >
       {{ getName(participant) }}
@@ -21,8 +18,6 @@
 
 <script lang="ts">
 import { Participant } from "@/stores/class/general/participant";
-import { useFilterStore } from "../../../stores/FilterStore";
-import { mapState } from "pinia";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "ParticipantDescription",
@@ -38,7 +33,6 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState(useFilterStore, ["filterOrgaId"]),
     title(): string {
       return this.isGuest ? this.$t("Guests") : this.$t("Animated by");
     },

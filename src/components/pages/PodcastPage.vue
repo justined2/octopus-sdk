@@ -85,6 +85,7 @@ import {
   ConferencePublicInfo,
 } from "@/stores/class/conference/conference";
 import { handle403 } from "../mixins/handle403";
+import { seoTitleUrl } from "../mixins/seoTitleUrl";
 import { defineComponent, defineAsyncComponent } from "vue";
 import { Category } from "@/stores/class/general/category";
 import { useAuthStore } from "../../stores/AuthStore";
@@ -117,7 +118,7 @@ export default defineComponent({
     PodcastmakerHeader,
   },
 
-  mixins: [handle403, orgaComputed, imageProxy],
+  mixins: [handle403, orgaComputed, imageProxy, seoTitleUrl],
 
   props: {
     updateStatus: { default: undefined, type: String },
@@ -126,7 +127,7 @@ export default defineComponent({
     isEducation: { default: false, type: Boolean },
   },
 
-  emits: ["initConferenceId", "podcastInfo"],
+  emits: ["initConferenceId"],
 
   data() {
     return {
@@ -305,7 +306,6 @@ export default defineComponent({
         }
         this.podcast = data;
         this.contentToDisplayUpdate(data);
-        this.$emit("podcastInfo", { title: this.podcast.title });
         this.handleAnnotations();
         if (
           (!this.podcast.availability.visibility ||
@@ -316,6 +316,8 @@ export default defineComponent({
           !this.editRight
         ) {
           this.error = true;
+        } else {
+          this.updatePathParams(this.podcast.title);
         }
         this.loaded = true;
       } catch (error) {

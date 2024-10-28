@@ -4,7 +4,6 @@
       :to="{
         name: 'participant',
         params: { participantId: participant.participantId },
-        query: { productor: filterOrgaId },
       }"
       class="mt-3 text-dark"
       :title="$t('Participant')"
@@ -42,7 +41,6 @@
       :to="{
         name: 'productor',
         params: { productorId: participant.orga.id },
-        query: { productor: filterOrgaId },
       }"
       class="participant-producer"
     >

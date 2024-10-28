@@ -100,8 +100,15 @@ export default defineComponent({
     organisation(): string | undefined {
       return this.organisationId ? this.organisationId : this.filterOrgaId;
     },
+    changePaginate(): string {
+      return `${this.first}|${this.size}`;
+    },
   },
   watch: {
+    changePaginate() {
+      this.dfirst = this.first;
+      this.dsize = this.size;
+    },
     query(): void {
       this.reloadList();
     },

@@ -23,8 +23,8 @@
     />
     <EmissionList
       :show-count="true"
-      :first="0"
-      :size="30"
+      :first="paginateFirst"
+      :size="ps"
       :query="searchPattern"
       :organisation-id="organisationId"
       :monetization="monetization"
@@ -42,6 +42,7 @@
 
 <script lang="ts">
 import { orgaComputed } from "../mixins/orgaComputed";
+import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
 import EmissionList from "../display/emission/EmissionList.vue";
 import AdvancedSearch from "../display/filter/AdvancedSearch.vue";
 import { useFilterStore } from "../../stores/FilterStore";
@@ -57,10 +58,12 @@ export default defineComponent({
     EmissionList,
     AdvancedSearch,
   },
-  mixins: [orgaComputed],
+  mixins: [orgaComputed, paginateParamInit],
   props: {
     productor: { default: undefined, type: String },
     isEducation: { default: false, type: Boolean },
+    pr: { default: 0, type: Number },
+    ps: { default: 30, type: Number },
   },
 
   data() {

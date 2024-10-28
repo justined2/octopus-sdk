@@ -11,7 +11,6 @@
         :to="{
           name: 'home',
           query: {
-            productor: filterOrgaId,
             iabId: filterIab?.id,
             rubriquesId: rubriqueQueryParam,
           },
@@ -33,11 +32,7 @@ export default defineComponent({
   name: "PageNotFound",
   computed: {
     ...mapState(useGeneralStore, ["metaTitle"]),
-    ...mapState(useFilterStore, [
-      "filterRubrique",
-      "filterIab",
-      "filterOrgaId",
-    ]),
+    ...mapState(useFilterStore, ["filterRubrique", "filterIab"]),
     rubriqueQueryParam(): string | undefined {
       if (this.filterRubrique?.length) {
         return this.filterRubrique

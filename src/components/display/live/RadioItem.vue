@@ -5,7 +5,6 @@
       :to="{
         name: 'radio',
         params: { canalId: radio.id },
-        query: { productor: filterOrgaId },
       }"
       class="text-dark emission-item-text"
     >
@@ -21,8 +20,6 @@
 </template>
 
 <script lang="ts">
-import { useFilterStore } from "../../../stores/FilterStore";
-import { mapState } from "pinia";
 import imageProxy from "../../mixins/imageProxy";
 import RadioImage from "./RadioImage.vue";
 import RadioCurrently from "./RadioCurrently.vue";
@@ -39,9 +36,6 @@ export default defineComponent({
 
   props: {
     radio: { default: undefined, type: Object as () => Canal },
-  },
-  computed: {
-    ...mapState(useFilterStore, ["filterOrgaId"]),
   },
 });
 </script>

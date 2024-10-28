@@ -55,6 +55,7 @@ import { state } from "../../../stores/ParamSdkStore";
 import PaginateParams from "./PaginateParams.vue";
 import PaginateSection from "./PaginateSection.vue";
 import resizePhone from "../../mixins/resizePhone";
+import { paginateParams } from "../../mixins/paginate/paginateParams";
 import { defineComponent } from "vue";
 import { usePlayerStore } from "../../../stores/PlayerStore";
 import { mapState } from "pinia";
@@ -65,7 +66,7 @@ export default defineComponent({
     PaginateParams,
     ClassicLoading,
   },
-  mixins: [resizePhone],
+  mixins: [resizePhone, paginateParams],
   props: {
     first: { default: 0, type: Number },
     rowsPerPage: { default: 30, type: Number },
@@ -85,6 +86,7 @@ export default defineComponent({
     return {
       isPhone: false as boolean,
       windowWidth: 0 as number,
+      internSizeChange: false as boolean,
     };
   },
   computed: {
@@ -106,6 +108,13 @@ export default defineComponent({
         this.$emit("update:isMobile", this.isPhone);
       },
     },
+    first() {
+      if (this.internSizeChange) {
+        this.internSizeChange = false;
+        return;
+      }
+      this.updatePaginateRank(Math.floor(this.first / this.rowsPerPage) + 1);
+    },
   },
   methods: {
     fetchMore() {
@@ -117,7 +126,11 @@ export default defineComponent({
     },
     changeSize(sizeValue: number) {
       this.scrollToTop();
+      if(0!==this.first){
+        this.internSizeChange = true;
+      }
       this.$emit("update:rowsPerPage", sizeValue);
+      this.updatePaginateSize(sizeValue);
     },
     scrollToTop() {
       const element = document.getElementById(this.id);

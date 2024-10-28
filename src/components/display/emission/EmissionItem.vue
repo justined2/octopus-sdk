@@ -4,7 +4,6 @@
       :to="{
         name: 'emission',
         params: { emissionId: emission.emissionId },
-        query: { productor: filterOrgaId },
       }"
       :title="$t('Emission')"
       class="d-flex flex-grow-1 text-dark"
@@ -43,7 +42,6 @@
           :to="{
             name: 'productor',
             params: { productorId: emission.orga.id },
-            query: { productor: filterOrgaId },
           }"
         >
           © {{ emission.orga.name }}

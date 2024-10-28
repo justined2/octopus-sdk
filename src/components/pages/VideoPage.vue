@@ -5,7 +5,6 @@
         :to="{
           name: 'podcast',
           params: { podcastId: podcastId },
-          query: { productor: filterOrgaId },
         }"
         class="mt-3 mb-3 width-fit-content"
       >
@@ -93,6 +92,7 @@ import classicApi from "../../api/classicApi";
 import { Podcast } from "@/stores/class/general/podcast";
 import ClassicNav from "../misc/ClassicNav.vue";
 import { handle403 } from "../mixins/handle403";
+import { seoTitleUrl } from "../mixins/seoTitleUrl";
 import podcastView from "../mixins/podcast/podcastView";
 import { defineAsyncComponent, defineComponent } from "vue";
 import { AxiosError } from "axios";
@@ -134,7 +134,7 @@ export default defineComponent({
     CountdownOctopus,
   },
 
-  mixins: [handle403, podcastView],
+  mixins: [handle403, podcastView, seoTitleUrl],
 
   props: {
     podcastId: { default: 0, type: Number },
@@ -241,15 +241,21 @@ export default defineComponent({
           !this.editRight;
         if (privateAccess || notValid) {
           this.error = true;
-        } else if (this.podcast.conferenceId) {
-          await this.fetchConferenceStatus();
-          this.intervalStatusConference = setInterval(() => {
-            this.fetchConferenceStatus();
-          }, 3000);
-          this.playerPlay(
-            { ...this.podcast, ...{ conferenceId: this.podcast.conferenceId } },
-            true,
-          );
+        } else {
+          this.updatePathParams(this.podcast.title);
+          if (this.podcast.conferenceId) {
+            await this.fetchConferenceStatus();
+            this.intervalStatusConference = setInterval(() => {
+              this.fetchConferenceStatus();
+            }, 3000);
+            this.playerPlay(
+              {
+                ...this.podcast,
+                ...{ conferenceId: this.podcast.conferenceId },
+              },
+              true,
+            );
+          }
         }
       } catch (error) {
         this.handle403(error as AxiosError);

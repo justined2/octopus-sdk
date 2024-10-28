@@ -133,8 +133,11 @@ export default defineComponent({
     displayRubriquage(): number | undefined {
       return state.emissionsPage.rubriquage;
     },
+    changePaginate(): string {
+      return `${this.first}|${this.size}`;
+    },
     changed(): string {
-      return `${this.first}|${this.size}|${this.organisationId}|${this.query}|${this.monetization}|${this.includeHidden}
+      return `${this.organisationId}|${this.query}|${this.monetization}|${this.includeHidden}
       ${this.iabId}|${this.rubriqueId}|${this.rubriquageId}|${this.before}|${this.after}|${this.sort}|${this.noRubriquageId}`;
     },
     sortText(): string {
@@ -161,6 +164,10 @@ export default defineComponent({
     },
   },
   watch: {
+    changePaginate() {
+      this.dfirst = this.first;
+      this.dsize = this.size;
+    },
     changed(): void {
       this.reloadList();
     },

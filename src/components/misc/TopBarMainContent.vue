@@ -5,7 +5,6 @@
       :to="{
         name: 'home',
         query: {
-          productor: filterOrgaId,
           iabId: filterIab?.id,
           rubriquesId: rubriqueQueryParam,
         },
@@ -118,7 +117,6 @@
           :title="$t('Search')"
           :to="{
             name: 'podcasts',
-            query: { productor: filterOrgaId },
           }"
           class="btn admin-button m-1 saooti-search text-blue-octopus"
         />

@@ -7,8 +7,8 @@
     />
     <ParticipantList
       :show-count="true"
-      :first="first"
-      :size="size"
+      :first="paginateFirst"
+      :size="ps"
       :query="searchPattern"
       :organisation-id="organisationId"
     />
@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
 import { useFilterStore } from "../../stores/FilterStore";
 import ParticipantList from "../display/participant/ParticipantList.vue";
 import ProductorSearch from "../display/filter/ProductorSearch.vue";
@@ -26,13 +27,14 @@ export default defineComponent({
     ProductorSearch,
     ParticipantList,
   },
+  mixins: [paginateParamInit],
   props: {
     productor: { default: undefined, type: String },
+    pr: { default: 0, type: Number },
+    ps: { default: 30, type: Number },
   },
   data() {
     return {
-      first: 0 as number,
-      size: 30 as number,
       searchPattern: "" as string,
       organisationId: undefined as string | undefined,
     };

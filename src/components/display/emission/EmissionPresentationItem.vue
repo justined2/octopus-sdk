@@ -7,7 +7,6 @@
       :to="{
         name: 'emission',
         params: { emissionId: emission.emissionId },
-        query: { productor: filterOrgaId },
       }"
       :title="$t('Emission')"
       class="d-flex-column flex-grow-1 text-dark"

@@ -43,6 +43,7 @@ import { useGeneralStore } from "../../stores/GeneralStore";
 import { mapActions, mapState } from "pinia";
 import classicApi from "../../api/classicApi";
 import displayMethods from "../mixins/displayMethods";
+import { seoTitleUrl } from "../mixins/seoTitleUrl";
 import imageProxy from "../mixins/imageProxy";
 import { orgaComputed } from "../mixins/orgaComputed";
 import { handle403 } from "../mixins/handle403";
@@ -83,12 +84,10 @@ export default defineComponent({
     RadioPlanning,
     PodcastmakerHeader,
   },
-  mixins: [displayMethods, handle403, orgaComputed, imageProxy],
+  mixins: [displayMethods, handle403, orgaComputed, imageProxy, seoTitleUrl],
   props: {
     canalId: { default: undefined, type: Number },
   },
-  emits: ["radioTitle"],
-
   data() {
     return {
       loaded: false as boolean,
@@ -125,7 +124,7 @@ export default defineComponent({
           path: "canal/" + this.canalId,
         });
         this.contentToDisplayUpdate(this.radio);
-        this.$emit("radioTitle", this.radio.name);
+        this.updatePathParams(this.radio.name);
       } catch (error) {
         this.handle403(error as AxiosError);
         this.error = true;

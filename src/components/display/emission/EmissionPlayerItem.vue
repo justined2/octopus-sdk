@@ -4,7 +4,6 @@
       :to="{
         name: 'emission',
         params: { emissionId: emission.emissionId },
-        query: { productor: filterOrgaId },
       }"
       class="d-flex flex-column text-dark"
     >
@@ -35,7 +34,6 @@
         :to="{
           name: 'podcast',
           params: { podcastId: p.podcastId },
-          query: { productor: filterOrgaId },
         }"
         class="text-dark fw-bold two-line-clamp"
       >
@@ -48,7 +46,6 @@
             :to="{
               name: 'podcast',
               params: { podcastId: p.podcastId },
-              query: { productor: filterOrgaId },
             }"
             class="d-flex flex-grow-1 align-items-center define-width text-dark"
           >
@@ -85,7 +82,6 @@
         :to="{
           name: 'emission',
           params: { emissionId: emission.emissionId },
-          query: { productor: filterOrgaId },
         }"
         class="btn"
       >

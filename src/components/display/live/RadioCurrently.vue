@@ -12,7 +12,6 @@
       :to="{
         name: 'podcast',
         params: { podcastId: podcastRadio.podcastId },
-        query: { productor: filterOrgaId },
       }"
     >
       <img
@@ -33,7 +32,6 @@
 
 <script lang="ts">
 import { usePlayerStore } from "../../../stores/PlayerStore";
-import { useFilterStore } from "../../../stores/FilterStore";
 import { mapState } from "pinia";
 import imageProxy from "../../mixins/imageProxy";
 import { fetchRadioData } from "../../mixins/radio/fetchRadioData";
@@ -62,7 +60,6 @@ export default defineComponent({
 
   computed: {
     ...mapState(usePlayerStore, ["playerRadio"]),
-    ...mapState(useFilterStore, ["filterOrgaId"]),
     playingRadio() {
       return this.playerRadio && this.playerRadio.canalId === this.radio?.id;
     },
