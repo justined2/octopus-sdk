@@ -4,7 +4,7 @@
       <PodcastmakerHeader
         v-if="isPodcastmaker"
         :page-title="titlePage"
-        :image-url="podcast.imageUrl"
+        :img-url="podcast.imageUrl"
       />
       <div
         class="d-flex flex-column page-element"

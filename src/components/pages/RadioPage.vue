@@ -4,7 +4,7 @@
       <PodcastmakerHeader
         v-if="isPodcastmaker"
         :page-title="$t('Radio')"
-        :image-url="radio.imageUrl"
+        :img-url="radio.imageUrl"
       />
       <div
         v-if="radio"

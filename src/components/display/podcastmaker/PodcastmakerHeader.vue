@@ -15,15 +15,15 @@ export default defineComponent({
 
   props: {
     pageTitle: { default: undefined, type: String },
-    imageUrl: { default: undefined, type: String },
+    imgUrl: { default: undefined, type: String },
   },
   computed: {
     backgroundDisplay(): string {
-      if (!this.imageUrl) {
+      if (!this.imgUrl) {
         return "";
       }
       return `background-image: url('${this.proxyImageUrl(
-        this.imageUrl,
+        this.imgUrl,
         "250",
       )}');`;
     },
