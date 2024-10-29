@@ -65,7 +65,7 @@ export default {
     }else if('urlencoded' === params.contentType){
       typeHeader = { "Content-Type": "  application/x-www-form-urlencoded" };
       dataToSend = params.dataToSend;
-    }else if(params.dataToSend){
+    }else if(null!=params.dataToSend || undefined!=params.dataToSend){
       typeHeader = { "Content-Type": 'application/json; charset=utf-8' };
       dataToSend =JSON.stringify(params.dataToSend);
     }
@@ -104,7 +104,7 @@ export default {
           dataToSend.append(key, value);
         }
       }
-    }else if(params.dataToSend){
+    }else if(null!=params.dataToSend || undefined!=params.dataToSend){
       typeHeader = { "Content-Type": 'application/json; charset=utf-8' };
       dataToSend = JSON.stringify(params.dataToSend);
     }
