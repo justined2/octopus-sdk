@@ -43,24 +43,28 @@ const ClassicPopover = defineAsyncComponent(
 );
 export default defineComponent({
   name: "DownloadPodcastButton",
-
-  mixins:[download],
-  components:{
-    ClassicPopover
+  components: {
+    ClassicPopover,
   },
+
+  mixins: [download],
 
   props: {
     podcast: { default: undefined, type: Object as () => Podcast },
   },
-  computed:{
+  computed: {
     videoId(): string | undefined {
       return this.podcast?.video?.videoId;
     },
   },
 
   methods: {
-    downloadPodcast(){
-      this.onDownload("/download/podcast/" + this.podcast?.podcastId, this.podcast?.title + ".mp3", false);
+    downloadPodcast() {
+      this.onDownload(
+        "/download/podcast/" + this.podcast?.podcastId,
+        this.podcast?.title + ".mp3",
+        false,
+      );
     },
   },
 });

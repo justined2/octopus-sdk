@@ -3,7 +3,7 @@
     class="d-flex flex-column classic-input-text"
     :class="{ 'form-margin': displayLabel }"
   >
-    <div class="d-flex">
+    <div class="d-flex align-items-center">
       <label
         class="form-label"
         :for="inputId"
@@ -21,6 +21,7 @@
         <ClassicPopover
           :target="'popover' + inputId"
           popover-class="popover-z-index"
+          :relativeClass="popoverRelativeClass"
         >
           <!-- eslint-disable vue/no-v-html -->
           <div v-html="popover" />
@@ -72,7 +73,7 @@
     <div class="d-flex">
       <ClassicEmojiPicker
         v-if="isEmojiPicker"
-        :popover-relative-class="emojiRelativeClass"
+        :popover-relative-class="popoverRelativeClass"
         :is-top-position="true"
         @emoji-selected="addEmojiSelected"
       />
@@ -139,7 +140,7 @@ export default defineComponent({
     displayLabel: { default: true, type: Boolean },
     focus: { default: true, type: Boolean },
     isEmojiPicker: { default: false, type: Boolean },
-    emojiRelativeClass: { default: undefined, type: String },
+    popoverRelativeClass: { default: undefined, type: String },
     forceReload: { default: false, type: Boolean },
   },
   emits: ["update:textInit", "update:errorVariable"],

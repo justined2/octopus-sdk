@@ -25,6 +25,7 @@ export interface Emission {
     podcastMaxCount?: number;
   };
   createdByUserId?: string;
+  privateRssType?:string;
 }
 
 export function emptyEmissionData(): Emission {

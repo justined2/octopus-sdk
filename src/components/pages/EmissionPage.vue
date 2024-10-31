@@ -83,7 +83,7 @@
           :organisation-id="emission.orga.id"
         />
         <ShareDistribution
-          v-if="editRight && !isPodcastmaker"
+          v-if="editRight && !isPodcastmaker && securityRight"
           :emission-id="emissionId"
         />
       </div>
@@ -190,6 +190,13 @@ export default defineComponent({
     },
     editRight(): boolean {
       return this.isEditRights(this.emission?.orga.id);
+    },
+    securityRight() {
+      return (
+        "PUBLIC" === this.emission?.orga?.privacy ||
+        ("PRIVATE" === this.emission?.orga?.privacy &&
+        ![null, undefined, "PRIVATE"].includes(this.emission?.privateRssType))
+      );
     },
   },
   watch: {

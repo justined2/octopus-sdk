@@ -231,7 +231,7 @@ const router = createRouter({
 //Do in frontoffice but not podcastmakers
 router.beforeEach((to) => {
   const filterStore = useFilterStore();
-  if(filterStore.filterOrgaId !== to.query.productor){
+  if(filterStore.filterOrgaId !== to.query.productor && undefined!==filterStore.filterOrgaId){
     return { path: to.path, query:{...to.query, ...{productor: filterStore.filterOrgaId}}, params: to.params, name:to.name};
   }
 })

@@ -126,7 +126,7 @@ export default defineComponent({
     },
     changeSize(sizeValue: number) {
       this.scrollToTop();
-      if(0!==this.first){
+      if (0 !== this.first) {
         this.internSizeChange = true;
       }
       this.$emit("update:rowsPerPage", sizeValue);

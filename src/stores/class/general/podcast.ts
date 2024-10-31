@@ -34,6 +34,7 @@ export interface Podcast {
   pubDate?: string;
   publisher?: Person;
   rubriqueIds?: Array<number>;
+  rssEpisode?:string;
   score?: number;
   size?: number;
   tags?: Array<string>;

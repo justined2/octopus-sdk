@@ -109,7 +109,7 @@
           </div>
           <div class="d-flex align-items-center flex-wrap">
             <LikeSection :edit-right="editRight" :podcast="podcast" />
-            <DownloadPodcastButton v-if="isDownloadButton" :podcast="podcast"/>
+            <DownloadPodcastButton v-if="isDownloadButton" :podcast="podcast" />
           </div>
         </div>
       </div>
@@ -196,7 +196,7 @@ export default defineComponent({
     Countdown,
     LikeSection,
     PodcastRawTranscript,
-    DownloadPodcastButton
+    DownloadPodcastButton,
   },
 
   mixins: [displayMethods, orgaComputed, resizePhone, podcastView],
@@ -268,7 +268,7 @@ export default defineComponent({
       return !((state.generalParameters.podcastmaker as boolean) ?? false);
     },
     isDownloadButton(): boolean {
-      return (state.podcastPage.downloadButton as boolean);
+      return state.podcastPage.downloadButton as boolean;
     },
   },
   methods: {
