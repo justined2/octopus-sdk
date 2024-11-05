@@ -16,6 +16,7 @@ interface RequestParameters{
   contentType?: string,
   noContentType?:boolean,
   catchFunction?: () => void,
+  responseType?:{[key: string]: string},
 }
 
 export default {
@@ -33,7 +34,7 @@ export default {
       authHeaders = await fetchHelper.createAuthenticatedFetchHeader(params.forceRefresh);
     }
     const url = getApiUrl(params.api) + params.path +paramsString;
-    const response = await axios.get(url, {headers:  {...params.headers, ...authHeaders}});
+    const response = await axios.get(url, {...{headers:  {...params.headers, ...authHeaders}}, ...params.responseType});
     return response.data;
   },
 
