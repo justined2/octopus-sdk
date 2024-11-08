@@ -22,13 +22,12 @@ export default {
   "Term of use": "Condiciones de uso",
   "Producted by : ": "Producido por: ",
   "Loading podcasts ...": "Cargar pódcast...",
-  "Logo of main page": "Logotipo de la página de inicio",
   "All podcasts": "Todos los pódcast",
   Error: "Error",
   Upload: "Cargar",
   "Count more elements matched your query, please make a more specific search.":
     "Tu búsqueda ha producido {count} resultado(s) más. Prueba con una búsqueda más específica.",
-  "Animator image": "Imagen del presentador/a",
+  "Animator image": "Imagen del presentador/a {name}",
   Emission: "Programa",
   "Emission description": "Descripción del programa",
   "Emission image": "Imagen del programa",
@@ -261,7 +260,6 @@ export default {
     "Se ha producido un error al procesar este pódcast; ponte en contacto con Saooti.",
   "Podcast still available": "Pódcast disponible para el público",
   "Podcasts still available": "Dar acceso al público a los episodios ocultos",
-  "Podcast image": "Imagen del pódcast",
   "Recaptcha error": "Google Recaptcha no cree que seas una persona",
   "Recaptcha not active": "El Captcha de Google está desactivado",
   "Comment waiting":
@@ -296,7 +294,6 @@ export default {
     "La página que busca no se encuentra",
   "Back to home": "Volver a la página de inicio",
   Warning: "Advertencia",
-  Visual: "Imagen de {name}",
   "If the transcript is available, show it":
     "Si la transcripción está disponible, muéstrela",
   "Photo credits": "Créditos fotográficos",

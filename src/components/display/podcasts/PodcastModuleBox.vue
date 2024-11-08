@@ -29,9 +29,9 @@
             {{ $t("Episode record in live") }}
           </div>
         </div>
-        <div class="h2 mb-3">
+        <h2 class="mb-3">
           {{ podcast.title }}
-        </div>
+        </h2>
         <Countdown v-if="isCounter" :time-remaining="timeRemaining" />
         <!-- eslint-disable vue/no-v-html -->
         <div
@@ -47,6 +47,7 @@
                 name: 'emission',
                 params: { emissionId: podcast.emission.emissionId },
               }"
+              :title="$t('Series name page', {name:podcast.emission.name})"
             >
               {{ podcast.emission.name }}
             </router-link>

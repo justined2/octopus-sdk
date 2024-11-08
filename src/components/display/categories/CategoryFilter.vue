@@ -4,7 +4,7 @@
     class="header-img flex-column justify-content-end"
     :style="backgroundDisplay"
   >
-    <h1>{{ titleDisplay }}</h1>
+    <h1 v-if="isHeaderDisplay" v-show="titleDisplay">{{ titleDisplay ?? $t('Home') }}</h1>
     <div v-show="isDisplay" class="d-flex flex-column justify-content-end">
       <ol
         v-if="filterIab || filterRubrique.length"
@@ -117,7 +117,7 @@ export default defineComponent({
     rubriquageFilter(): Array<Rubriquage> {
       return this.filterOrgaId ? this.filterRubriquage : [];
     },
-    titleDisplay(): string {
+    titleDisplay(): string|undefined {
       switch (this.$route.name) {
         case "podcasts":
           return this.$t("All podcasts");
@@ -128,7 +128,7 @@ export default defineComponent({
         case "playlists":
           return this.$t("All playlists");
         default:
-          return "";
+          return;
       }
     },
     backgroundDisplay(): string {

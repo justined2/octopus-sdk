@@ -13,14 +13,15 @@
         name: 'podcast',
         params: { podcastId: podcastRadio.podcastId },
       }"
+      :title="$t('Episode name page', {name:podcastRadio.title})"
     >
       <img
         v-lazy="proxyImageUrl(podcastRadio.imageUrl, '80')"
         width="80"
         height="80"
         class="small-img-box"
+        role="presentation"
         :title="$t('Episode name image', { name: podcastRadio.title })"
-        :alt="$t('Episode name image', { name: podcastRadio.title })"
       />
       <div>{{ podcastRadio.title }}</div>
     </router-link>

@@ -28,6 +28,7 @@
                 name: 'playlist',
                 params: { playlistId: p.playlistId },
               }"
+              :title="$t('Playlist name page', {name:p.title})"
             >
               {{ p.title }}
             </router-link>

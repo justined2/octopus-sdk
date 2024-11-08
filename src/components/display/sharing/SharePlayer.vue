@@ -1,9 +1,9 @@
 <template>
   <div class="module-box overflow-visible">
     <div class="d-flex justify-content-between align-items-center">
-      <h2 class="mb-3">
+      <h3 class="mb-3">
         {{ $t("Embed") }}
-      </h2>
+      </h3>
       <div
         v-if="noAd && !isEducation"
         class="sticker"
@@ -16,7 +16,7 @@
       <div class="d-flex">
         <iframe
           id="miniplayerIframe"
-          title="miniplayer"
+          title="Miniplayer"
           allowfullscreen="true"
           allow="clipboard-read; clipboard-write; autoplay"
           referrerpolicy="no-referrer-when-downgrade"
@@ -40,12 +40,6 @@
             v-model:theme="theme"
             class="mt-3"
           />
-          <ClassicCheckbox
-            v-if="isPodcastNotVisible || playlist"
-            v-model:text-init="isVisible"
-            id-checkbox="is-visible-checkbox"
-            :label="titleStillAvailable"
-          />
           <PlayerParameters
             v-model:display-article="displayArticle"
             v-model:display-transcript="displayTranscript"
@@ -53,7 +47,8 @@
             v-model:proceed-reading="proceedReading"
             v-model:is-visible="isVisible"
             v-model:player-auto-play="playerAutoPlay"
-            :is-visible="isVisible"
+            :display-is-visible="isPodcastNotVisible || playlist"
+            :isPodcastNotVisible="isPodcastNotVisible"
             :chose-number-episode="choseNumberEpisodes"
             :display-choice-all-episodes="displayChoiceAllEpisodes"
             :display-transcript-param="displayTranscriptParam"
@@ -115,16 +110,12 @@ const SharePlayerTypes = defineAsyncComponent(
 const SharePlayerColors = defineAsyncComponent(
   () => import("./SharePlayerColors.vue"),
 );
-const ClassicCheckbox = defineAsyncComponent(
-  () => import("../../form/ClassicCheckbox.vue"),
-);
 export default defineComponent({
   components: {
     ShareModalPlayer,
     SharePlayerColors,
     PlayerParameters,
     SharePlayerTypes,
-    ClassicCheckbox,
     PlayerCommonParameters,
   },
   props: {
@@ -170,6 +161,13 @@ export default defineComponent({
     },
     choseNumberEpisodes(): boolean {
       return this.displayChoiceAllEpisodes || this.isTypeSuggestion;
+    },
+    isPodcastNotVisible(): boolean {
+      return (
+        undefined !== this.podcast &&
+        !this.podcast.availability.visibility &&
+        ("default" === this.iFrameModel || "large" === this.iFrameModel)
+      );
     },
     displayArticleParam(): boolean {
       return (
@@ -232,11 +230,6 @@ export default defineComponent({
         this.isLargeEmission ||
         "EMISSION" === this.typeCustomPlayer
       );
-    },
-    titleStillAvailable(): string {
-      return this.isPodcastNotVisible
-        ? this.$t("Podcast still available")
-        : this.$t("Podcasts still available");
     },
     isLiveReadyToRecord(): boolean {
       if (this.podcast)
@@ -312,13 +305,6 @@ export default defineComponent({
         ? 'allowfullscreen="true" referrerpolicy="no-referrer-when-downgrade"'
         : "";
       return `<iframe src="${this.iFrameSrc}" width="100%" height="${this.iFrameHeight}" scrolling="no" frameborder="0" ${specialDigiteka} allow="clipboard-read; clipboard-write; autoplay"></iframe>`;
-    },
-    isPodcastNotVisible(): boolean {
-      return (
-        undefined !== this.podcast &&
-        !this.podcast.availability.visibility &&
-        ("default" === this.iFrameModel || "large" === this.iFrameModel)
-      );
     },
     dataTitle(): number {
       if (this.podcast) return this.podcast.podcastId;

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h2 class="mt-3 align-self-baseline">
+    <h3 class="mb-3 align-self-baseline">
       {{ titleList }}
-    </h2>
+    </h3>
     <ClassicSearch
       v-if="!loading && notEmptyPlaylist"
       v-model:text-init="searchPattern"
@@ -44,6 +44,7 @@
                   name: 'podcast',
                   params: { podcastId: p.podcastId },
                 }"
+                :title="$t('Episode name page', {name:p.title})"
               >
                 {{ p.title }}
               </router-link>

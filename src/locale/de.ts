@@ -22,13 +22,12 @@ export default {
   "Term of use": "Nutzungsbedingungen",
   "Producted by : ": "Produziert von",
   "Loading podcasts ...": "Podcasts werden geladen …",
-  "Logo of main page": "Logo Hauptseite",
   "All podcasts": "Alle Podcasts",
   Error: "Fehler",
   Upload: "Hochladen",
   "Count more elements matched your query, please make a more specific search.":
     "Für Ihre Suche gibt es immer noch {count} Ergebnisse. Bitte grenzen Sie Ihre Suche ein.",
-  "Animator image": "Bild des Autors",
+  "Animator image": "Bild des Autors {name}",
   Emission: "Reihe",
   "Emission description": "Beschreibung der Reihe",
   "Emission image": "Bild zur Reihe",
@@ -261,7 +260,6 @@ export default {
   "Podcast still available": "Podcast für Besucher verfügbar",
   "Podcasts still available":
     "Ausgeblendete Folgen sollen für Hörer verfügbar bleiben",
-  "Podcast image": "Bild zum Podcast",
   "Recaptcha error": "Google reCAPTCHA hält Sie für einen Roboter",
   "Recaptcha not active": "Google CAPTCHA ist deaktiviert",
   "Comment waiting":
@@ -295,7 +293,6 @@ export default {
     "Die gesuchte Seite kann nicht gefunden werden",
   "Back to home": "Zurück zur Startseite",
   Warning: "Warnung",
-  Visual: "Bild von {name}",
   "If the transcript is available, show it":
     "Wenn die Abschrift vorhanden ist, zeigen Sie sie",
   "Photo credits": "Bildnachweis",

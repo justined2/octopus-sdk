@@ -2,9 +2,9 @@
   <div v-if="!isLoading && (authOrgaId || !noSharing)" class="module-box">
     <div class="share-buttons-display">
       <div v-if="!isGarStudent && !noSharing" class="d-flex flex-column me-2">
-        <div class="h2 mb-2">
+        <h3 class="mb-2">
           {{ $t("Share in one click") }}
-        </div>
+        </h3>
         <div class="d-flex align-items-center">
           <template v-for="button in arrayShareButtons" :key="button.title">
             <a
@@ -32,9 +32,9 @@
           v-if="podcast || emission || playlist"
           class="d-flex flex-column share-left-not-phone"
         >
-          <div class="h2 mb-2">
+          <h3 class="mb-2">
             {{ $t("Newsletter") }}
-          </div>
+          </h3>
           <button
             :class="getClass()"
             class="saooti-newsletter"
@@ -43,9 +43,9 @@
           />
         </div>
         <div class="d-flex flex-column share-left-not-phone">
-          <div class="h2 mb-2">
+          <h3 class="mb-2">
             {{ $t("QR Code") }}
-          </div>
+          </h3>
           <button
             :class="getClass()"
             :title="$t('Share QR Code')"
@@ -54,9 +54,9 @@
           />
         </div>
         <div v-if="'' !== rssUrl && displayRss" class="d-flex flex-column ms-4">
-          <div class="h2 mb-2">
+          <h3 class="mb-2">
             {{ $t("Rss feed") }}
-          </div>
+          </h3>
           <div class="d-flex align-items-center justify-content-center">
             <a
               rel="noopener"
@@ -70,9 +70,9 @@
           </div>
         </div>
         <div v-if="shareAiAuth" class="d-flex flex-column ms-4">
-          <div class="h2 mb-2">
+          <h3 class="mb-2">
             {{ $t("Generate a social media post (with AI)") }}
-          </div>
+          </h3>
           <div class="d-flex align-items-center justify-content-center">
             <router-link
               :class="getClass()"

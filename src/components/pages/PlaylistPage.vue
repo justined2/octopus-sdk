@@ -37,7 +37,7 @@
           :playlist="playlist"
           :organisation-id="playlist.organisation.id"
         />
-        <PodcastList :playlist="playlist" />
+        <PodcastList class="module-box" :playlist="playlist" />
       </div>
     </template>
     <ClassicLoading

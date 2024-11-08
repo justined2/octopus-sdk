@@ -69,6 +69,7 @@
                     name: 'podcast',
                     params: { podcastId: planningItem.podcastId },
                   }"
+                  :title="$t('Episode name page', {name:planningItem.title})"
                 >
                   <img
                     v-lazy="
@@ -77,12 +78,8 @@
                     width="150"
                     height="150"
                     class="m-2"
+                    role="presentation"
                     :title="
-                      $t('Episode name image', {
-                        name: planningItem.podcastData.title,
-                      })
-                    "
-                    :alt="
                       $t('Episode name image', {
                         name: planningItem.podcastData.title,
                       })

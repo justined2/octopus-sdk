@@ -8,7 +8,7 @@
         name: 'participant',
         params: { participantId: animator.participantId },
       }"
-      :title="$t('Participant')"
+      :title="$t('Participant name page', {name:animatorName})"
       class="podcast-item-animator text-truncate"
     >
       {{ animatorName }}

@@ -22,13 +22,12 @@ export default {
   "Term of use": "Conditions Générales d'Utilisation",
   "Producted by : ": "Produit par : ",
   "Loading podcasts ...": "Chargement des épisodes ...",
-  "Logo of main page": "Logo de la page",
   "All podcasts": "Tous les épisodes",
   Error: "Erreur",
   Upload: "Téléverser",
   "Count more elements matched your query, please make a more specific search.":
     "Encore {count} élément(s) correspondant à votre recherche. Veuillez effectuer une recherche plus spécifique.",
-  "Animator image": "Image de l'animateur",
+  "Animator image": "Image de l'animateur {name}",
   Emission: "Émission",
   "Emission description": "Description de l'émission",
   "Emission image": "Image de l'émission",
@@ -262,7 +261,6 @@ export default {
     "Maintenir l'épisode disponible pour les auditeurs",
   "Podcasts still available":
     "Maintenir les épisodes cachés disponibles pour les auditeurs",
-  "Podcast image": "Image de l'épisode",
   "Recaptcha error":
     "Le Google Recaptcha ne vous reconnait pas comme un humain",
   "Recaptcha not active": "Attention le captcha google est désactivé",
@@ -303,7 +301,6 @@ export default {
   "Go to next page": "Aller à la page suivante",
   "Go to previous page": "Aller à la page précédente",
   Warning: "Avertissement",
-  Visual: "Visuel de {name}",
   "If the transcript is available, show it":
     "Si la transcription est disponible, l'afficher",
   "Photo credits": "Crédits photo",
@@ -399,4 +396,12 @@ export default {
   "Hide transcript":"Cacher la transcription",
   "Transcript does not yet exist for this episode":"La transcription n'existe pas encore pour cet épisode",
   "Line break":"Saut de ligne",
+
+  //TODO
+  "Organisation name image": "Image de l'organisation {name}",
+  "Series name page": "Page de l'émission \"{name}\"",
+  "Episode name page": "Page de l'épisode \"{name}\"",
+  "Radio name page": "Page de la radio \"{name}\"",
+  "Participant name page": "Page de l'intervenant \"{name}\"",
+  "Playlist name page": "Page de la paylist \"{name}\"",
 };

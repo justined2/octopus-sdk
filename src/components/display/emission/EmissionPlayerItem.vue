@@ -5,6 +5,7 @@
         name: 'emission',
         params: { emissionId: emission.emissionId },
       }"
+      :title="$t('Series name page', {name:emission.name})"
       class="d-flex flex-column text-dark"
     >
       <div v-if="rubriqueName" class="emissionPlayerItem-info">
@@ -15,8 +16,8 @@
           v-lazy="proxyImageUrl(emission.imageUrl, '330')"
           width="330"
           height="330"
+          role="presentation"
           :title="$t('Emission name image', { name: emission.name })"
-          :alt="$t('Emission name image', { name: emission.name })"
           class="img-box rounded-0"
         />
       </div>
@@ -35,6 +36,7 @@
           name: 'podcast',
           params: { podcastId: p.podcastId },
         }"
+        :title="$t('Episode name page', {name:p.title})"
         class="text-dark fw-bold two-line-clamp"
       >
         {{ p.title }}
@@ -47,6 +49,7 @@
               name: 'podcast',
               params: { podcastId: p.podcastId },
             }"
+            :title="$t('Episode name page', {name:p.title})"
             class="d-flex flex-grow-1 align-items-center define-width text-dark"
           >
             <div class="fw-bold text-truncate">

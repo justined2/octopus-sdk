@@ -1,8 +1,8 @@
 <template>
   <div class="py-3">
-    <h2 class="mb-2">
+    <h3 class="mb-2">
       {{ titleFilter }}
-    </h2>
+    </h3>
     <div class="d-flex align-items-center flex-wrap mb-2">
       <div class="w-50-responsive pe-3">
         <CategoryChooser

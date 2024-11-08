@@ -9,12 +9,16 @@
       :class="imageWidth > 50 ? 'big-player-image' : ''"
       :title="$t('Advertising')"
     />
-    <router-link v-else-if="podcastImage" :to="podcastShareUrl">
+    <router-link 
+      v-else-if="podcastImage"
+      :to="podcastShareUrl"
+      :title="$t('Episode name page', {name:podcastDisplay?.title})"
+    >
       <img
         v-lazy="proxyImageUrl(podcastImage, imageWidth)"
         :width="imageWidth"
         :height="imageWidth"
-        :alt="$t('Podcast image')"
+        :alt="$t('Episode name image', {name: podcastDisplay?.title})"
         class="player-image"
         :class="imageWidth > 50 ? 'big-player-image' : ''"
       />
@@ -28,6 +32,7 @@ import { RouteLocationRaw } from "vue-router";
 import { mapState } from "pinia";
 import { usePlayerStore } from "../../../../stores/PlayerStore";
 import { useVastStore } from "../../../../stores/VastStore";
+import { Podcast } from "@/stores/class/general/podcast";
 export default defineComponent({
   name: "PlayerImage",
 
@@ -44,6 +49,14 @@ export default defineComponent({
       "podcastImage",
     ]),
     ...mapState(useVastStore, ["linkAdvertising"]),
+    podcastDisplay(): Podcast|undefined{
+      if (this.playerRadio?.podcast) {
+        return this.playerRadio?.podcast;
+      }
+      if (this.playerPodcast) {
+        return this.playerPodcast;
+      }
+    },
     podcastShareUrl(): RouteLocationRaw | string {
       if (this.playerRadio?.podcast?.podcastId) {
         return {

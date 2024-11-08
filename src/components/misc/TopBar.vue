@@ -11,7 +11,7 @@
     />
     <template v-if="contentToDisplay">
       <div class="page-element-bg" :style="backgroundDisplay" />
-      <h1 v-show="!scrolled" class="text-truncate">{{ titleToDisplay }}</h1>
+      <h1 v-if="!scrolled" class="text-truncate">{{ titleToDisplay }}</h1>
       <SubscribeButtons
         v-show="!scrolled"
         :emission="emissionObject"

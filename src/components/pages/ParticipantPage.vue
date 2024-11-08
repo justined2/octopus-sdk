@@ -9,8 +9,8 @@
           v-lazy="proxyImageUrl(participant.imageUrl, '200')"
           width="200"
           height="200"
-          :title="$t('Animator image')"
-          :alt="$t('Animator image')"
+          :title="$t('Animator image', {name:name})"
+          :alt="$t('Animator image', {name:name})"
           class="img-box mb-3"
         />
         <h2 class="text-capitalize">

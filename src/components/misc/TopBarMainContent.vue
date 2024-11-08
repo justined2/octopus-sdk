@@ -9,11 +9,12 @@
           rubriquesId: rubriqueQueryParam,
         },
       }"
+      :title="$t('Home')"
     >
       <img
         v-if="!filterOrgaId || '' === imgUrl"
         :src="logoUrl"
-        :alt="$t('Logo of main page')"
+        role="presentation"
         width="140"
         height="50"
         :class="isEducation ? 'educationLogo' : 'octopusLogo'"
@@ -21,7 +22,7 @@
       <img
         v-else
         :src="proxyImageUrl(imgUrl, '', '80')"
-        :alt="$t('Visual', { name: filterName })"
+        role="presentation"
         class="client-logo"
         :class="isEducation ? 'educationLogo' : ''"
       />
@@ -38,14 +39,15 @@
       ]"
     >
       <a
-        v-if="filterOrgaId && '' == !imgUrl"
+        v-if="filterOrgaId && '' !==imgUrl"
         href="https://www.saooti.com/"
         target="_blank"
         rel="noopener"
+        title="Saooti"
       >
         <img
           :src="logoUrl"
-          :alt="$t('Logo of main page')"
+          aria-hidden="true"
           width="100"
           height="29"
           class="ms-2"
@@ -274,9 +276,10 @@ export default defineComponent({
       padding: 0 0.5rem;
     }
 
-    a.link-hover {
+    .link-hover {
       color: white;
       font-weight: bold;
+      font-size:0.93rem;
       &.link-hover:hover,
       &.link-hover.router-link-exact-active.router-link-active {
         color: white;

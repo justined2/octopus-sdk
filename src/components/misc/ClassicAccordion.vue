@@ -19,7 +19,7 @@
           height="30"
           class="img-accordion"
           :src="imageUrl"
-          :alt="title"
+          aria-hidden="true"
         />
         <span class="flex-grow-1">{{ title }}</span>
         <span :class="isOpen ? 'saooti-up' : 'saooti-down'" />

@@ -20,7 +20,7 @@
                 :alt="$t('Emission name image', { name: name })"
                 class="img-box img-box-podcast mb-3 flex-column justify-content-start align-items-start position-relative flex-shrink-0 float-start me-3"
               />
-              <div class="h2 mb-3">{{ name }}</div>
+              <h2 class="mb-3">{{ name }}</h2>
               <!-- eslint-disable vue/no-v-html -->
               <p
                 class="html-wysiwyg-content descriptionText"

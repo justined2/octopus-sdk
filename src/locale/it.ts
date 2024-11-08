@@ -21,7 +21,6 @@ export default{
     'Please set an animator': 'Seleziona o crea un moderatore', 
     'Producted by : ': 'Prodotto da:', 
     'Loading podcasts ...': 'Podcast in caricamento...',
-    'Logo of main page': 'Logo della pagina principale', 
     'All podcasts': 'Tutti i podcast', 
     Error: 'Errore',
     Upload: 'Upload',
@@ -257,7 +256,6 @@ export default{
       "Podcast disponibile agli utenti", 
     'Podcasts still available':
       'Mantieni gli episodi nascosti disponibili agli ascoltatori',
-    'Podcast image': "Immagine del podcast",
     'Recaptcha error': 
       'Recaptcha di Google non pensa che tu sia un umano',
     'Recaptcha not active': 'Google captcha disattivato', 
@@ -291,7 +289,6 @@ export default{
     "The page you are looking for cannot be found":"Impossibile trovare la pagina che stai cercando",
     'Back to home': "Torna alla schermata 'home'",
     "Warning":"Avvertimento",
-    "Visual":"Visiva di {name}",
     "If the transcript is available, show it":"Se la trascrizione è disponibile, mostrala",
     "Photo credits":"Crediti fotografici",
     "Audio credits":"Crediti audio",

@@ -10,6 +10,7 @@
     :iab-id="iabId"
     :rubrique-id="rubriqueId"
     :no-rubriquage-id="noRubriquageId"
+    :titleTag="titleTag"
     @sort-chrono="sortChrono"
     @sort-popular="sortPopular"
   >
@@ -67,6 +68,7 @@ export default defineComponent({
     noRubriquageId: { default: () => [], type: Array as () => Array<number> },
     query: { default: undefined, type: String },
     lastThreeMonths: { default: false, type: Boolean },
+    titleTag:{ default: "h2", type: String },
   },
   emits: ["update:isArrow"],
 

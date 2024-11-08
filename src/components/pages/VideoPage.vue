@@ -7,6 +7,7 @@
           params: { podcastId: podcastId },
         }"
         class="mt-3 mb-3 width-fit-content"
+        :title="$t('Episode name page', {name:podcast?.title})"
       >
         <span class="saooti-left" />{{ $t("Episode page") }}
       </router-link>
