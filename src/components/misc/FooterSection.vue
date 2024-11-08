@@ -108,17 +108,16 @@ export default defineComponent({
       return undefined !== this.authOrgaId;
     },
     routerLinkSecondArray() {
-      const links = [
-        { title: this.$t("Contact"), routeName: "/main/pub/contact" },
-        { title: this.$t("Term of use"), routeName: "/main/pub/cgu" },
-      ];
-
+      let links = [];
       if (!this.isGarRole) {
-        links.push({
+        links.push({ title: this.$t("Contact"), routeName: "/main/pub/contact" },{
           title: this.$t("Used libraries"),
           routeName: "/main/pub/libraries",
         });
       }
+      links.push(
+        { title: this.$t("Term of use"), routeName: "/main/pub/cgu" },
+      );
       return links;
     },
     isPodcastmaker(): boolean {

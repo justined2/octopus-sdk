@@ -70,7 +70,7 @@
             {{ $t("Logout") }}
           </a>
         </template>
-        <router-link class="octopus-dropdown-item" to="/main/pub/contact">
+        <router-link v-if="!isGarRole" class="octopus-dropdown-item" to="/main/pub/contact">
           {{ $t("Contact") }}
         </router-link>
       </ClassicPopover>

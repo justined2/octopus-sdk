@@ -43,7 +43,7 @@
         <a v-else class="octopus-dropdown-item" @click="logoutFunction">
           {{ $t("Logout") }}
         </a>
-        <router-link class="octopus-dropdown-item" to="/main/pub/contact">
+        <router-link v-if="!isGarRole" class="octopus-dropdown-item" to="/main/pub/contact">
           {{ $t("Contact") }}
         </router-link>
       </ClassicPopover>
@@ -81,7 +81,7 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(useAuthStore, ["authOrgaId"]),
+    ...mapState(useAuthStore, ["authOrgaId", "isGarRole"]),
     ...mapState(useFilterStore, [
       "filterLive",
       "filterOrgaId",
