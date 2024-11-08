@@ -73,7 +73,7 @@ export const playerStitching = defineComponent({
     async radioIntervalExecute(){
       //If pause when ad needs to be played then skipped (TO THINK)
       if("PAUSED"===this.playerStatus){return;}
-      const vastUrl = await this.getVastUrl(this.playerRadio?.nextAdvertising?.tag ??"5e385e1b51c86");
+      const vastUrl = await this.getVastUrl(this.playerRadio?.nextAdvertising?.tag ??"5e385e1b51c86", (this.playerRadio?.nextAdvertising?.adCount ?? 1);
       console.log("vastUrl "+vastUrl);
       this.onRequestAd(vastUrl);
     },
@@ -178,10 +178,10 @@ export const playerStitching = defineComponent({
     },
 
     async defineVastUrl(adPosition: AdPosition): Promise<AdPosition>{
-      adPosition.vastUrl = await this.getVastUrl(adPosition.impressId);
+      adPosition.vastUrl = await this.getVastUrl(adPosition.impressId, 1);
       return adPosition;
     },
-    async getVastUrl(tag: string): Promise<string>{
+    async getVastUrl(tag: string, adCount: number): Promise<string>{
       let baseUrl = "https://api.soundcast.io/v1/vast/"+tag;
       let keywords: Array<string> = [];
       if(this.playerPodcast?.tags?.length){
@@ -193,7 +193,7 @@ export const playerStitching = defineComponent({
         }
       }
       const parameters = this.getUriSearchParams({
-        adCount: 1,
+        adCount: adCount ?? 1,
         pageUrl:document.referrer,
         keywords:keywords
       });

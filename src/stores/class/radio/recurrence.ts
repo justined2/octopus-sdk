@@ -67,6 +67,7 @@ export interface PlanningRecurrence extends Recurrence {
   isAdvertising: boolean;
   ignoreForStream: boolean;
   advertisingTag: null | string;
+  adCount: number;
 }
 export interface Exclusion {
   exclusionId: number;
