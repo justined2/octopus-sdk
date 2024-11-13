@@ -34,7 +34,7 @@
                 name: 'podcast',
                 params: { podcastId: p.podcastId },
               }"
-              :title="$t('Episode name page', {name:p.title})"
+              :title="$t('Episode name page', { name: p.title })"
             >
               {{ p.title }}
             </router-link>

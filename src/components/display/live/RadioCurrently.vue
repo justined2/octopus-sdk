@@ -13,7 +13,7 @@
         name: 'podcast',
         params: { podcastId: podcastRadio.podcastId },
       }"
-      :title="$t('Episode name page', {name:podcastRadio.title})"
+      :title="$t('Episode name page', { name: podcastRadio.title })"
     >
       <img
         v-lazy="proxyImageUrl(podcastRadio.imageUrl, '80')"

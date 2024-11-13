@@ -28,7 +28,7 @@
                 name: 'emission',
                 params: { emissionId: e.emissionId },
               }"
-              :title="$t('Series name page', {name:e.name})"
+              :title="$t('Series name page', { name: e.name })"
             >
               {{ e.name }}
             </router-link>

@@ -69,7 +69,7 @@
                     name: 'podcast',
                     params: { podcastId: planningItem.podcastId },
                   }"
-                  :title="$t('Episode name page', {name:planningItem.title})"
+                  :title="$t('Episode name page', { name: planningItem.title })"
                 >
                   <img
                     v-lazy="

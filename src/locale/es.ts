@@ -389,4 +389,11 @@ export default {
   "Hide transcript":"Ocultar transcripción",
   "Transcript does not yet exist for this episode":"La transcripción aún no existe para este episodio",
   "Line break":"Salto de línea",
+  "Organisation name image": "Imagen de la organización {name}",
+  "Series name page": "Página del programa \"{name}\"",
+  "Episode name page": "Página del episodio \"{name}\"",
+  "Radio name page": "Página de la radio \"{name}\"",
+  "Participant name page": "Página del participante \"{name}\"",
+  "Playlist name page": "Página de la lista de reproducción \"{name}\"",
+  "Site map": "Mapa del sitio",
 }

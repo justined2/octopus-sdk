@@ -6,14 +6,14 @@
         params: { participantId: participant.participantId },
       }"
       class="mt-3 text-dark"
-      :title="$t('Participant name page', {name: name})"
+      :title="$t('Participant name page', { name: name })"
     >
       <img
         v-lazy="proxyImageUrl(participant.imageUrl, '200')"
         width="200"
         height="200"
         role="presentation"
-        :title="$t('Animator image', {name:name})"
+        :title="$t('Animator image', { name: name })"
         class="img-box border"
       />
       <div class="d-flex align-items-center h4 justify-content-center mt-2">

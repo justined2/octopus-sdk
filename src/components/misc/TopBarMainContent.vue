@@ -39,7 +39,7 @@
       ]"
     >
       <a
-        v-if="filterOrgaId && '' !==imgUrl"
+        v-if="filterOrgaId && '' !== imgUrl"
         href="https://www.saooti.com/"
         target="_blank"
         rel="noopener"
@@ -279,7 +279,7 @@ export default defineComponent({
     .link-hover {
       color: white;
       font-weight: bold;
-      font-size:0.93rem;
+      font-size: 0.93rem;
       &.link-hover:hover,
       &.link-hover.router-link-exact-active.router-link-active {
         color: white;

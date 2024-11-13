@@ -2,8 +2,8 @@
   <div class="d-inline-flex w-100 mb-3 px-3 hide-phone">
     <div ref="rubriqueListContainer" class="rubrique-list-container">
       <select
-        :title="$t('By topic')"
         v-model="rubriquage"
+        :title="$t('By topic')"
         class="c-hand"
         @change="onRubriquageSelected"
       >

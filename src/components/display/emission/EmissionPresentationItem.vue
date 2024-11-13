@@ -8,7 +8,7 @@
         name: 'emission',
         params: { emissionId: emission.emissionId },
       }"
-      :title="$t('Series name page', {name:emission.name})"
+      :title="$t('Series name page', { name: emission.name })"
       class="d-flex-column flex-grow-1 text-dark"
       :class="isVertical ? 'flex-column' : ''"
     >

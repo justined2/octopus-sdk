@@ -47,7 +47,7 @@
                 name: 'emission',
                 params: { emissionId: podcast.emission.emissionId },
               }"
-              :title="$t('Series name page', {name:podcast.emission.name})"
+              :title="$t('Series name page', { name: podcast.emission.name })"
             >
               {{ podcast.emission.name }}
             </router-link>

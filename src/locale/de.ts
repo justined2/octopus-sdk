@@ -388,4 +388,11 @@ export default {
   "Hide transcript":"Transkript ausblenden",
   "Transcript does not yet exist for this episode":"Für diese Episode existiert noch kein Transkript",
   "Line break":"Zeilenumbruch",
+  "Organisation name image": "Bild der Organisation {name}",
+  "Series name page": "Seite der Sendung \"{name}\"",
+  "Episode name page": "Seite der Episode \"{name}\"",
+  "Radio name page": "Seite des Radiosenders \"{name}\"",
+  "Participant name page": "Seite des Teilnehmers \"{name}\"",
+  "Playlist name page": "Seite der Playlist \"{name}\"",
+  "Site map": "Seitenübersicht",
 }

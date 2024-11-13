@@ -5,7 +5,7 @@
         name: 'emission',
         params: { emissionId: emission.emissionId },
       }"
-      :title="$t('Series name page', {name:emission.name})"
+      :title="$t('Series name page', { name: emission.name })"
       class="d-flex flex-grow-1 text-dark"
     >
       <img

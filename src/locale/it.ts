@@ -383,4 +383,11 @@ export default{
   "Hide transcript":"Nascondi trascrizione",
   "Transcript does not yet exist for this episode":"La trascrizione di questo episodio non esiste ancora",
   "Line break":"Interruzione di riga",
+  "Organisation name image": "Immagine dell'organizzazione {name}",
+  "Series name page": "Pagina della serie \"{name}\"",
+  "Episode name page": "Pagina dell'episodio \"{name}\"",
+  "Radio name page": "Pagina della radio \"{name}\"",
+  "Participant name page": "Pagina del partecipante \"{name}\"",
+  "Playlist name page": "Pagina della playlist \"{name}\"",
+  "Site map": "Mappa del sito",
 };

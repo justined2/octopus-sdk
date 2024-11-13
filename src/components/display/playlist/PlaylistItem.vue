@@ -5,7 +5,7 @@
         name: 'playlist',
         params: { playlistId: playlist.playlistId },
       }"
-      :title="$t('Playlist name page', {name:name})"
+      :title="$t('Playlist name page', { name: name })"
       class="d-flex flex-grow-1 text-dark"
     >
       <div class="emission-item-text">

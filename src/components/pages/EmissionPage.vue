@@ -195,7 +195,7 @@ export default defineComponent({
       return (
         "PUBLIC" === this.emission?.orga?.privacy ||
         ("PRIVATE" === this.emission?.orga?.privacy &&
-        ![null, undefined, "PRIVATE"].includes(this.emission?.privateRssType))
+          ![null, undefined, "PRIVATE"].includes(this.emission?.privateRssType))
       );
     },
   },

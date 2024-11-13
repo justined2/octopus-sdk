@@ -379,4 +379,11 @@ export default {
   "Hide transcript":"Skrij prepis",
   "Transcript does not yet exist for this episode":"Prepis za to epizodo še ne obstaja",
   "Line break":"Prelom vrstice",
+  "Organisation name image": "Slika organizacije {name}",
+  "Series name page": "Stran oddaje \"{name}\"",
+  "Episode name page": "Stran epizode \"{name}\"",
+  "Radio name page": "Stran radia \"{name}\"",
+  "Participant name page": "Stran udeleženca \"{name}\"",
+  "Playlist name page": "Stran seznama predvajanja \"{name}\"",
+  "Site map": "Zemljevid spletnega mesta",
 }

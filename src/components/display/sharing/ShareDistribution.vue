@@ -8,10 +8,9 @@
       <div class="text-primary hide-small-screen text-break">
         {{ rss }}
       </div>
-      <button
-        class="btn btn-primary"
-        @click="onCopyCode(rss, afterCopy)"
-      >{{ $t('Copy') }}</button>
+      <button class="btn btn-primary" @click="onCopyCode(rss, afterCopy)">
+        {{ $t("Copy") }}
+      </button>
     </div>
     <RssSection v-if="emission" :emission="emission" />
     <div class="sharing-distribution-container">

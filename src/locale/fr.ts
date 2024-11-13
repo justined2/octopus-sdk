@@ -396,12 +396,11 @@ export default {
   "Hide transcript":"Cacher la transcription",
   "Transcript does not yet exist for this episode":"La transcription n'existe pas encore pour cet épisode",
   "Line break":"Saut de ligne",
-
-  //TODO
   "Organisation name image": "Image de l'organisation {name}",
   "Series name page": "Page de l'émission \"{name}\"",
   "Episode name page": "Page de l'épisode \"{name}\"",
   "Radio name page": "Page de la radio \"{name}\"",
   "Participant name page": "Page de l'intervenant \"{name}\"",
   "Playlist name page": "Page de la paylist \"{name}\"",
+  "Site map":"Plan du site",
 };

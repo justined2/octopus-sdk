@@ -15,7 +15,9 @@
         name="episodeNumbers"
         value="all"
       />
-      <label for="radio-all-episodes" class="flex-shrink-0">{{ $t("Show every episode") }}</label>
+      <label for="radio-all-episodes" class="flex-shrink-0">{{
+        $t("Show every episode")
+      }}</label>
     </div>
     <div
       class="d-flex align-items-center flex-wrap"
@@ -28,7 +30,7 @@
         type="radio"
         name="episodeNumbers"
         value="number"
-        :title="$t('Show')+' '+$t('Last podcasts')"
+        :title="$t('Show') + ' ' + $t('Last podcasts')"
       />
       <span class="flex-shrink-0">{{ $t("Show") }}</span>
       <input
@@ -99,7 +101,7 @@ export default defineComponent({
     displayChoiceAllEpisodes: { default: false, type: Boolean },
     displayTranscriptParam: { default: false, type: Boolean },
     displayArticleParam: { default: false, type: Boolean },
-    displayIsVisible:{ default: false, type: Boolean },
+    displayIsVisible: { default: false, type: Boolean },
     proceedReading: { default: true, type: Boolean },
     displayArticle: { default: true, type: Boolean },
     displayTranscript: { default: true, type: Boolean },
@@ -125,7 +127,6 @@ export default defineComponent({
     };
   },
   computed: {
-    
     titleStillAvailable(): string {
       return this.isPodcastNotVisible
         ? this.$t("Podcast still available")

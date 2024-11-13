@@ -30,7 +30,7 @@
                 name: 'participant',
                 params: { participantId: p.participantId },
               }"
-              :title="$t('Participant name page', {name: p.lastName})"
+              :title="$t('Participant name page', { name: p.lastName })"
             >
               {{ p.lastName }}
             </router-link>

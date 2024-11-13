@@ -48,7 +48,7 @@
             v-model:is-visible="isVisible"
             v-model:player-auto-play="playerAutoPlay"
             :display-is-visible="isPodcastNotVisible || playlist"
-            :isPodcastNotVisible="isPodcastNotVisible"
+            :is-podcast-not-visible="isPodcastNotVisible"
             :chose-number-episode="choseNumberEpisodes"
             :display-choice-all-episodes="displayChoiceAllEpisodes"
             :display-transcript-param="displayTranscriptParam"

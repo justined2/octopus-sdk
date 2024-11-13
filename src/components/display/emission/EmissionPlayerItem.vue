@@ -5,7 +5,7 @@
         name: 'emission',
         params: { emissionId: emission.emissionId },
       }"
-      :title="$t('Series name page', {name:emission.name})"
+      :title="$t('Series name page', { name: emission.name })"
       class="d-flex flex-column text-dark"
     >
       <div v-if="rubriqueName" class="emissionPlayerItem-info">
@@ -36,7 +36,7 @@
           name: 'podcast',
           params: { podcastId: p.podcastId },
         }"
-        :title="$t('Episode name page', {name:p.title})"
+        :title="$t('Episode name page', { name: p.title })"
         class="text-dark fw-bold two-line-clamp"
       >
         {{ p.title }}
@@ -49,7 +49,7 @@
               name: 'podcast',
               params: { podcastId: p.podcastId },
             }"
-            :title="$t('Episode name page', {name:p.title})"
+            :title="$t('Episode name page', { name: p.title })"
             class="d-flex flex-grow-1 align-items-center define-width text-dark"
           >
             <div class="fw-bold text-truncate">

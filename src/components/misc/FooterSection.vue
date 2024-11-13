@@ -112,6 +112,7 @@ export default defineComponent({
       const links = [
         { title: this.$t("Contact"), routeName: "/main/pub/contact" },
         { title: this.$t("Term of use"), routeName: "/main/pub/cgu" },
+        { title: this.$t("Site map"), routeName: "/main/pub/map" },
       ];
 
       if (!this.isGarRole) {

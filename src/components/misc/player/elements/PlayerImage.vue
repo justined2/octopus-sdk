@@ -9,16 +9,16 @@
       :class="imageWidth > 50 ? 'big-player-image' : ''"
       :title="$t('Advertising')"
     />
-    <router-link 
+    <router-link
       v-else-if="podcastImage"
       :to="podcastShareUrl"
-      :title="$t('Episode name page', {name:podcastDisplay?.title})"
+      :title="$t('Episode name page', { name: podcastDisplay?.title })"
     >
       <img
         v-lazy="proxyImageUrl(podcastImage, imageWidth)"
         :width="imageWidth"
         :height="imageWidth"
-        :alt="$t('Episode name image', {name: podcastDisplay?.title})"
+        :alt="$t('Episode name image', { name: podcastDisplay?.title })"
         class="player-image"
         :class="imageWidth > 50 ? 'big-player-image' : ''"
       />
@@ -49,13 +49,14 @@ export default defineComponent({
       "podcastImage",
     ]),
     ...mapState(useVastStore, ["linkAdvertising"]),
-    podcastDisplay(): Podcast|undefined{
+    podcastDisplay(): Podcast | undefined {
       if (this.playerRadio?.podcast) {
         return this.playerRadio?.podcast;
       }
       if (this.playerPodcast) {
         return this.playerPodcast;
       }
+      return undefined;
     },
     podcastShareUrl(): RouteLocationRaw | string {
       if (this.playerRadio?.podcast?.podcastId) {

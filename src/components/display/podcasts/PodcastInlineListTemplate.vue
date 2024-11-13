@@ -75,7 +75,7 @@ export default defineComponent({
     rubriqueId: { default: () => [], type: Array as () => Array<number> },
     noRubriquageId: { default: () => [], type: Array as () => Array<number> },
     podcastId: { default: undefined, type: Number },
-    titleTag:{ default: "h2", type: String },
+    titleTag: { default: "h2", type: String },
   },
   emits: ["sortChrono", "sortPopular", "displayPrevious", "displayNext"],
   data() {

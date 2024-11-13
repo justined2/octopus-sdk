@@ -5,8 +5,8 @@
     :style="{ width: width }"
   >
     <select
-      :title="$t('select productor')"
       v-model="actual"
+      :title="$t('select productor')"
       class="c-hand w-100 transparent"
       @change="onOrganisationSelected"
     >
