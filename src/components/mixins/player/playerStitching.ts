@@ -73,7 +73,7 @@ export const playerStitching = defineComponent({
     async radioIntervalExecute(){
       //If pause when ad needs to be played then skipped (TO THINK)
       if("PAUSED"===this.playerStatus){return;}
-      const vastUrl = await this.getVastUrl(this.playerRadio?.nextAdvertising?.tag ??"5e385e1b51c86", (this.playerRadio?.nextAdvertising?.adCount ?? 1);
+      const vastUrl = await this.getVastUrl(this.playerRadio?.nextAdvertising?.tag ??"5e385e1b51c86", this.playerRadio?.nextAdvertising?.adCount ?? 1);
       console.log("vastUrl "+vastUrl);
       this.onRequestAd(vastUrl);
     },
