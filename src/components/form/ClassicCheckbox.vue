@@ -8,10 +8,17 @@
         :disabled="isDisabled"
         :title="displayLabel ? '' : label"
         :data-selenium="selenium"
+        :tabindex="isSwitch ? '-1' : '0'"
         @input="$emit('update:textInit', !textInit)"
         @click="emitClickAction"
       />
-      <span v-if="isSwitch" class="slider" @click="clickSlider" />
+      <div
+        v-if="isSwitch"
+        class="slider"
+        tabindex="0"
+        @click="clickSlider"
+        @keydown.space.prevent="clickSlider"
+      />
     </div>
     <label
       class="c-hand"

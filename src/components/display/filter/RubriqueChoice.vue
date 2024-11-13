@@ -3,6 +3,7 @@
     <select
       v-model="rubriquageId"
       class="ms-2 mb-0 c-hand"
+      :title="$t('Topics')"
       @change="onRubriquageSelected"
     >
       <option

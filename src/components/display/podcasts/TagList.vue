@@ -22,7 +22,7 @@
           width="20"
           height="20"
           class="ouest-france-logo"
-          alt="Ouest France Logo"
+          aria-hidden="true"
           src="/img/ouest_france_logo.svg"
         />
         {{ formateOfTag(tag) }}

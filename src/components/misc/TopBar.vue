@@ -11,7 +11,7 @@
     />
     <template v-if="contentToDisplay">
       <div class="page-element-bg" :style="backgroundDisplay" />
-      <h1 v-show="!scrolled" class="text-truncate">{{ titleToDisplay }}</h1>
+      <h1 v-if="!scrolled" class="text-truncate">{{ titleToDisplay }}</h1>
       <SubscribeButtons
         v-show="!scrolled"
         :emission="emissionObject"
@@ -139,6 +139,9 @@ export default defineComponent({
 @use "@scss/variables" as octopusVariables;
 .octopus-app {
   .top-bar-container {
+    *:focus-visible {
+      box-shadow: 0 0 10px 1px white !important;
+    }
     position: sticky;
     top: 0;
     background: octopusVariables.$octopus-primary-color;

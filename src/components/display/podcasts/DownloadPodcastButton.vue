@@ -38,13 +38,13 @@
 import { Podcast } from "@/stores/class/general/podcast";
 import download from "../../mixins/download";
 import { defineAsyncComponent, defineComponent } from "vue";
-const ClassicPopover = defineAsyncComponent(
+/* const ClassicPopover = defineAsyncComponent(
   () => import("../../misc/ClassicPopover.vue"),
-);
+); */
 export default defineComponent({
   name: "DownloadPodcastButton",
   components: {
-    ClassicPopover,
+    /* ClassicPopover, */
   },
 
   mixins: [download],

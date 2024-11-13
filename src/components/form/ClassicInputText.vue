@@ -21,7 +21,7 @@
         <ClassicPopover
           :target="'popover' + inputId"
           popover-class="popover-z-index"
-          :relativeClass="popoverRelativeClass"
+          :relative-class="popoverRelativeClass"
         >
           <!-- eslint-disable vue/no-v-html -->
           <div v-html="popover" />

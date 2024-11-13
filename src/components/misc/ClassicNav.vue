@@ -6,13 +6,13 @@
       :key="index - 1"
       class="octopus-nav-item"
     >
-      <div
+      <button
         class="octopus-nav-link"
         :class="activeTab === index - 1 ? 'active' : ''"
         @click="$emit('update:activeTab', index - 1)"
       >
         <slot :name="index - 1" />
-      </div>
+      </button>
     </li>
   </ul>
   <div
@@ -75,6 +75,7 @@ export default defineComponent({
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
     cursor: pointer;
+    display: flex;
     flex-grow: 1;
     text-align: center;
   }
@@ -84,6 +85,8 @@ export default defineComponent({
   }
   .octopus-nav-link {
     display: block;
+    background: transparent;
+    flex-grow: 1;
     padding: 0.5rem 1rem;
     text-decoration: none;
     transition:

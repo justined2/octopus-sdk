@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import ClassicCheckbox from "../../form/ClassicCheckbox.vue";
-import { state } from "../../../stores/ParamSdkStore";
 import SnackBar from "../../misc/SnackBar.vue";
 import QrcodeVue from "qrcode.vue";
 import { useSaveFetchStore } from "../../../stores/SaveFetchStore";

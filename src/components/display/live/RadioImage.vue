@@ -10,9 +10,9 @@
       "
       width="270"
       height="270"
+      role="presentation"
       class="img-box img-box-podcast"
       :title="$t('Canal name image', { name: radio.name })"
-      :alt="$t('Canal name image', { name: radio.name })"
     />
     <button class="image-play-button" @click="playRadio">
       <div class="multiple-play-buttons-container">

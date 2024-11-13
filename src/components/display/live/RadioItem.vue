@@ -7,6 +7,7 @@
         params: { canalId: radio.id },
       }"
       class="text-dark emission-item-text"
+      :title="$t('Radio name page', { name: radio.name })"
     >
       <div class="emission-name mb-2">
         {{ radio.name }}

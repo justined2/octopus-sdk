@@ -8,13 +8,16 @@
       class="d-flex align-items-center flex-wrap mt-1"
     >
       <input
+        id="radio-all-episodes"
         v-model="episodeNumbers"
         class="form-check-input"
         type="radio"
         name="episodeNumbers"
         value="all"
       />
-      <span class="flex-shrink-0">{{ $t("Show every episode") }}</span>
+      <label for="radio-all-episodes" class="flex-shrink-0">{{
+        $t("Show every episode")
+      }}</label>
     </div>
     <div
       class="d-flex align-items-center flex-wrap"
@@ -27,6 +30,7 @@
         type="radio"
         name="episodeNumbers"
         value="number"
+        :title="$t('Show') + ' ' + $t('Last podcasts')"
       />
       <span class="flex-shrink-0">{{ $t("Show") }}</span>
       <input
@@ -36,8 +40,8 @@
         min="1"
         max="50"
         class="input-share-player text-center m-2"
+        :title="$t('Number of player podcasts')"
       />
-      <label for="number-input" :title="$t('Number of player podcasts')" />
       <span class="flex-shrink-0">{{ $t("Last podcasts") }}</span>
     </div>
     <ClassicCheckbox
@@ -47,9 +51,10 @@
       @update:text-init="$emit('update:proceedReading', $event)"
     />
     <ClassicCheckbox
+      v-if="displayIsVisible"
       :text-init="isVisible"
       id-checkbox="is-visible-checkbox"
-      :label="$t('Podcasts still available')"
+      :label="titleStillAvailable"
       @update:text-init="$emit('update:isVisible', $event)"
     />
   </template>
@@ -96,11 +101,13 @@ export default defineComponent({
     displayChoiceAllEpisodes: { default: false, type: Boolean },
     displayTranscriptParam: { default: false, type: Boolean },
     displayArticleParam: { default: false, type: Boolean },
+    displayIsVisible: { default: false, type: Boolean },
     proceedReading: { default: true, type: Boolean },
     displayArticle: { default: true, type: Boolean },
     displayTranscript: { default: true, type: Boolean },
     displayWave: { default: true, type: Boolean },
     playerAutoPlay: { default: false, type: Boolean },
+    isPodcastNotVisible: { default: false, type: Boolean },
   },
   emits: [
     "episodeNumbers",
@@ -120,6 +127,11 @@ export default defineComponent({
     };
   },
   computed: {
+    titleStillAvailable(): string {
+      return this.isPodcastNotVisible
+        ? this.$t("Podcast still available")
+        : this.$t("Podcasts still available");
+    },
     iFrameNumber: {
       get(): string {
         return this.iFrameNumberPriv;

@@ -4,6 +4,7 @@
     <select
       ref="select"
       v-model="monetization"
+      :title="$t('Advertising')"
       class="ms-2 mb-0 c-hand"
       @change="onChange"
     >
