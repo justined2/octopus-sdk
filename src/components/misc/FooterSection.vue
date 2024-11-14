@@ -30,12 +30,13 @@
           { title: 'Italiano', value: 'it' },
           { title: 'Slovenščina', value: 'sl' },
         ]"
-        class="mb-1"
+        class="my-1"
       />
       <OrganisationChooserLight
         v-if="!isPodcastmaker && organisationId && authenticated"
         page="footer"
         width="auto"
+        class="my-1"
         :defaultanswer="$t('No organisation filter')"
         :value="organisationId"
         :reset="reset"
@@ -116,6 +117,7 @@ export default defineComponent({
         });
       }
       links.push(
+        { title: this.$t("Site map"), routeName: "/main/pub/map" },
         { title: this.$t("Term of use"), routeName: "/main/pub/cgu" },
       );
       return links;

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="notEmpty" class="py-3">
-    <h2 class="mb-0 mt-3">
+  <div v-if="notEmpty">
+    <h3 class="mb-0 mt-3">
       {{ $t("All live emission button") }}
-    </h2>
+    </h3>
     <ListPaginate
       id="liveListPaginate"
       v-model:first="dfirst"

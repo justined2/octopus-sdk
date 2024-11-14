@@ -5,8 +5,8 @@
     :style="{ width: width }"
   >
     <select
-      :id="'organisation_chooser_light' + page"
       v-model="actual"
+      :title="$t('select productor')"
       class="c-hand w-100 transparent"
       @change="onOrganisationSelected"
     >
@@ -17,11 +17,6 @@
         {{ $t("No organisation filter") }}
       </option>
     </select>
-    <label
-      :for="'organisation_chooser_light' + page"
-      class="d-inline"
-      :title="$t('select productor')"
-    />
   </div>
 </template>
 

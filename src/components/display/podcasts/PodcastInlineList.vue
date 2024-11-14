@@ -14,6 +14,7 @@
     :no-rubriquage-id="noRubriquageId"
     :query="query"
     :last-three-months="lastThreeMonths"
+    :title-tag="titleTag"
     @update:is-arrow="$emit('update:isArrow', $event)"
   />
 </template>
@@ -45,6 +46,7 @@ export default defineComponent({
     query: { default: undefined, type: String },
     podcastId: { default: undefined, type: Number },
     lastThreeMonths: { default: false, type: Boolean },
+    titleTag: { default: "h2", type: String },
   },
   emits: ["update:isArrow"],
 });

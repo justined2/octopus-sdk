@@ -21,7 +21,6 @@ export default{
     'Please set an animator': 'Seleziona o crea un moderatore', 
     'Producted by : ': 'Prodotto da:', 
     'Loading podcasts ...': 'Podcast in caricamento...',
-    'Logo of main page': 'Logo della pagina principale', 
     'All podcasts': 'Tutti i podcast', 
     Error: 'Errore',
     Upload: 'Upload',
@@ -257,7 +256,6 @@ export default{
       "Podcast disponibile agli utenti", 
     'Podcasts still available':
       'Mantieni gli episodi nascosti disponibili agli ascoltatori',
-    'Podcast image': "Immagine del podcast",
     'Recaptcha error': 
       'Recaptcha di Google non pensa che tu sia un umano',
     'Recaptcha not active': 'Google captcha disattivato', 
@@ -291,7 +289,6 @@ export default{
     "The page you are looking for cannot be found":"Impossibile trovare la pagina che stai cercando",
     'Back to home': "Torna alla schermata 'home'",
     "Warning":"Avvertimento",
-    "Visual":"Visiva di {name}",
     "If the transcript is available, show it":"Se la trascrizione è disponibile, mostrala",
     "Photo credits":"Crediti fotografici",
     "Audio credits":"Crediti audio",
@@ -386,4 +383,11 @@ export default{
   "Hide transcript":"Nascondi trascrizione",
   "Transcript does not yet exist for this episode":"La trascrizione di questo episodio non esiste ancora",
   "Line break":"Interruzione di riga",
+  "Organisation name image": "Immagine dell'organizzazione {name}",
+  "Series name page": "Pagina della serie \"{name}\"",
+  "Episode name page": "Pagina dell'episodio \"{name}\"",
+  "Radio name page": "Pagina della radio \"{name}\"",
+  "Participant name page": "Pagina del partecipante \"{name}\"",
+  "Playlist name page": "Pagina della playlist \"{name}\"",
+  "Site map": "Mappa del sito",
 };

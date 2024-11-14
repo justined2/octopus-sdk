@@ -4,6 +4,7 @@
     :id="'popover' + target"
     ref="popover"
     tabindex="0"
+    role="dialog"
     class="octopus-popover"
     :class="[onlyClick ? 'octopus-dropdown' : '', popoverClass]"
     :style="positionInlineStyle"
@@ -164,6 +165,7 @@ export default defineComponent({
         yGap;
     },
     clearDataBlur(e: FocusEvent) {
+      console.log("FocusOUt");
       if (!e.relatedTarget) {
         return this.clearClick();
       }

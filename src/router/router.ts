@@ -11,6 +11,7 @@ Composants publics
 --------------------------------------------------------------------------*/
 
 const Home = () => import("@/components/pages/HomePage.vue");
+const MapPage = () => import("@/components/pages/MapPage.vue");
 const PodcastsPage = () => import("@/components/pages/PodcastsPage.vue");
 const EmissionPage = () => import("@/components/pages/EmissionPage.vue");
 const EmissionsPage = () => import("@/components/pages/EmissionsPage.vue");
@@ -46,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/main/pub/home",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/main/pub/map",
+    name: "map",
+    component: MapPage,
   },
   {
     path: "/main/pub/search/:query?",

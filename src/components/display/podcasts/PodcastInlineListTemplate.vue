@@ -1,9 +1,9 @@
 <template>
   <div class="podcast-inline-container">
     <div class="d-flex align-items-center" :class="podcastId ? 'mb-4' : 'mb-2'">
-      <h2 class="mb-0">
+      <component :is="titleTag" class="mb-0">
         {{ title }}
-      </h2>
+      </component>
     </div>
     <div v-if="!podcastId" class="d-flex justify-content-between">
       <div class="d-flex">
@@ -75,6 +75,7 @@ export default defineComponent({
     rubriqueId: { default: () => [], type: Array as () => Array<number> },
     noRubriquageId: { default: () => [], type: Array as () => Array<number> },
     podcastId: { default: undefined, type: Number },
+    titleTag: { default: "h2", type: String },
   },
   emits: ["sortChrono", "sortPopular", "displayPrevious", "displayNext"],
   data() {

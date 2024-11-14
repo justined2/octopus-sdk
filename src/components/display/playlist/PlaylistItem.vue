@@ -5,7 +5,7 @@
         name: 'playlist',
         params: { playlistId: playlist.playlistId },
       }"
-      :title="$t('Playlist')"
+      :title="$t('Playlist name page', { name: name })"
       class="d-flex flex-grow-1 text-dark"
     >
       <div class="emission-item-text">
@@ -29,7 +29,7 @@
             name: 'productor',
             params: { productorId: playlist.organisation.id },
           }"
-          class="text-primary mt-auto"
+          class="text-dark mt-auto py-1"
         >
           © {{ playlist.organisation.name }}
         </router-link>
@@ -38,8 +38,8 @@
         v-lazy="proxyImageUrl(playlist.imageUrl, '250')"
         width="250"
         height="250"
+        role="presentation"
         :title="$t('Playlist name image', { name: name })"
-        :alt="$t('Playlist name image', { name: name })"
         class="img-box"
       />
     </router-link>

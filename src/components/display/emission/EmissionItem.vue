@@ -5,7 +5,7 @@
         name: 'emission',
         params: { emissionId: emission.emissionId },
       }"
-      :title="$t('Emission')"
+      :title="$t('Series name page', { name: emission.name })"
       class="d-flex flex-grow-1 text-dark"
     >
       <img
@@ -13,8 +13,8 @@
         width="250"
         height="250"
         class="img-box"
+        role="presentation"
         :title="$t('Emission name image', { name: emission.name })"
-        :alt="$t('Emission name image', { name: emission.name })"
       />
       <div class="emission-item-text">
         <div class="d-flex align-items-center emission-name">
@@ -38,7 +38,7 @@
         </div>
         <router-link
           v-if="!isPodcastmaker"
-          class="text-dark mt-auto"
+          class="text-dark mt-auto py-1"
           :to="{
             name: 'productor',
             params: { productorId: emission.orga.id },

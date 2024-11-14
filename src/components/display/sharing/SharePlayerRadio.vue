@@ -6,7 +6,7 @@
     <div class="d-flex">
       <iframe
         id="miniplayerIframeRadio"
-        title="miniplayer"
+        title="Miniplayer"
         :src="iFrameSrc"
         width="100%"
         height="140px"

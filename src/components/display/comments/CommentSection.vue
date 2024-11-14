@@ -1,7 +1,7 @@
 <template>
   <div v-show="displayCommentSection" class="module-box">
     <div class="d-flex align-items-center">
-      <h2 class="mb-0 me-2">{{ $t("Podcast's comments") }}</h2>
+      <h3 class="mb-0 me-2">{{ $t("Podcast's comments") }}</h3>
       <button
         :title="$t('Refresh')"
         class="btn btn-transparent saooti-refresh"

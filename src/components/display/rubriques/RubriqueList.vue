@@ -1,10 +1,9 @@
 <template>
   <div class="d-inline-flex w-100 mb-3 px-3 hide-phone">
     <div ref="rubriqueListContainer" class="rubrique-list-container">
-      <label for="rubrique-list-select" class="hid">{{ $t("By topic") }}</label>
       <select
-        id="rubrique-list-select"
         v-model="rubriquage"
+        :title="$t('By topic')"
         class="c-hand"
         @change="onRubriquageSelected"
       >

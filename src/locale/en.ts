@@ -22,13 +22,12 @@ export default {
   "Term of use": "Terms of use",
   "Producted by : ": "Produced by : ",
   "Loading podcasts ...": "Loading podcasts ...",
-  "Logo of main page": "Main page logo",
   "All podcasts": "All podcasts",
   Error: "Error",
   Upload: "Upload",
   "Count more elements matched your query, please make a more specific search.":
     "There are still {count} item (s) matching your search. Please do a more specific search.",
-  "Animator image": "Host image",
+  "Animator image": "Host image {name}",
   Emission: "Series",
   "Emission description": "Series description",
   "Emission image": "Series image",
@@ -256,7 +255,6 @@ export default {
     "An error occured while processing this Podcast, please contact Saooti.",
   "Podcast still available": "Podcast available for the audience",
   "Podcasts still available": "Keep hidden episodes available to listeners",
-  "Podcast image": "Podcast image",
   "Recaptcha error": "The Google Recaptcha does not think you are a human",
   "Recaptcha not active": "The captcha google is deactivated",
   "Comment waiting":
@@ -296,7 +294,6 @@ export default {
   "Go to next page": "Go to next page",
   "Go to previous page": "Go to previous page",
   Warning: "Warning",
-  Visual: "Visual of {name}",
   "If the transcript is available, show it":
     "If the transcript is available, show it",
   "Photo credits": "Photo credits",
@@ -392,4 +389,11 @@ export default {
   "Hide transcript":"Hide transcript",
   "Transcript does not yet exist for this episode":"Transcript does not yet exist for this episode",
   "Line break":"Line break",
+  "Organisation name image": "Image of the organization {name}",
+  "Series name page": "\"{name}\" show page",
+  "Episode name page": "\"{name}\" episode page",
+  "Radio name page": "\"{name}\" radio page",
+  "Participant name page": "\"{name}\" participant page",
+  "Playlist name page": "\"{name}\" playlist page",
+  "Site map": "Site map",
 };

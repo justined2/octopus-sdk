@@ -8,7 +8,7 @@
         name: 'emission',
         params: { emissionId: emission.emissionId },
       }"
-      :title="$t('Emission')"
+      :title="$t('Series name page', { name: emission.name })"
       class="d-flex-column flex-grow-1 text-dark"
       :class="isVertical ? 'flex-column' : ''"
     >
@@ -18,8 +18,8 @@
         :height="isVertical ? '400' : '250'"
         :class="isVertical ? 'img-box-bigger' : ''"
         class="img-box"
+        role="presentation"
         :title="$t('Emission name image', { name: emission.name })"
-        :alt="$t('Emission name image', { name: emission.name })"
       />
       <div class="emission-item-text">
         <div class="emission-name mb-2">

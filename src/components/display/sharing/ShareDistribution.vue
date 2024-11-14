@@ -8,13 +8,9 @@
       <div class="text-primary hide-small-screen text-break">
         {{ rss }}
       </div>
-      <input
-        type="button"
-        :value="$t('Copy')"
-        class="btn btn-primary"
-        :title="$t('Copy')"
-        @click="onCopyCode(rss, afterCopy)"
-      />
+      <button class="btn btn-primary" @click="onCopyCode(rss, afterCopy)">
+        {{ $t("Copy") }}
+      </button>
     </div>
     <RssSection v-if="emission" :emission="emission" />
     <div class="sharing-distribution-container">

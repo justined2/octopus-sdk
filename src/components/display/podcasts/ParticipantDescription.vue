@@ -5,7 +5,7 @@
     <router-link
       v-for="participant in participants"
       :key="participant.participantId"
-      :title="$t('Participant')"
+      :title="$t('Participant name page', { name: getName(participant) })"
       :to="{
         name: 'participant',
         params: { participantId: participant.participantId },

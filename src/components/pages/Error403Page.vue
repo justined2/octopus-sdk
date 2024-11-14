@@ -7,7 +7,7 @@
           height="auto"
           class="logo-octopus"
           src="/img/logo_saooti_play_black.webp"
-          :alt="$t('Logo of main page')"
+          aria-hidden="true"
         />
         <h2>{{ $t("You do not have the right to access this page") }}</h2>
       </div>
@@ -16,7 +16,7 @@
         height="auto"
         class="stop-octopus-img"
         src="/img/403.webp"
-        :alt="$t('You do not have the right to access this page')"
+        aria-hidden="true"
       />
     </div>
 

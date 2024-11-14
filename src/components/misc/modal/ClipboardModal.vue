@@ -8,13 +8,9 @@
       <p class="d-flex justify-content-between align-items-center">
         {{ $t("Rss feed:") }}
         <span id="LINK">{{ link }}</span>
-        <input
-          type="button"
-          :value="$t('Copy')"
-          class="btn btn-primary"
-          :title="$t('Copy')"
-          @click="onCopyCode(link, afterCopy)"
-        />
+        <button class="btn btn-primary" @click="onCopyCode(link, afterCopy)">
+          {{ $t("Copy") }}
+        </button>
       </p>
       <RssSection
         v-if="emission && undefined !== authOrgaId"

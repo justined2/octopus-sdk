@@ -64,7 +64,6 @@ import { VSwatches } from "vue3-swatches";
 import "vue3-swatches/dist/style.css";
 import displayMethods from "../../mixins/displayMethods";
 import { Podcast } from "@/stores/class/general/podcast";
-import { state } from "../../../stores/ParamSdkStore";
 import { defineComponent } from "vue";
 import { useSaveFetchStore } from "../../../stores/SaveFetchStore";
 import { useAuthStore } from "../../../stores/AuthStore";
@@ -111,7 +110,8 @@ export default defineComponent({
         return {
           titleModal: this.$t("Share the episode in your newsletter"),
           imageUrl: `${this.podcast.imageUrl}" alt="${this.$t(
-            "Podcast image",
+            "Episode name image",
+            { name: this.podcast.title },
           )}`,
           title: this.podcast.title,
           description: this.podcast.description ?? "",

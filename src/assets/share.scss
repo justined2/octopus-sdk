@@ -274,7 +274,7 @@
     width: 100%;  
     padding: 0;
     &:focus{
-      background: rgba(0, 0, 0, 0.09);
+      background: rgba(0, 0, 0, 0.308);
     }
     .multiple-play-buttons-container{
       background-color:octopusVariables.$primaryColorLessTransparent;
@@ -282,7 +282,7 @@
       color: white;
       padding: 0.3rem;
       width: fit-content;
-      font-size: 0.9rem;
+      font-size: 1rem;
       margin: 0.2rem;
       display: flex;
       align-items: center;

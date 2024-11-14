@@ -33,6 +33,7 @@
           :href="'/main/pub/emission/' + podcast.emission.emissionId"
           :title="$t('More episodes of this emission')"
           :button-text="$t('All podcast emission button')"
+          title-tag="h3"
         />
         <ShareButtons
           v-if="pageParameters.isShareButtons"
@@ -43,6 +44,7 @@
           <ClassicLazy :min-height="550">
             <PodcastInlineList
               class="mt-4"
+              title-tag="h3"
               :podcast-id="podcastId"
               :title="$t('Suggested listening')"
             />
@@ -50,6 +52,7 @@
           <ClassicLazy v-for="c in categories" :key="c.id" :min-height="550">
             <PodcastInlineList
               class="mt-4"
+              title-tag="h3"
               :iab-id="c.id"
               :href="'/main/pub/category/' + c.id"
               :title="$t('More episodes of this category : ', { name: c.name })"

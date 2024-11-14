@@ -12,6 +12,7 @@
       <div class="d-flex flex-column">
         <input
           v-model="temporaryName"
+          :title="$t('Your name')"
           class="h6"
           type="text"
           :class="{ 'border border-danger': nameNotValid }"
