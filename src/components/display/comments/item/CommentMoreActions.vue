@@ -139,7 +139,7 @@ export default defineComponent({
           condition: this.getCanReportAbuse(
             this.config,
             undefined !== this.authOrgaId,
-          ),
+          ) && !this.isMyComment,
         },
         {
           title: this.$t("Managing reported abuses"),
