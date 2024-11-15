@@ -19,7 +19,7 @@
           <template v-if="isLiveReadyToRecord">
             <PlayerVideoHls
               v-if="recordingLive"
-              :hls-url="hlsUrl"
+              :hls-url="hlsVideoUrl"
               :responsive="true"
             />
             <div
@@ -182,7 +182,7 @@ export default defineComponent({
           "PENDING" === this.podcastConference.status)
       );
     },
-    hlsUrl(): string {
+    hlsVideoUrl(): string {
       if (!this.recordingLive || !this.podcastConference) {
         return "";
       }

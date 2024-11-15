@@ -7,7 +7,7 @@
       />
       <div class="video-wrapper">
         <PlayerVideoDigiteka v-if="!playerLive" :video-id="videoId" />
-        <PlayerVideoHls v-else :hls-url="hlsUrl" />
+        <PlayerVideoHls v-else :hls-url="hlsVideoUrl" />
       </div>
     </template>
   </teleport>
@@ -36,7 +36,7 @@ export default defineComponent({
   computed: {
     ...mapState(useApiStore, ["hlsUrl"]),
     ...mapState(usePlayerStore, ["playerVideo", "playerLive", "playerPodcast"]),
-    hlsUrl(): string {
+    hlsVideoUrl(): string {
       if (!this.playerLive) {
         return "";
       }
