@@ -140,14 +140,14 @@ export default defineComponent({
       ];
     },
     footerLinks() {
-      if (this.isPodcastmaker) {
+      if (this.isPodcastmaker || this.isGarRole) {
         return [];
       }
       return [
         {
           title: this.$t("Contact"),
           href: "/main/pub/contact",
-          condition: !this.isGarRole,
+          condition: true,
         },
         {
           title: this.$t("Term of use"),
@@ -157,7 +157,7 @@ export default defineComponent({
         {
           title: this.$t("Used libraries"),
           href: "/main/pub/libraries",
-          condition: !this.isGarRole,
+          condition: true,
         },
       ];
     },

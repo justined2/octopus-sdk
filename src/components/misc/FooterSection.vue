@@ -111,14 +111,13 @@ export default defineComponent({
     routerLinkSecondArray() {
       let links = [];
       if (!this.isGarRole) {
-        links.push({ title: this.$t("Contact"), routeName: "/main/pub/contact" },{
-          title: this.$t("Used libraries"),
-          routeName: "/main/pub/libraries",
-        });
+        links.push(
+          { title: this.$t("Contact"), routeName: "/main/pub/contact" },
+          { title: this.$t("Used libraries"), routeName: "/main/pub/libraries"},
+          { title: this.$t("Term of use"), routeName: "/main/pub/cgu" });
       }
       links.push(
         { title: this.$t("Site map"), routeName: "/main/pub/map" },
-        { title: this.$t("Term of use"), routeName: "/main/pub/cgu" },
       );
       return links;
     },
