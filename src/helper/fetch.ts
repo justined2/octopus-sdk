@@ -73,6 +73,7 @@ export default {
         grant_type: "refresh_token",
         refresh_token: authStore.authParam.refreshToken,
       },
+      isNotAuth: true,
       catchFunction:() => {
         const filterStore = useFilterStore();
         filterStore.filterOrgaId = undefined;
