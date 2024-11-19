@@ -386,4 +386,7 @@ export default {
   "Participant name page": "Stran udeleženca \"{name}\"",
   "Playlist name page": "Stran seznama predvajanja \"{name}\"",
   "Site map": "Zemljevid spletnega mesta",
+  Editing: "Uredi",
+  "Live progress bar":"Vrstica napredka v živo",
+  "Listening progress bar":"Vrstica napredka poslušanja",
 }

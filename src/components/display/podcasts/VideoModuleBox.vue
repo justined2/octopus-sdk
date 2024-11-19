@@ -16,9 +16,8 @@
       v-html="urlify(podcast.description)"
     />
     <!-- eslint-enable -->
-    <ParticipantDescription class="mb-1" :participants="podcast.animators" />
+    <ParticipantDescription :participants="podcast.animators" />
     <ParticipantDescription
-      class="mb-1"
       :participants="podcast.guests"
       :is-guest="true"
     />

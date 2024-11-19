@@ -403,4 +403,7 @@ export default {
   "Participant name page": "Page de l'intervenant \"{name}\"",
   "Playlist name page": "Page de la paylist \"{name}\"",
   "Site map":"Plan du site",
+  Editing: "Éditer",
+  "Live progress bar":"Barre de progression du live",
+  "Listening progress bar":"Barre de progression de l'écoute",
 };

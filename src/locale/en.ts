@@ -396,4 +396,7 @@ export default {
   "Participant name page": "\"{name}\" participant page",
   "Playlist name page": "\"{name}\" playlist page",
   "Site map": "Site map",
+  Editing: "Edit",
+  "Live progress bar":"Live progress bar",
+  "Listening progress bar":"Listening progress bar",
 };

@@ -390,4 +390,7 @@ export default{
   "Participant name page": "Pagina del partecipante \"{name}\"",
   "Playlist name page": "Pagina della playlist \"{name}\"",
   "Site map": "Mappa del sito",
+  Editing: "Modifica",
+  "Live progress bar":"Barra di avanzamento in tempo reale",
+  "Listening progress bar":"Barra di avanzamento dell'ascolto",
 };

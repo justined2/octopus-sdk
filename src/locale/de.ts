@@ -395,4 +395,7 @@ export default {
   "Participant name page": "Seite des Teilnehmers \"{name}\"",
   "Playlist name page": "Seite der Playlist \"{name}\"",
   "Site map": "Seitenübersicht",
+  Editing: "Bearbeiten",
+  "Live progress bar":"Live-Fortschrittsbalken",
+  "Listening progress bar":"Fortschrittsbalken beim Zuhören",
 }

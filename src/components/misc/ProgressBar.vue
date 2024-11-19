@@ -11,6 +11,7 @@
       aria-valuenow="0"
       aria-valuemin="0"
       aria-valuemax="100"
+      :aria-label="$t('Live progress bar')"
       :style="'width: ' + secondaryProgress + '%'"
     />
     <template v-if="playerMedia">
@@ -31,6 +32,7 @@
       aria-valuenow="0"
       aria-valuemin="0"
       aria-valuemax="100"
+      :aria-label="$t('Listening progress bar')"
       :style="'width: ' + mainProgress + '%'"
     />
     <template v-if="playerMedia">
@@ -60,10 +62,6 @@
         <div
           :id="'chapter-' + chapter.startPercent"
           class="octopus-progress-bar octopus-chapter"
-          role="progressbar"
-          aria-valuenow="0"
-          aria-valuemin="0"
-          aria-valuemax="100"
           :style="{
             left: chapter.startPercent + '%',
             right: 100 - chapter.endPercent + '%',

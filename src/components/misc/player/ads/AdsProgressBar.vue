@@ -6,6 +6,7 @@
       aria-valuenow="0"
       aria-valuemin="0"
       aria-valuemax="100"
+      :aria-label="$t('Advertising')"
       :style="'width: ' + adPercentProgress + '%'"
     />
   </div>

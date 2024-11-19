@@ -201,6 +201,7 @@ body{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    margin: 0.5rem 0;
     > a {
       text-transform: capitalize;
       &:after {
