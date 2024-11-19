@@ -47,7 +47,7 @@
             v-model:proceed-reading="proceedReading"
             v-model:is-visible="isVisible"
             v-model:player-auto-play="playerAutoPlay"
-            :display-is-visible="isPodcastNotVisible || playlist"
+            :display-is-visible="displayIsVisible"
             :is-podcast-not-visible="isPodcastNotVisible"
             :chose-number-episode="choseNumberEpisodes"
             :display-choice-all-episodes="displayChoiceAllEpisodes"
@@ -162,11 +162,14 @@ export default defineComponent({
     choseNumberEpisodes(): boolean {
       return this.displayChoiceAllEpisodes || this.isTypeSuggestion;
     },
+    displayIsVisible():boolean{
+      return this.choseNumberEpisodes || this.isPodcastNotVisible;
+    },
     isPodcastNotVisible(): boolean {
       return (
         undefined !== this.podcast &&
         !this.podcast.availability.visibility &&
-        ("default" === this.iFrameModel || "large" === this.iFrameModel)
+        !this.isTypeEmission && !this.isTypeSuggestion
       );
     },
     displayArticleParam(): boolean {

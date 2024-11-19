@@ -50,6 +50,7 @@
       :label="$t('Proceed reading')"
       @update:text-init="$emit('update:proceedReading', $event)"
     />
+  </template>
     <ClassicCheckbox
       v-if="displayIsVisible"
       :text-init="isVisible"
@@ -57,7 +58,6 @@
       :label="titleStillAvailable"
       @update:text-init="$emit('update:isVisible', $event)"
     />
-  </template>
   <ClassicCheckbox
     v-if="displayArticleParam"
     :text-init="displayArticle"
