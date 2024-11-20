@@ -66,7 +66,7 @@
             </template>
           </template>
           <hr />
-          <a class="octopus-dropdown-item c-hand" @click="logoutFunction">
+          <a class="octopus-dropdown-item c-hand" href="/logout">
             {{ $t("Logout") }}
           </a>
         </template>
@@ -160,19 +160,6 @@ export default defineComponent({
     },
   },
   methods: {
-    async logoutFunction() {
-      try {
-        await classicApi.postData({
-          api: 4,
-          path: "/logout",
-          dataToSend: undefined,
-        });
-        await this.$router.push({ path: "/" });
-        location.reload();
-      } catch (error) {
-        //Do nothing
-      }
-    },
     goToAdministration() {
       if ("backoffice" !== this.$route.name) {
         this.$router.push("/main/priv/backoffice");

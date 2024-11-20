@@ -20,13 +20,13 @@
       />
     </div>
 
-    <button
-      v-if="authenticated"
+    <a
+      v-if="authOrgaId"
       class="btn btn-primary"
-      @click="logoutFunction"
+      href="/logout"
     >
       {{ authText }}
-    </button>
+  </a>
     <a v-else class="btn btn-primary" href="/sso/login">{{ authText }}</a>
   </div>
 </template>
@@ -36,7 +36,6 @@ import { useGeneralStore } from "../../stores/GeneralStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import { mapState } from "pinia";
 import { defineComponent } from "vue";
-import classicApi from "../../api/classicApi";
 export default defineComponent({
   name: "Error403Page",
   computed: {
@@ -48,21 +47,6 @@ export default defineComponent({
   },
   mounted() {
     document.title = this.metaTitle;
-  },
-  methods: {
-    async logoutFunction() {
-      try {
-        await classicApi.postData({
-          api: 4,
-          path: "/logout",
-          dataToSend: undefined,
-        });
-        await this.$router.push({ path: "/" });
-        location.reload();
-      } catch (error) {
-        //Do nothing
-      }
-    },
   },
 });
 </script>

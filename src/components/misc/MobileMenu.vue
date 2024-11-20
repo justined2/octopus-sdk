@@ -40,7 +40,7 @@
         >
           {{ $t("Login") }}
         </a>
-        <a v-else class="octopus-dropdown-item" @click="logoutFunction">
+        <a v-else class="octopus-dropdown-item c-hand" href="/logout">
           {{ $t("Logout") }}
         </a>
         <router-link v-if="!isGarRole" class="octopus-dropdown-item" to="/main/pub/contact">
@@ -156,19 +156,6 @@ export default defineComponent({
   },
 
   methods: {
-    async logoutFunction() {
-      try {
-        await classicApi.postData({
-          api: 4,
-          path: "/logout",
-          dataToSend: undefined,
-        });
-        await this.$router.push({ path: "/" });
-        location.reload();
-      } catch (error) {
-        //Do nothing
-      }
-    },
     handleMenuClick() {
       if (this.firstLoaded) {
         return;
