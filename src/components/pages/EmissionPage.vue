@@ -83,7 +83,7 @@
           :organisation-id="emission.orga.id"
         />
         <ShareDistribution
-          v-if="editRight && !isPodcastmaker && securityRight"
+          v-if="editRight && !isPodcastmaker && securityRight && !isGarRole"
           :emission-id="emissionId"
         />
       </div>
@@ -108,6 +108,7 @@ import ClassicLoading from "../form/ClassicLoading.vue";
 import { defineComponent, defineAsyncComponent } from "vue";
 import { AxiosError } from "axios";
 import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "../../stores/AuthStore";
 import { useGeneralStore } from "../../stores/GeneralStore";
 import { useApiStore } from "../../stores/ApiStore";
 import { Podcast } from "@/stores/class/general/podcast";
@@ -173,6 +174,7 @@ export default defineComponent({
   },
 
   computed: {
+    ...mapState(useAuthStore, ["isGarRole"]),
     ...mapState(useApiStore, ["apiUrl"]),
     pageParameters() {
       return {

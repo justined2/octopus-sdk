@@ -70,7 +70,11 @@
             {{ $t("Logout") }}
           </a>
         </template>
-        <router-link v-if="!isGarRole" class="octopus-dropdown-item" to="/main/pub/contact">
+        <router-link
+          v-if="!isGarRole"
+          class="octopus-dropdown-item"
+          to="/main/pub/contact"
+        >
           {{ $t("Contact") }}
         </router-link>
       </ClassicPopover>
@@ -85,7 +89,6 @@ import { useAuthStore } from "../../stores/AuthStore";
 import { mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Organisation } from "@/stores/class/general/organisation";
-import classicApi from "../../api/classicApi";
 export default defineComponent({
   name: "HomeDropdown",
   components: {

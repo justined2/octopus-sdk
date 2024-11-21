@@ -13,6 +13,7 @@
       <div class="page-element-bg" :style="backgroundDisplay" />
       <h1 v-if="!scrolled" class="text-truncate">{{ titleToDisplay }}</h1>
       <SubscribeButtons
+        v-if="!isGarRole"
         v-show="!scrolled"
         :emission="emissionObject"
         :playlist-id="contentToDisplay?.playlistId"
@@ -27,6 +28,7 @@ import imageProxy from "../mixins/imageProxy";
 import TopBarMainContent from "./TopBarMainContent.vue";
 import { mapState } from "pinia";
 import { defineAsyncComponent, defineComponent } from "vue";
+import { useAuthStore } from "../../stores/AuthStore";
 import { useGeneralStore } from "../../stores/GeneralStore";
 import { Podcast } from "@/stores/class/general/podcast";
 import { Emission } from "@/stores/class/general/emission";
@@ -58,6 +60,7 @@ export default defineComponent({
     };
   },
   computed: {
+    ...mapState(useAuthStore, ["isGarRole"]),
     ...mapState(useGeneralStore, ["contentToDisplay"]),
     isContentToDisplay(): boolean {
       return (

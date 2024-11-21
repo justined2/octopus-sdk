@@ -38,14 +38,9 @@
           : 'flex-column align-items-end',
       ]"
     >
-      <a
-        v-if="filterOrgaId && '' !== imgUrl"
-        href="https://www.saooti.com/"
-        target="_blank"
-        rel="noopener"
-        title="Saooti"
-      >
+      <template v-if="filterOrgaId && '' !== imgUrl">
         <img
+          v-if="isGarRole"
           :src="logoUrl"
           aria-hidden="true"
           width="100"
@@ -53,7 +48,23 @@
           class="ms-2"
           :class="isEducation ? 'educationLogo' : 'octopusLogo'"
         />
-      </a>
+        <a
+          v-else
+          href="https://www.saooti.com/"
+          target="_blank"
+          rel="noopener"
+          title="Saooti"
+        >
+          <img
+            :src="logoUrl"
+            aria-hidden="true"
+            width="100"
+            height="29"
+            class="ms-2"
+            :class="isEducation ? 'educationLogo' : 'octopusLogo'"
+          />
+        </a>
+      </template>
       <div class="d-flex align-items-center justify-content-end flex-grow-1">
         <template v-for="link in routerLinkArray" :key="link.routeName">
           <router-link
@@ -132,6 +143,7 @@ import { state } from "../../stores/ParamSdkStore";
 import HomeDropdown from "./HomeDropdown.vue";
 import imageProxy from "../mixins/imageProxy";
 import { useFilterStore } from "../../stores/FilterStore";
+import { useAuthStore } from "../../stores/AuthStore";
 import { mapState } from "pinia";
 import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import ClassicPopover from "../misc/ClassicPopover.vue";
@@ -163,6 +175,7 @@ export default defineComponent({
       "filterRubrique",
       "filterName",
     ]),
+    ...mapState(useAuthStore, ["isGarRole"]),
     mobileMenuDisplay(): boolean {
       return this.isPhone || this.inContentDisplayPage;
     },

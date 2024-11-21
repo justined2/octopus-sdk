@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isLoading && (authOrgaId || !noSharing)" class="module-box">
     <div class="share-buttons-display">
-      <div v-if="!isGarStudent && !noSharing" class="d-flex flex-column me-2">
+      <div v-if="!isGarRole && !noSharing" class="d-flex flex-column me-2">
         <h3 class="mb-2">
           {{ $t("Share in one click") }}
         </h3>
@@ -53,7 +53,10 @@
             @click="qrCode = true"
           />
         </div>
-        <div v-if="'' !== rssUrl && displayRss" class="d-flex flex-column ms-4">
+        <div
+          v-if="'' !== rssUrl && displayRss && !isGarRole"
+          class="d-flex flex-column ms-4"
+        >
           <h3 class="mb-2">
             {{ $t("Rss feed") }}
           </h3>
@@ -179,7 +182,7 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useAuthStore, [
-      "isGarStudent",
+      "isGarRole",
       "authOrganisation",
       "isRoleProduction",
       "authOrgaId",

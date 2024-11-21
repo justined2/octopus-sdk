@@ -20,13 +20,9 @@
       />
     </div>
 
-    <a
-      v-if="authOrgaId"
-      class="btn btn-primary"
-      href="/logout"
-    >
+    <a v-if="authOrgaId" class="btn btn-primary" href="/logout">
       {{ authText }}
-  </a>
+    </a>
     <a v-else class="btn btn-primary" href="/sso/login">{{ authText }}</a>
   </div>
 </template>

@@ -43,7 +43,11 @@
         <a v-else class="octopus-dropdown-item c-hand" href="/logout">
           {{ $t("Logout") }}
         </a>
-        <router-link v-if="!isGarRole" class="octopus-dropdown-item" to="/main/pub/contact">
+        <router-link
+          v-if="!isGarRole"
+          class="octopus-dropdown-item"
+          to="/main/pub/contact"
+        >
           {{ $t("Contact") }}
         </router-link>
       </ClassicPopover>
@@ -59,7 +63,6 @@ import { defineComponent, defineAsyncComponent } from "vue";
 import { useFilterStore } from "../../stores/FilterStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import { mapState } from "pinia";
-import classicApi from "../../api/classicApi";
 const ClassicPopover = defineAsyncComponent(
   () => import("../misc/ClassicPopover.vue"),
 );

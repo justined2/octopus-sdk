@@ -162,14 +162,15 @@ export default defineComponent({
     choseNumberEpisodes(): boolean {
       return this.displayChoiceAllEpisodes || this.isTypeSuggestion;
     },
-    displayIsVisible():boolean{
+    displayIsVisible(): boolean {
       return this.choseNumberEpisodes || this.isPodcastNotVisible;
     },
     isPodcastNotVisible(): boolean {
       return (
         undefined !== this.podcast &&
         !this.podcast.availability.visibility &&
-        !this.isTypeEmission && !this.isTypeSuggestion
+        !this.isTypeEmission &&
+        !this.isTypeSuggestion
       );
     },
     displayArticleParam(): boolean {

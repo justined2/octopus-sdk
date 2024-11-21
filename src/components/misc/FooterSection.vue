@@ -113,12 +113,14 @@ export default defineComponent({
       if (!this.isGarRole) {
         links.push(
           { title: this.$t("Contact"), routeName: "/main/pub/contact" },
-          { title: this.$t("Used libraries"), routeName: "/main/pub/libraries"},
-          { title: this.$t("Term of use"), routeName: "/main/pub/cgu" });
+          {
+            title: this.$t("Used libraries"),
+            routeName: "/main/pub/libraries",
+          },
+          { title: this.$t("Term of use"), routeName: "/main/pub/cgu" },
+        );
       }
-      links.push(
-        { title: this.$t("Site map"), routeName: "/main/pub/map" },
-      );
+      links.push({ title: this.$t("Site map"), routeName: "/main/pub/map" });
       return links;
     },
     isPodcastmaker(): boolean {

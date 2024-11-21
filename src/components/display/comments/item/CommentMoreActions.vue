@@ -136,10 +136,11 @@ export default defineComponent({
           actionClick: () => {
             this.isReportAbuse = true;
           },
-          condition: this.getCanReportAbuse(
-            this.config,
-            undefined !== this.authOrgaId,
-          ) && !this.isMyComment,
+          condition:
+            this.getCanReportAbuse(
+              this.config,
+              undefined !== this.authOrgaId,
+            ) && !this.isMyComment,
         },
         {
           title: this.$t("Managing reported abuses"),

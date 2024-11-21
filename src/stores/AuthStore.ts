@@ -110,9 +110,6 @@ export const useAuthStore = defineStore("AuthStore", {
         | string
         | undefined; /*CHEF_ETABLISSEMENT, ENSEIGNANT, ELEVE, undefined */
     },
-    isGarStudent(): boolean {
-      return "ELEVE" === this.isGarRole;
-    },
     isVideoOrga(): boolean {
       return this.authVideoConfig.active;
     },

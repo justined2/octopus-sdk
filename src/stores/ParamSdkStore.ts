@@ -1,6 +1,7 @@
 const state: ParamStore = {
   generalParameters: {
     forceOrganisationId: undefined,//"ecbd98d9-79bd-4312-ad5e-fc7c1c4a191c",
+    forceRubriqueId: undefined,
     podcastmaker: false,
     buttonPlus: true,
     isLiveTab: true,
@@ -26,6 +27,7 @@ const state: ParamStore = {
 export interface ParamStore {
   generalParameters: {
     forceOrganisationId?: string;
+    forceRubriqueId?:number;
     podcastmaker?: boolean;
     buttonPlus?: boolean;
     isLiveTab?: boolean;

@@ -37,7 +37,7 @@
 <script lang="ts">
 import { Podcast } from "@/stores/class/general/podcast";
 import download from "../../mixins/download";
-import { defineAsyncComponent, defineComponent } from "vue";
+import { defineComponent } from "vue";
 /* const ClassicPopover = defineAsyncComponent(
   () => import("../../misc/ClassicPopover.vue"),
 ); */

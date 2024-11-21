@@ -162,6 +162,12 @@ export default {
         parametersUpdated.organisationId = undefined;
       }
     }
+    if(undefined!==state.generalParameters.forceRubriqueId){
+      if(!parametersUpdated.rubriqueId){
+        parametersUpdated.rubriqueId = [];
+      }
+      parametersUpdated.rubriqueId = (parametersUpdated.rubriqueId as Array<number>).push(state.generalParameters.forceRubriqueId);
+    }
     return parametersUpdated
   },
 }

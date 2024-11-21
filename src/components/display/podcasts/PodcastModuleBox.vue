@@ -52,9 +52,7 @@
               {{ podcast.emission.name }}
             </router-link>
           </div>
-          <ParticipantDescription
-            :participants="podcast.animators"
-          />
+          <ParticipantDescription :participants="podcast.animators" />
           <ParticipantDescription
             :participants="podcast.guests"
             :is-guest="true"
@@ -81,7 +79,7 @@
           </div>
 
           <a
-            v-if="podcast.article"
+            v-if="podcast.article && !isGarRole"
             class="btn d-flex align-items-center my-2 width-fit-content mb-1"
             :href="podcast.article"
             rel="noopener"
@@ -216,7 +214,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState(useAuthStore, ["isRoleLive"]),
+    ...mapState(useAuthStore, ["isRoleLive", "isGarRole"]),
     errorMessage(): string {
       if (!this.podcast?.availability.visibility) {
         return this.$t("Podcast is not visible for listeners");

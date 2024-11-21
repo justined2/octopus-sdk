@@ -17,10 +17,7 @@
     />
     <!-- eslint-enable -->
     <ParticipantDescription :participants="podcast.animators" />
-    <ParticipantDescription
-      :participants="podcast.guests"
-      :is-guest="true"
-    />
+    <ParticipantDescription :participants="podcast.guests" :is-guest="true" />
     <PodcastRawTranscript class="mt-3" :podcast-id="podcast.podcastId" />
   </div>
 </template>
