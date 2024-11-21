@@ -166,7 +166,7 @@ export default {
       if(!parametersUpdated.rubriqueId){
         parametersUpdated.rubriqueId = [];
       }
-      parametersUpdated.rubriqueId = (parametersUpdated.rubriqueId as Array<number>).push(state.generalParameters.forceRubriqueId);
+      parametersUpdated.rubriqueId = (parametersUpdated.rubriqueId as Array<number>).concat([state.generalParameters.forceRubriqueId]);
     }
     return parametersUpdated
   },
