@@ -24,6 +24,7 @@ export interface MediaRadio {
 export interface NextAdvertising {
   startDate?: string;
   tag?: string;
+  adCount?:number;
 }
 
 export interface MetadataRadio {
