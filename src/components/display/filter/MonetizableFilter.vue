@@ -3,10 +3,9 @@
     <div>{{ $t("Advertising") + " :" }}</div>
     <select
       ref="select"
-      v-model="monetization"
+      v-model="monetisableForVmodel"
       :title="$t('Advertising')"
       class="ms-2 mb-0 c-hand"
-      @change="onChange"
     >
       <option value="UNDEFINED">
         {{ allString }}
@@ -26,13 +25,12 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     isEmission: { default: false, type: Boolean },
+    monetisable: { default: "UNDEFINED", type: String },
   },
-  emits: ["updateMonetization"],
+  emits: ["update:monetisable"],
 
   data() {
-    return {
-      monetization: "UNDEFINED" as string,
-    };
+    return {};
   },
   computed: {
     allString(): string {
@@ -40,10 +38,13 @@ export default defineComponent({
         ? this.$t("All emissions")
         : this.$t("All podcasts");
     },
-  },
-  methods: {
-    onChange(): void {
-      this.$emit("updateMonetization", this.monetization);
+    monetisableForVmodel: {
+      get(): string {
+        return this.monetisable;
+      },
+      set(value: string) {
+        this.$emit("update:monetisable", value);
+      },
     },
   },
 });

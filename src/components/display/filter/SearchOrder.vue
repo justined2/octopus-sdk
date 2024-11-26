@@ -1,9 +1,15 @@
 <template>
-  <ClassicRadio
-    v-model:text-init="sort"
-    id-radio="sort-radio"
-    :options="optionsArray"
-  />
+  <div class="d-flex flex-column">
+    <div class="text-primary mb-2">
+      {{ $t("Sort") }}
+    </div>
+    <ClassicRadio
+      :text-init="sort"
+      id-radio="sort-radio"
+      :options="optionsArray"
+      @update:text-init="$emit('update:sort', $event)"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,14 +21,12 @@ export default defineComponent({
   },
   props: {
     isEmission: { default: false, type: Boolean },
-    sortCriteria: { default: "DATE", type: String },
+    sort: { default: "DATE", type: String },
   },
 
-  emits: ["updateSortCriteria"],
+  emits: ["update:sort"],
   data() {
-    return {
-      sort: this.sortCriteria,
-    };
+    return {};
   },
   computed: {
     optionsArray() {
@@ -41,14 +45,6 @@ export default defineComponent({
         });
       }
       return options;
-    },
-  },
-  watch: {
-    sort(): void {
-      this.$emit("updateSortCriteria", this.sort);
-    },
-    sortCriteria(): void {
-      this.sort = this.sortCriteria;
     },
   },
 });

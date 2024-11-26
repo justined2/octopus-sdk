@@ -92,7 +92,7 @@ export default defineComponent({
     query: { default: undefined, type: String },
     iabId: { default: undefined, type: Number },
     organisationId: { default: undefined, type: String },
-    monetization: { default: "UNDEFINED", type: String },
+    monetisable: { default: "UNDEFINED", type: String },
     before: { default: undefined, type: String },
     after: { default: undefined, type: String },
     sort: { default: "DATE", type: String },
@@ -138,7 +138,7 @@ export default defineComponent({
       return `${this.first}|${this.size}`;
     },
     changed(): string {
-      return `${this.organisationId}|${this.query}|${this.monetization}|${this.includeHidden}
+      return `${this.organisationId}|${this.query}|${this.monetisable}|${this.includeHidden}
       ${this.iabId}|${this.rubriqueId}|${this.rubriquageId}|${this.before}|${this.after}|${this.sort}|${this.noRubriquageId}`;
     },
     sortText(): string {
@@ -203,7 +203,7 @@ export default defineComponent({
         size: this.dsize,
         query: this.query,
         organisationId: this.organisation,
-        monetisable: this.monetization,
+        monetisable: this.monetisable,
         iabId: this.iabId,
         before: this.before,
         after: this.after,

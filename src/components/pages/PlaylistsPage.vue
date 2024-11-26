@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
+import { paginateParamInit } from "../mixins/routeParam/paginateParamInit";
 import PlaylistList from "../display/playlist/PlaylistList.vue";
 import { useAuthStore } from "../../stores/AuthStore";
 import { useFilterStore } from "../../stores/FilterStore";

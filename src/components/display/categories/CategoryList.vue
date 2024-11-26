@@ -39,6 +39,7 @@
 </template>
 
 <script lang="ts">
+import { routeParams } from "../../mixins/routeParam/routeParams";
 import classicApi from "../../../api/classicApi";
 import { state } from "../../../stores/ParamSdkStore";
 import ClassicPopover from "../../misc/ClassicPopover.vue";
@@ -52,6 +53,7 @@ export default defineComponent({
   components: {
     ClassicPopover,
   },
+  mixins: [routeParams],
 
   props: {
     isFilter: { default: false, type: Boolean },
@@ -121,7 +123,6 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapActions(useFilterStore, ["filterUpdateIab"]),
     ...mapActions(useGeneralStore, ["storedUpdateCategoriesOrga"]),
     checkIfFilter(category: Category): void {
       if (!this.isFilter) {
@@ -137,11 +138,11 @@ export default defineComponent({
         ("string" === typeof queries.iabId &&
           parseInt(queries.iabId, 10) !== category.id)
       ) {
-        this.$router.replace({
-          query: { ...queries, ...{ iabId: category.id.toString() } },
-        });
+        this.updateFiltersParam(
+          { iabId: category.id.toString() },
+          { i: category.id.toString() },
+        );
       }
-      this.filterUpdateIab(category);
     },
     resizeWindow(): void {
       const categoryList = this.$refs.categoryListContainer as HTMLElement;

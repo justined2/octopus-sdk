@@ -19,7 +19,7 @@
         {{ $t("By rubric") }}
       </div>
       <RubriqueChooser
-        v-if="getRubriques(rubriquageId).length"
+        v-if="getRubriquesLength(rubriquageId)"
         class="ms-2"
         :multiple="false"
         :rubriquage-id="rubriquageId"
@@ -90,6 +90,9 @@ export default defineComponent({
     },
     deleteRubriquage() {
       this.$emit("deleteRubriqueChoice");
+    },
+    getRubriquesLength(rubriquageId: number): number {
+      return this.getRubriques(rubriquageId).length;
     },
     getRubriques(rubriquageId: number): Array<Rubrique> {
       const topicIndex = this.rubriquageDisplay.findIndex(

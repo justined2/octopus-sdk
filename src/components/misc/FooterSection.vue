@@ -64,6 +64,7 @@
 
 <script lang="ts">
 import cookies from "../mixins/cookies";
+import { rubriquesFilterComputed } from "../mixins/routeParam/rubriquesFilterComputed";
 import orgaFilter from "../mixins/organisationFilter";
 import ClassicSelect from "../form/ClassicSelect.vue";
 import AcpmImage from "./AcpmImage.vue";
@@ -75,7 +76,6 @@ import { useGeneralStore } from "../../stores/GeneralStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import { mapState, mapActions } from "pinia";
 import { Category } from "@/stores/class/general/category";
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { defineAsyncComponent, defineComponent } from "vue";
 import { Organisation } from "@/stores/class/general/organisation";
 const OrganisationChooserLight = defineAsyncComponent(
@@ -89,7 +89,7 @@ export default defineComponent({
     OrganisationChooserLight,
   },
 
-  mixins: [cookies, orgaFilter],
+  mixins: [cookies, orgaFilter, rubriquesFilterComputed],
   data() {
     return {
       language: this.$i18n.locale,
@@ -99,11 +99,7 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useGeneralStore, ["storedCategories", "platformEducation"]),
-    ...mapState(useFilterStore, [
-      "filterRubrique",
-      "filterOrgaId",
-      "filterIab",
-    ]),
+    ...mapState(useFilterStore, ["filterOrgaId", "filterIab"]),
     ...mapState(useAuthStore, ["isGarRole", "authOrgaId"]),
     authenticated() {
       return undefined !== this.authOrgaId;
@@ -125,17 +121,6 @@ export default defineComponent({
     },
     isPodcastmaker(): boolean {
       return state.generalParameters.podcastmaker as boolean;
-    },
-    rubriqueQueryParam(): string | undefined {
-      if (this.filterRubrique?.length) {
-        return this.filterRubrique
-          .map(
-            (value: RubriquageFilter) =>
-              value.rubriquageId + ":" + value.rubriqueId,
-          )
-          .join();
-      }
-      return undefined;
     },
   },
   watch: {

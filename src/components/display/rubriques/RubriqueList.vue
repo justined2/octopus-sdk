@@ -50,10 +50,10 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterParam } from "../../mixins/routeParam/rubriquesFilterParam";
 import ClassicPopover from "../../misc/ClassicPopover.vue";
 import { Rubrique } from "@/stores/class/rubrique/rubrique";
 import { Rubriquage } from "@/stores/class/rubrique/rubriquage";
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { useFilterStore } from "../../../stores/FilterStore";
 import { mapState, mapActions } from "pinia";
 import { defineAsyncComponent, defineComponent } from "vue";
@@ -67,6 +67,8 @@ export default defineComponent({
     ClassicPopover,
     RubriqueChooser,
   },
+
+  mixins: [rubriquesFilterParam],
 
   props: {
     rubriquages: { default: () => [], type: Array as () => Array<Rubriquage> },
@@ -119,10 +121,7 @@ export default defineComponent({
     window.removeEventListener("resize", this.resizeWindow);
   },
   methods: {
-    ...mapActions(useFilterStore, [
-      "filterUpdateRubrique",
-      "filterUpdateRubriqueDisplay",
-    ]),
+    ...mapActions(useFilterStore, ["filterUpdateRubriqueDisplay"]),
     initRubriques(): void {
       if (!this.rubriquage) {
         return;
@@ -147,17 +146,9 @@ export default defineComponent({
         nameRubriquage: this.rubriquage.title,
         nameRubrique: rubrique.name,
       };
-      const newFilter: Array<RubriquageFilter> = Array.from(
-        this.filterRubrique,
-      );
-      newFilter.push(filterToAdd);
-      this.filterUpdateRubrique(newFilter);
-      const queries = this.$route.query;
-      const queryString = newFilter
-        .map((value) => value.rubriquageId + ":" + value.rubriqueId)
-        .join();
-      this.$router.replace({
-        query: { ...queries, ...{ rubriquesId: queryString } },
+      this.modifyRubriquesFilter((a) => {
+        a.push(filterToAdd);
+        return a;
       });
       this.selectNewRubriquage();
     },

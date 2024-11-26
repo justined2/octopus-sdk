@@ -97,7 +97,14 @@ export default defineComponent({
     orgaIdSelected: {
       immediate: true,
       handler() {
-        if (!this.initLoaded && this.orgaIdSelected) {
+        if (!this.orgaIdSelected) {
+          this.organisationChosen = this.getDefaultOrganisation;
+          return;
+        }
+        if (
+          this.orgaIdSelected &&
+          this.organisationChosen?.id !== this.orgaIdSelected
+        ) {
           this.fetchOrganisation();
         }
       },

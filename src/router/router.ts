@@ -68,6 +68,17 @@ const routes: Array<RouteRecordRaw> = [
     props: (route: RouteLocationNormalized) => ({
       pr: route.query.pr ? parseInt(route.query.pr.toString(), 10) : undefined,
       ps: route.query.ps ? parseInt(route.query.ps.toString(), 10) : undefined,
+      routeQuery: route.query.q ?? "",
+      routeMonetisable: route.query.m ?? "",
+      routeIab: route.query.i ? parseInt(route.query.i.toString(), 10) : undefined,
+      routeSort: route.query.s ?? "",
+      routeIncludeHidden: route.query.h ?? "",
+      routeFrom: route.query.from,
+      routeTo: route.query.to,
+      routeNotValid:route.query.nv ?? "",
+      routeOnlyVideo:route.query.v ?? "",
+      routeOrga:route.query.o,
+      routeRubriques :route.query.r,
     }),
   },
   {
@@ -77,6 +88,15 @@ const routes: Array<RouteRecordRaw> = [
     props: (route: RouteLocationNormalized) => ({
       pr: route.query.pr ? parseInt(route.query.pr.toString(), 10) : undefined,
       ps: route.query.ps ? parseInt(route.query.ps.toString(), 10) : undefined,
+      routeQuery: route.query.q ?? "",
+      routeMonetisable: route.query.m ?? "",
+      routeIab: route.query.i ? parseInt(route.query.i.toString(), 10) : undefined,
+      routeSort: route.query.s ?? "",
+      routeIncludeHidden: route.query.h ?? "",
+      routeFrom: route.query.from,
+      routeTo: route.query.to,
+      routeOrga:route.query.o,
+      routeRubriques :route.query.r,
     }),
   },
   {
@@ -235,10 +255,33 @@ const router = createRouter({
   },
 });
 //Do in frontoffice but not podcastmakers
-router.beforeEach((to) => {
+//TODO ajouter dans frontoffice !
+router.beforeEach((to, from) => {
   const filterStore = useFilterStore();
-  if(filterStore.filterOrgaId !== to.query.productor && undefined!==filterStore.filterOrgaId){
-    return { path: to.path, query:{...to.query, ...{productor: filterStore.filterOrgaId}}, params: to.params, name:to.name};
+  if(to.path===from.path && to.query.productor !== from.query.productor){
+    if(undefined===to.query.productor){
+      filterStore.filterUpdateOrga({ orgaId: undefined });
+    }else{
+      filterStore.filterUpdateOrga({ orgaId: to.query.productor });
+    }
+    return;
   }
-})
+  if (
+    "/logout" !== to.path && 
+    filterStore.filterOrgaId !== to.query.productor &&
+    undefined !== filterStore.filterOrgaId
+  ) {
+    return {
+      path: to.path,
+      query: { ...to.query, ...{ productor: filterStore.filterOrgaId } },
+      params: to.params,
+      name: to.name,
+    };
+  }
+  if("/logout" === to.path && "/logout" !== from.path){
+    setTimeout(() => {
+      window.location.reload(true);
+    }, 10);
+  }
+});
 export default router;

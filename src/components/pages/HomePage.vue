@@ -64,10 +64,10 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterComputed } from "../mixins/routeParam/rubriquesFilterComputed";
 import PodcastInlineList from "../display/podcasts/PodcastInlineList.vue";
 import ClassicLazy from "../misc/ClassicLazy.vue";
 import { state } from "../../stores/ParamSdkStore";
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { Rubriquage } from "@/stores/class/rubrique/rubriquage";
 import { Rubrique } from "@/stores/class/rubrique/rubrique";
 import { useFilterStore } from "../../stores/FilterStore";
@@ -81,6 +81,7 @@ export default defineComponent({
     PodcastInlineList,
     ClassicLazy,
   },
+  mixins: [rubriquesFilterComputed],
   props: {
     displayWithoutRubriques: { default: true, type: Boolean },
   },
@@ -100,17 +101,6 @@ export default defineComponent({
       "filterRubriqueDisplay",
       "filterIab",
     ]),
-    rubriqueQueryParam(): string | undefined {
-      if (this.filterRubrique?.length) {
-        return this.filterRubrique
-          .map(
-            (value: RubriquageFilter) =>
-              value.rubriquageId + ":" + value.rubriqueId,
-          )
-          .join();
-      }
-      return undefined;
-    },
     rubriqueDisplay(): Array<Rubrique> {
       return this.filterRubriqueDisplay.filter(
         (rubrique: Rubrique) => 0 !== rubrique.podcastCount,
@@ -127,9 +117,6 @@ export default defineComponent({
     },
     rubriquageFilter(): Array<Rubriquage> {
       return this.filterOrgaId ? this.filterRubriquage : [];
-    },
-    rubriqueFilter(): Array<RubriquageFilter> {
-      return this.filterRubrique;
     },
     categories(): Array<Category> {
       let arrayCategories: Array<Category> = [];
@@ -152,7 +139,7 @@ export default defineComponent({
     },
   },
   watch: {
-    rubriqueFilter: {
+    filterRubrique: {
       deep: true,
       immediate: true,
       handler() {
@@ -162,11 +149,11 @@ export default defineComponent({
   },
   methods: {
     updateRubriquageFilter() {
-      const length = this.rubriqueFilter.length;
+      const length = this.filterRubrique.length;
       const rubriqueId: Array<number> = [];
       for (let index = 0; index < length; index++) {
-        if (0 < this.rubriqueFilter[index].rubriqueId) {
-          rubriqueId.push(this.rubriqueFilter[index].rubriqueId);
+        if (0 < this.filterRubrique[index].rubriqueId) {
+          rubriqueId.push(this.filterRubrique[index].rubriqueId);
         }
       }
       this.rubriqueId = rubriqueId;

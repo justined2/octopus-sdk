@@ -78,7 +78,7 @@ export default defineComponent({
     iabId: { default: undefined, type: Number },
     participantId: { default: undefined, type: Number },
     query: { default: undefined, type: String },
-    monetization: { default: undefined, type: String },
+    monetisable: { default: undefined, type: String },
     popularSort: { default: false, type: Boolean },
     reload: { default: false, type: Boolean },
     before: { default: undefined, type: String },
@@ -124,7 +124,7 @@ export default defineComponent({
     },
     changed(): string {
       return `${this.organisation}|${this.emissionId}|${this.sortCriteria}|${this.sort}
-      ${this.iabId}|${this.participantId}|${this.query}|${this.monetization}|${this.popularSort}|
+      ${this.iabId}|${this.participantId}|${this.query}|${this.monetisable}|${this.popularSort}|
       ${this.rubriqueId}|${this.rubriquageId}|${this.before}|${this.after}|${this.includeHidden}|${this.noRubriquageId}|${this.notValid}|
       ${this.withVideo}`;
     },
@@ -194,7 +194,7 @@ export default defineComponent({
         iabId: this.iabId,
         participantId: this.participantId,
         query: this.query,
-        monetisable: this.monetization,
+        monetisable: this.monetisable,
         sort: this.sort,
         before: this.before,
         after: this.after,

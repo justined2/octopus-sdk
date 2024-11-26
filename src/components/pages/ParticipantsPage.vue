@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
+import { paginateParamInit } from "../mixins/routeParam/paginateParamInit";
 import { useFilterStore } from "../../stores/FilterStore";
 import ParticipantList from "../display/participant/ParticipantList.vue";
 import ProductorSearch from "../display/filter/ProductorSearch.vue";
