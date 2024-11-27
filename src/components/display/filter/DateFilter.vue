@@ -29,7 +29,7 @@ export default defineComponent({
     ClassicDatePicker,
     ClassicCheckbox,
   },
-  //TODO change dans frontoffice DateFilter
+
   props: {
     isEmission: { default: false, type: Boolean },
     fromDate: { default: undefined, type: String },

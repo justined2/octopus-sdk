@@ -52,7 +52,6 @@ export default defineComponent({
     ClassicCheckbox,
   },
   mixins: [rubriquesFilterParam],
-  //TODO modifier dans front également !
   props: {
     organisationId: { default: undefined, type: String },
     rubriqueFilter: {

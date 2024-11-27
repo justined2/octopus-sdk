@@ -255,7 +255,6 @@ const router = createRouter({
   },
 });
 //Do in frontoffice but not podcastmakers
-//TODO ajouter dans frontoffice !
 router.beforeEach((to, from) => {
   const filterStore = useFilterStore();
   if(to.path===from.path && to.query.productor !== from.query.productor){

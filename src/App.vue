@@ -108,7 +108,6 @@ export default defineComponent({
       }
       await this.selectOrganisation(orgaId);
     },
-    //TODO remove front ! handleIabIdFilter  && handleRubriquesFilter (POdcastmaker ?)
   },
 });
 </script>
