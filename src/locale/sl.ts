@@ -199,7 +199,7 @@ export default {
   "Listen this episode": "Poslušajte to epizodo",
   "Choose main color": "Izberite barvo elementov modula newsletter",
   "Octopus is ACPM Podcast accredited":
-    "Octopus je akreditiran pri organizaciji ACPM",
+    "Saooti Play je akreditiran pri organizaciji ACPM",
   "Live episode": "Trenutne epizode v živo",
   "This live will start": "Prenos v živo se bo začel",
   "In days hours minutes seconds":

@@ -206,7 +206,7 @@ export default {
   "Copy and embed the HTML code into your email tool": "Copiez et intégrez le code HTML dans votre outil d'e-mailing",
   "Listen this episode": "Écouter ce podcast",
   "Choose main color": "Choisir la couleur des éléments du module",
-  "Octopus is ACPM Podcast accredited": "Octopus est accrédité ACPM Podcasts",
+  "Octopus is ACPM Podcast accredited": "Saooti Play est accrédité ACPM Podcasts",
   "Live episode": "Épisode en live",
   "This live will start": "Ce live débutera",
   "In days hours minutes seconds":

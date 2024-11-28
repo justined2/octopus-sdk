@@ -204,7 +204,7 @@ export default {
   "Listen this episode": "Escuchar este episodio",
   "Choose main color": "Elija el color de los elementos del módulo de newsletter",
   "Octopus is ACPM Podcast accredited":
-    "Octopus ha recibido la certificación ACPM",
+    "Saooti Play ha recibido la certificación ACPM",
   "Live episode": "Episodios en directo ahora",
   "This live will start": "La retransmisión en directo va a comenzar",
   "In days hours minutes seconds":

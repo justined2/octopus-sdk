@@ -17,7 +17,7 @@ interface GeneralState {
 }
 export const useGeneralStore = defineStore("GeneralStore", {
   state: (): GeneralState => ({
-    metaTitle: "Octopus by Saooti",
+    metaTitle: "Saooti Play",
     platformEducation: false,
     generalLogoUrl: "/img/logo_saooti_play_black.webp",
     storedCategories: [],
