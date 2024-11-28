@@ -36,8 +36,8 @@ export default defineComponent({
         });
         if(!state.generalParameters.podcastmaker){
           const queries = this.$route.query;
-          this.$router.replace({
-            query: { ...queries, ...{ productor: organisationId } },
+          this.$router.push({
+            query: { ...queries, ...{ productor: organisationId, o:undefined } },
           });
         }
       } catch (error) {

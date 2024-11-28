@@ -36,12 +36,13 @@
       :autofocus="true"
       id-search="productor-search-input"
       :label="searchText"
-      @update:text-init="$emit('update:searchPattern', $event)"
+      @update:text-init="updateSearchPattern"
     />
   </div>
 </template>
 
 <script lang="ts">
+import { routeParams } from "../../mixins/routeParam/routeParams";
 import ClassicSearch from "../../form/ClassicSearch.vue";
 import { state } from "../../../stores/ParamSdkStore";
 import orgaFilter from "../../mixins/organisationFilter";
@@ -61,7 +62,7 @@ export default defineComponent({
     ClassicSearch,
     ClassicCheckbox,
   },
-  mixins: [orgaFilter],
+  mixins: [orgaFilter, routeParams],
 
   props: {
     organisationId: { default: undefined, type: String },
@@ -105,10 +106,11 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(useFilterStore, ["filterUpdateOrga"]),
+    updateSearchPattern(newSearch: string) {
+      this.$emit("update:searchPattern", newSearch);
+    },
     onOrganisationSelected(organisation: Organisation): void {
-      if (this.$route.query.productor) {
-        this.$router.push({ query: { productor: undefined } });
-      }
+      this.updateRouteParam({ o: organisation.id, productor: undefined });
       this.filterUpdateOrga({ orgaId: undefined });
       this.keepOrganisation = false;
       if (organisation?.id) {

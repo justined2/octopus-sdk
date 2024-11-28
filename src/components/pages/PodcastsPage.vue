@@ -6,51 +6,45 @@
     />
     <AdvancedSearch
       v-model:only-video="onlyVideo"
+      v-model:monetisable="monetisable"
+      v-model:iab-id="iabId"
+      v-model:sort="sort"
+      v-model:include-hidden="includeHidden"
+      v-model:from-date="fromDate"
+      v-model:to-date="toDate"
+      v-model:not-valid="notValid"
+      v-model:rubrique-filter="rubriqueFilter"
+      :search-pattern="searchPattern"
       :is-education="isEducation"
       :is-emission="false"
-      :reset-rubriquage="resetRubriquage"
-      :sort-criteria="sortCriteria"
-      :include-hidden="includeHidden"
       :organisation-id="organisationId"
-      @update-category="iabId = $event"
-      @update-rubriquage-filter="updateRubriquageFilter"
-      @update-monetization="monetization = $event"
-      @update-from-date="fromDate = $event"
-      @update-to-date="toDate = $event"
-      @update-sort-criteria="sortCriteria = $event"
-      @include-hidden="includeHidden = $event"
-      @not-valid="notValid = $event"
     />
     <PodcastList
       :show-count="true"
       :first="paginateFirst"
       :size="ps"
       :organisation-id="orgaArray"
-      :query="searchPattern"
-      :monetization="monetization"
+      :query="searchMinSize"
+      :monetisable="monetisable"
       :before="toDate"
       :after="fromDate"
-      :sort-criteria="sortCriteria"
+      :sort-criteria="sort"
       :include-hidden="includeHidden"
       :not-valid="notValid"
       :iab-id="iabId"
-      :rubrique-id="rubriqueId"
-      :rubriquage-id="rubriquageId"
-      :no-rubriquage-id="noRubriquageId"
+      :rubrique-id="rubriquesFilterArrayIds.rubriqueId"
+      :rubriquage-id="rubriquesFilterArrayIds.rubriquageId"
+      :no-rubriquage-id="rubriquesFilterArrayIds.noRubriquageId"
       :with-video="withVideo"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { orgaComputed } from "../mixins/orgaComputed";
-import { paginateParamInit } from "../mixins/paginate/paginateParamInit";
+import { advancedParamInit } from "../mixins/routeParam/advancedParamInit";
 import PodcastList from "../display/podcasts/PodcastList.vue";
 import ProductorSearch from "../display/filter/ProductorSearch.vue";
 import AdvancedSearch from "../display/filter/AdvancedSearch.vue";
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
-import { useFilterStore } from "../../stores/FilterStore";
-import { mapState } from "pinia";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "PodcastsPage",
@@ -59,109 +53,52 @@ export default defineComponent({
     ProductorSearch,
     AdvancedSearch,
   },
-  mixins: [orgaComputed, paginateParamInit],
+  mixins: [advancedParamInit],
   props: {
-    productor: { default: undefined, type: String },
     isEducation: { default: false, type: Boolean },
-    searchInit: { default: "", type: String },
     pr: { default: 0, type: Number },
     ps: { default: 30, type: Number },
+    routeQuery: { default: "", type: String },
+    routeMonetisable: { default: "UNDEFINED", type: String },
+    routeIab: { default: undefined, type: Number },
+    routeSort: { default: "DATE", type: String },
+    routeIncludeHidden: { default: "", type: String },
+    routeFrom: { default: undefined, type: String },
+    routeTo: { default: undefined, type: String },
+    routeNotValid: { default: "", type: String },
+    routeOnlyVideo: { default: "", type: String },
+    routeOrga: { default: undefined, type: String },
+    routeRubriques: { default: "", type: String },
   },
   data() {
     return {
-      isInit: false as boolean,
-      searchPattern: "" as string,
-      organisationId: undefined as string | undefined,
-      monetization: "UNDEFINED" as string, // UNDEFINED, YES, NO
-      fromDate: undefined as string | undefined,
-      toDate: undefined as string | undefined,
-      resetRubriquage: false as boolean,
-      includeHidden: false as boolean,
-      sortCriteria: "DATE" as string, // SCORE, DATE, POPULARITY, NAME, LAST_PODCAST_DESC
       notValid: false as boolean,
-      iabId: undefined as number | undefined,
-      noRubriquageId: [] as Array<number>,
-      rubriquageId: [] as Array<number>,
-      rubriqueId: [] as Array<number>,
       onlyVideo: false as boolean,
     };
   },
-
   computed: {
-    ...mapState(useFilterStore, ["filterRubrique", "filterIab"]),
-    organisationRight(): boolean {
-      return this.isEditRights(this.organisationId);
-    },
     orgaArray(): Array<string> {
       return this.organisationId ? [this.organisationId] : [];
-    },
-    organisation(): string | undefined {
-      return this.organisationId ? this.organisationId : this.filterOrgaId;
     },
     withVideo(): boolean | undefined {
       return false === this.onlyVideo ? undefined : true;
     },
   },
   watch: {
-    organisationId(): void {
-      if (!this.isInit) {
-        return;
-      }
-      this.resetRubriquage = !this.resetRubriquage;
-      this.rubriquageId = [];
-      this.rubriqueId = [];
-      this.noRubriquageId = [];
-    },
-    searchPattern(value: string): void {
-      this.sortCriteria = "" !== value ? "SCORE" : "DATE";
-    },
-    filterRubrique: {
-      deep: true,
+    routeNotValid: {
+      immediate: true,
       handler() {
-        this.updateRubriquageFilter(this.filterRubrique);
+        this.notValid =
+          undefined !== this.organisation &&
+          this.organisationRight &&
+          "true" === this.routeNotValid;
       },
     },
-    filterIab: {
-      deep: true,
+    routeOnlyVideo: {
+      immediate: true,
       handler() {
-        this.iabId = this.filterIab?.id;
+        this.onlyVideo = "true" === this.routeOnlyVideo;
       },
-    },
-  },
-  created() {
-    this.initPodcastsPage();
-  },
-  methods: {
-    initPodcastsPage() {
-      this.searchPattern = this.searchInit ?? "";
-      this.organisationId = this.productor ? this.productor : this.filterOrgaId;
-      this.includeHidden =
-        undefined !== this.organisation && this.organisationRight;
-      this.iabId = this.filterIab?.id;
-      if (this.filterRubrique.length) {
-        this.updateRubriquageFilter(this.filterRubrique);
-      }
-      this.$nextTick(() => {
-        this.isInit = true;
-      });
-    },
-    updateRubriquageFilter(value: Array<RubriquageFilter>) {
-      const length = value.length;
-      const allRubriquageId: Array<number> = [];
-      const noRubriquageId: Array<number> = [];
-      const rubriqueId: Array<number> = [];
-      for (let index = 0; index < length; index++) {
-        if (-1 === value[index].rubriqueId) {
-          noRubriquageId.push(value[index].rubriquageId);
-        } else if (0 === value[index].rubriqueId) {
-          allRubriquageId.push(value[index].rubriquageId);
-        } else {
-          rubriqueId.push(value[index].rubriqueId);
-        }
-      }
-      this.rubriquageId = allRubriquageId;
-      this.rubriqueId = rubriqueId;
-      this.noRubriquageId = noRubriquageId;
     },
   },
 });

@@ -22,37 +22,40 @@
         <MonetizableFilter
           v-if="!isPodcastmaker && !isEducation"
           :is-emission="isEmission"
-          @update-monetization="updateMonetization"
+          :monetisable="monetisable"
+          @update:monetisable="updateMonetisable"
         />
-        <CategorySearchFilter @update-category="updateCategory" />
+        <CategorySearchFilter :iab-id="iabId" @update:iab-id="updateIab" />
         <RubriqueFilter
-          :reset-rubriquage="resetRubriquage"
-          :organisation-id="organisationId"
-          @update-rubriquage-filter="updateRubriquageFilter"
+          :rubrique-filter="rubriqueFilter"
+          @update:rubrique-filter="updateRubriquageFilter"
         />
         <DateFilter
           :is-emission="isEmission"
-          @update-to-date="updateToDate"
-          @update-from-date="updateFromDate"
+          :from-date="fromDate"
+          :to-date="toDate"
+          @update-dates="updateDates($event)"
         />
         <div
           v-if="organisation && organisationRight && !isPodcastmaker"
           class="d-flex flex-column mt-3"
         >
           <ClassicCheckbox
-            v-model:text-init="isNotVisible"
+            :text-init="includeHidden"
             class="flex-shrink-0"
             id-checkbox="search-future-checkbox"
             :label="textNotVisible"
-            :is-disabled="isCheckboxNotValidate && isNotValidate"
+            :is-disabled="isCheckboxNotValidate && notValid"
+            @update:text-init="updateIncludeHidden"
           />
         </div>
         <div v-if="isCheckboxNotValidate" class="d-flex flex-column mt-3">
           <ClassicCheckbox
-            v-model:text-init="isNotValidate"
+            :text-init="notValid"
             class="flex-shrink-0"
             id-checkbox="search-not-validate-checkbox"
             :label="textNotValidate"
+            @update:text-init="updateNotValid"
           />
         </div>
         <ClassicCheckbox
@@ -61,19 +64,14 @@
           class="flex-shrink-0 mt-3"
           id-checkbox="only-video-checkbox"
           :label="$t('Show only episodes with video')"
-          @update:text-init="$emit('update:onlyVideo', $event)"
+          @update:text-init="updateOnlyVideo"
         />
       </div>
-      <div class="d-flex flex-column">
-        <div class="text-primary mb-2">
-          {{ $t("Sort") }}
-        </div>
-        <SearchOrder
-          :is-emission="isEmission"
-          :sort-criteria="sortCriteria"
-          @update-sort-criteria="updateSortCriteria"
-        />
-      </div>
+      <SearchOrder
+        :is-emission="isEmission"
+        :sort="sort"
+        @update:sort="updateSort"
+      />
     </div>
   </div>
 </template>
@@ -81,6 +79,8 @@
 <script lang="ts">
 import { orgaComputed } from "../../mixins/orgaComputed";
 import { useAuthStore } from "../../../stores/AuthStore";
+import { useFilterStore } from "../../../stores/FilterStore";
+import { rubriquesFilterParam } from "../../mixins/routeParam/rubriquesFilterParam";
 import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { defineComponent, defineAsyncComponent } from "vue";
 import { mapState } from "pinia";
@@ -107,38 +107,46 @@ export default defineComponent({
     DateFilter,
     SearchOrder,
   },
-  mixins: [orgaComputed],
+  mixins: [orgaComputed, rubriquesFilterParam],
   props: {
     organisationId: { default: undefined, type: String },
     isEmission: { default: false, type: Boolean },
-    resetRubriquage: { default: false, type: Boolean },
     isEducation: { default: false, type: Boolean },
     includeHidden: { default: false, type: Boolean },
-    sortCriteria: { default: "DATE", type: String },
+    sort: { default: "DATE", type: String },
     onlyVideo: { default: false, type: Boolean },
+    monetisable: { default: "UNDEFINED", type: String },
+    iabId: { default: undefined, type: Number },
+    searchPattern: { default: "", type: String },
+    fromDate: { default: undefined, type: String },
+    toDate: { default: undefined, type: String },
+    notValid: { default: false, type: Boolean },
+    rubriqueFilter: {
+      default: () => [],
+      type: Array as () => Array<RubriquageFilter>,
+    },
   },
 
   emits: [
-    "updateToDate",
-    "updateFromDate",
-    "updateMonetization",
-    "updateCategory",
-    "updateSortCriteria",
-    "includeHidden",
-    "notValid",
-    "updateRubriquageFilter",
+    "update:toDate",
+    "update:fromDate",
+    "update:monetisable",
+    "update:iabId",
+    "update:sort",
+    "update:includeHidden",
+    "update:notValid",
+    "update:rubriqueFilter",
     "update:onlyVideo",
   ],
   data() {
     return {
-      isNotVisible: this.includeHidden,
-      isNotValidate: false as boolean,
       showFilters: false as boolean,
       firstLoaded: false as boolean,
     };
   },
 
   computed: {
+    ...mapState(useFilterStore, ["filterIab", "filterRubrique"]),
     ...mapState(useAuthStore, [
       "isRoleProduction",
       "isRoleContribution",
@@ -162,7 +170,7 @@ export default defineComponent({
         this.isRoleContribution &&
         !this.isPodcastmaker &&
         !this.isEmission &&
-        this.isNotVisible
+        this.includeHidden
       );
     },
     textNotValidate(): string {
@@ -173,42 +181,91 @@ export default defineComponent({
   },
   watch: {
     organisation(): void {
-      this.isNotVisible =
+      const hidden =
         undefined !== this.organisation &&
         this.organisationRight &&
         !this.isEmission;
+      if (hidden !== this.includeHidden) {
+        this.updateIncludeHidden(hidden);
+      }
     },
-    isNotVisible(): void {
-      this.$emit("includeHidden", this.isNotVisible);
-    },
-    isNotValidate(): void {
-      this.$emit("notValid", this.isNotValidate);
+    searchPattern(value: string): void {
+      const search = value.trim();
+      const valSort =
+        search.length > 3
+          ? "SCORE"
+          : this.isEmission
+            ? "LAST_PODCAST_DESC"
+            : "DATE";
+      if (valSort !== this.sort) {
+        this.$emit("update:sort", valSort);
+      }
+      this.updateRouteParam({
+        q: search.length ? search : undefined,
+        s: valSort,
+      });
     },
   },
   methods: {
+    updateMonetisable(value: string): void {
+      this.$emit("update:monetisable", value);
+      this.updateRouteParam({ m: "UNDEFINED" !== value ? value : undefined });
+    },
+    updateIab(value: number | undefined) {
+      this.$emit("update:iabId", 0 !== value ? value : undefined);
+      let filterIab = {};
+      if (this.filterIab && this.filterIab.id !== value) {
+        filterIab = { iabId: undefined };
+      }
+      this.updateRouteParam({
+        ...{ i: value ? value.toString() : undefined },
+        ...filterIab,
+      });
+    },
+    updateSort(value: string) {
+      this.$emit("update:sort", value);
+      this.updateRouteParam({ s: value });
+    },
+    updateIncludeHidden(value: boolean) {
+      this.$emit("update:includeHidden", value);
+      this.updateRouteParam({ h: value.toString() });
+    },
+    updateNotValid(value: boolean) {
+      this.$emit("update:notValid", value);
+      this.updateRouteParam({ nv: value.toString() });
+    },
+    updateOnlyVideo(value: boolean) {
+      this.$emit("update:onlyVideo", value);
+      this.updateRouteParam({ v: value ? "true" : undefined });
+    },
+    updateDates(value: {
+      from: string | undefined;
+      to: string | undefined;
+    }): void {
+      this.$emit("update:fromDate", value.from);
+      this.$emit("update:toDate", value.to);
+      this.updateRouteParam({ from: value.from, to: value.to });
+    },
+    updateRubriquageFilter(value: Array<RubriquageFilter>) {
+      this.$emit("update:rubriqueFilter", value);
+      let filterRubriques = {};
+      const valueString = this.stringifyRubriquesFilter(value);
+      if (
+        this.filterRubrique.length &&
+        this.stringifyRubriquesFilter(this.filterRubrique) !== valueString
+      ) {
+        filterRubriques = { rubriquesId: undefined };
+      }
+      this.updateRouteParam({
+        ...{ r: valueString.length ? valueString : undefined },
+        ...filterRubriques,
+      });
+    },
     clickShowFilters(): void {
       if (!this.firstLoaded) {
         this.firstLoaded = true;
       }
       this.showFilters = !this.showFilters;
-    },
-    updateFromDate(value: string): void {
-      this.$emit("updateFromDate", value);
-    },
-    updateToDate(value: string): void {
-      this.$emit("updateToDate", value);
-    },
-    updateMonetization(value: string): void {
-      this.$emit("updateMonetization", value);
-    },
-    updateCategory(value: number) {
-      this.$emit("updateCategory", 0 !== value ? value : undefined);
-    },
-    updateRubriquageFilter(value: Array<RubriquageFilter>) {
-      this.$emit("updateRubriquageFilter", value);
-    },
-    updateSortCriteria(value: string) {
-      this.$emit("updateSortCriteria", value);
     },
   },
 });

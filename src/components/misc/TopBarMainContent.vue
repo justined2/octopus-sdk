@@ -139,13 +139,13 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterComputed } from "../mixins/routeParam/rubriquesFilterComputed";
 import { state } from "../../stores/ParamSdkStore";
 import HomeDropdown from "./HomeDropdown.vue";
 import imageProxy from "../mixins/imageProxy";
 import { useFilterStore } from "../../stores/FilterStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import { mapState } from "pinia";
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import ClassicPopover from "../misc/ClassicPopover.vue";
 import { defineComponent, defineAsyncComponent } from "vue";
 const MobileMenu = defineAsyncComponent(() => import("./MobileMenu.vue"));
@@ -156,7 +156,7 @@ export default defineComponent({
     ClassicPopover,
     MobileMenu,
   },
-  mixins: [imageProxy],
+  mixins: [imageProxy, rubriquesFilterComputed],
   props: {
     isEducation: { default: false, type: Boolean },
     isPhone: { default: false, type: Boolean },
@@ -172,7 +172,6 @@ export default defineComponent({
       "filterOrgaId",
       "filterImgUrl",
       "filterIab",
-      "filterRubrique",
       "filterName",
     ]),
     ...mapState(useAuthStore, ["isGarRole"]),
@@ -231,17 +230,6 @@ export default defineComponent({
         },
       ];
     },
-    rubriqueQueryParam(): string | undefined {
-      if (this.filterRubrique?.length) {
-        return this.filterRubrique
-          .map(
-            (value: RubriquageFilter) =>
-              value.rubriquageId + ":" + value.rubriqueId,
-          )
-          .join();
-      }
-      return undefined;
-    },
     logoUrl(): string {
       if (this.isEducation) {
         return "/img/logo_education_white.svg";
@@ -279,7 +267,7 @@ export default defineComponent({
 .octopus-app {
   .top-bar-grid {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 5fr;
     margin-top: 0.5rem;
     padding: 0 1rem;
     &.scrolled {

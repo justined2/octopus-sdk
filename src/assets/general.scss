@@ -47,6 +47,9 @@ body{
     height: 0.01rem;
     color: #999;
   }
+  .d-flex-low-importance{
+		display: flex;
+	}
   .d-flex-column{
 		display: flex;
 		flex-direction: row;

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="organisationId && rubriquageData"
+    v-if="organisation && rubriquageData"
     class="d-flex mt-3 align-items-center"
   >
     <ClassicCheckbox
@@ -11,7 +11,7 @@
     />
     <div v-if="isRubriquage" class="d-flex ms-1 flex-column mb-2 flex-grow-1">
       <RubriqueChoice
-        v-for="(filter, index) in arrayFilter"
+        v-for="(filter, index) in internRubriqueFilter"
         :key="index"
         :index="index"
         class="mb-2"
@@ -35,12 +35,13 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterParam } from "../../mixins/routeParam/rubriquesFilterParam";
 import classicApi from "../../../api/classicApi";
 import ClassicCheckbox from "../../form/ClassicCheckbox.vue";
 import { Rubriquage } from "@/stores/class/rubrique/rubriquage";
 import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { useFilterStore } from "../../../stores/FilterStore";
-import { mapState, mapActions } from "pinia";
+import { mapState } from "pinia";
 import { defineComponent, defineAsyncComponent } from "vue";
 const RubriqueChoice = defineAsyncComponent(
   () => import("./RubriqueChoice.vue"),
@@ -50,27 +51,22 @@ export default defineComponent({
     RubriqueChoice,
     ClassicCheckbox,
   },
+  mixins: [rubriquesFilterParam],
   props: {
     organisationId: { default: undefined, type: String },
-    resetRubriquage: { default: false, type: Boolean },
-    modifyFilter: { default: true, type: Boolean },
-    initRubriqueFilter: {
-      default: undefined,
+    rubriqueFilter: {
+      default: () => [],
       type: Array as () => Array<RubriquageFilter>,
     },
   },
-  emits: ["updateRubriquageFilter", "warning"],
+  emits: ["update:rubriqueFilter", "warning"],
 
   data() {
     return {
       isRubriquage: false as boolean,
-      rubriquageId: [] as Array<number>,
-      rubriqueId: [] as Array<number>,
-      arrayFilter: [] as Array<RubriquageFilter>,
+      internRubriqueFilter: [] as Array<RubriquageFilter>,
       rubriquageData: [] as Array<Rubriquage>,
-      saveOrganisation: "" as string,
-      isInit: true as boolean,
-      isInternChanged: false as boolean,
+      needToFetchRubrique: false as boolean,
     };
   },
 
@@ -80,139 +76,79 @@ export default defineComponent({
       return this.organisationId ? this.organisationId : this.filterOrgaId;
     },
     availableRubriquage(): Array<Rubriquage> {
-      if (this.arrayFilter.length) {
-        const rubriquageIdToNotShow = this.arrayFilter.map(
-          (a) => a.rubriquageId,
-        );
-        return this.rubriquageData.filter((element) => {
-          if (element.rubriquageId) {
-            return !rubriquageIdToNotShow.includes(element.rubriquageId);
-          }
-        });
-      }
-      return this.rubriquageData;
+      return this.getAvailableRubriquage(this.internRubriqueFilter);
     },
   },
   watch: {
     organisation(): void {
       if (this.isRubriquage) {
-        this.fetchTopics(true);
+        this.fetchTopics();
+      } else {
+        this.needToFetchRubrique = true;
       }
     },
+    rubriqueFilter: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.isRubriquage = 0 !== this.rubriqueFilter?.length;
+        if (
+          this.rubriqueFilter &&
+          this.stringifyRubriquesFilter(this.internRubriqueFilter) !==
+            this.stringifyRubriquesFilter(this.rubriqueFilter)
+        ) {
+          this.internRubriqueFilter = this.rubriqueFilter;
+        }
+      },
+    },
     isRubriquage(): void {
-      if (this.isInternChanged || this.isInit) {
-        return;
+      if (this.needToFetchRubrique) {
+        this.fetchTopics();
       }
-      this.isInternChanged = true;
+      if (this.isRubriquage && 0 === this.internRubriqueFilter.length) {
+        this.addFilter();
+      }
+      const value = this.isRubriquage ? this.internRubriqueFilter : [];
       if (
-        0 === this.arrayFilter.length &&
-        this.availableRubriquage[0].rubriquageId
+        this.stringifyRubriquesFilter(value) !==
+        this.stringifyRubriquesFilter(this.rubriqueFilter)
       ) {
-        this.arrayFilter.push({
+        this.$emit("update:rubriqueFilter", value);
+      }
+    },
+  },
+
+  created() {
+    this.fetchTopics();
+  },
+  methods: {
+    updateInternRubriqueFilter() {
+      if (this.isRubriquage) {
+        this.$emit("update:rubriqueFilter", this.internRubriqueFilter);
+      } else {
+        this.isRubriquage = true;
+      }
+    },
+    addFilter(): void {
+      if (this.availableRubriquage[0].rubriquageId) {
+        this.internRubriqueFilter.push({
           rubriquageId: this.availableRubriquage[0].rubriquageId,
           rubriqueId: 0,
           nameRubriquage: this.rubriquageData[0].title,
           nameRubrique: "",
         });
+        this.updateInternRubriqueFilter();
       }
-      if (this.isRubriquage) {
-        if (this.saveOrganisation !== this.organisation) {
-          this.fetchTopics(true);
-        }
-        this.$emit("updateRubriquageFilter", this.arrayFilter);
-      } else {
-        this.$emit("updateRubriquageFilter", []);
-      }
-      if (this.modifyFilter) {
-        this.resetRubriqueFilter();
-      }
-      this.$nextTick(() => {
-        this.isInternChanged = false;
-      });
     },
-    arrayFilter: {
-      deep: true,
-      handler() {
-        if (this.isInternChanged || this.isInit) {
-          return;
-        }
-        this.isInternChanged = true;
-        if (this.modifyFilter) {
-          this.resetRubriqueFilter();
-        }
-        if (this.isRubriquage) {
-          this.$emit("updateRubriquageFilter", this.arrayFilter);
-        }
-        this.$nextTick(() => {
-          this.isInternChanged = false;
-        });
-      },
-    },
-    filterRubrique: {
-      deep: true,
-      async handler() {
-        if (this.isInternChanged || !this.modifyFilter) {
-          return;
-        }
-        this.isInternChanged = true;
-        if (this.saveOrganisation !== this.filterOrgaId) {
-          await this.fetchTopics(false);
-        }
-        if (this.filterRubrique.length) {
-          this.arrayFilter = Array.from(this.filterRubrique);
-          this.isRubriquage = true;
-        } else if (this.rubriquageData[0].rubriquageId) {
-          this.arrayFilter = [
-            {
-              rubriquageId: this.rubriquageData[0].rubriquageId,
-              rubriqueId: 0,
-              nameRubriquage: this.rubriquageData[0].title,
-              nameRubrique: "",
-            },
-          ];
-          this.isRubriquage = false;
-        }
-        this.$emit(
-          "updateRubriquageFilter",
-          this.isRubriquage ? this.arrayFilter : [],
-        );
-        this.$nextTick(() => {
-          this.isInternChanged = false;
-        });
-      },
-    },
-    resetRubriquage(): void {
-      this.isRubriquage = false;
-    },
-  },
-
-  created() {
-    if (!this.modifyFilter) {
-      if (this.initRubriqueFilter && this.initRubriqueFilter.length > 0) {
-        this.arrayFilter = Array.from(this.initRubriqueFilter);
-        this.isRubriquage = true;
-      }
-    } else if (this.filterRubrique.length) {
-      this.arrayFilter = Array.from(this.filterRubrique);
-      this.isRubriquage = true;
-    }
-    this.fetchTopics(false);
-    this.$nextTick(() => {
-      this.isInit = false;
-    });
-  },
-  methods: {
-    ...mapActions(useFilterStore, ["filterUpdateRubrique"]),
     deleteRubriqueChoice(index: number): void {
-      this.arrayFilter.splice(index, 1);
+      this.internRubriqueFilter.splice(index, 1);
+      this.updateInternRubriqueFilter();
     },
-    getRubriquage(index: number) {
-      const elementToNotShow = Array.from(this.arrayFilter);
-      elementToNotShow.splice(index, 1);
-      if (elementToNotShow.length) {
-        const rubriquageIdToNotShow = elementToNotShow.map(
-          (a) => a.rubriquageId,
-        );
+    getAvailableRubriquage(
+      filterRubrique: Array<RubriquageFilter>,
+    ): Array<Rubriquage> {
+      if (filterRubrique.length) {
+        const rubriquageIdToNotShow = filterRubrique.map((a) => a.rubriquageId);
         return this.rubriquageData.filter((element) => {
           if (element.rubriquageId) {
             return !rubriquageIdToNotShow.includes(element.rubriquageId);
@@ -221,31 +157,26 @@ export default defineComponent({
       }
       return this.rubriquageData;
     },
-    addFilter(): void {
-      if (this.availableRubriquage[0].rubriquageId) {
-        this.arrayFilter.push({
-          rubriquageId: this.availableRubriquage[0].rubriquageId,
-          rubriqueId: 0,
-          nameRubriquage: this.rubriquageData[0].title,
-          nameRubrique: "",
-        });
-      }
+    getRubriquage(index: number) {
+      const elementToNotShow = Array.from(this.internRubriqueFilter);
+      elementToNotShow.splice(index, 1);
+      return this.getAvailableRubriquage(elementToNotShow);
     },
     updateRubrique(newValue: { rubriqueId: number; index: number }): void {
-      const item = this.arrayFilter[newValue.index];
+      const item = this.internRubriqueFilter[newValue.index];
       item.rubriqueId = newValue.rubriqueId;
-      this.arrayFilter.splice(newValue.index, 1, item);
+      this.internRubriqueFilter.splice(newValue.index, 1, item);
+      this.updateInternRubriqueFilter();
     },
     updateRubriquage(newValue: { rubriquageId: number; index: number }): void {
-      const item = this.arrayFilter[newValue.index];
+      const item = this.internRubriqueFilter[newValue.index];
       item.rubriquageId = newValue.rubriquageId;
-      this.arrayFilter.splice(newValue.index, 1, item);
+      this.internRubriqueFilter.splice(newValue.index, 1, item);
+      this.updateInternRubriqueFilter();
     },
-    async fetchTopics(initArrayFilter: boolean): Promise<void> {
-      if (initArrayFilter) {
-        this.arrayFilter.length = 0;
-      }
+    async fetchTopics(): Promise<void> {
       if (!this.organisation) return;
+      this.needToFetchRubrique = false;
       const data = await classicApi.fetchData<Array<Rubriquage>>({
         api: 0,
         path: "rubriquage/find/" + this.organisation,
@@ -254,47 +185,30 @@ export default defineComponent({
       this.rubriquageData = data.filter((element: Rubriquage) => {
         return element.rubriques.length;
       });
-      this.saveOrganisation = this.organisation;
-      if (0 === this.rubriquageData.length) return;
-
-      if (initArrayFilter && this.rubriquageData[0].rubriquageId) {
-        this.arrayFilter.push({
-          rubriquageId: this.rubriquageData[0].rubriquageId,
-          rubriqueId: 0,
-          nameRubriquage: this.rubriquageData[0].title,
-          nameRubrique: "",
-        });
-      } else {
-        const arrayFilterToUpdate = [];
-        for (const filter of this.arrayFilter) {
-          const rubriquageExist = this.rubriquageData.find(
-            (element) => element.rubriquageId === filter.rubriquageId,
-          );
-          if (rubriquageExist) {
-            arrayFilterToUpdate.push(filter);
-          }
-        }
-        if (arrayFilterToUpdate.length !== this.arrayFilter.length) {
-          this.arrayFilter = arrayFilterToUpdate;
+      if (0 === this.rubriquageData.length) {
+        if (this.internRubriqueFilter.length) {
+          this.internRubriqueFilter = [];
+          this.updateInternRubriqueFilter();
           this.$emit("warning");
         }
-      }
-    },
-    resetRubriqueFilter(): void {
-      if (
-        0 === this.filterRubrique.length ||
-        this.isInit ||
-        !this.modifyFilter
-      ) {
         return;
       }
-      const queries = this.$route.query;
-      if (queries.rubriquesId) {
-        this.$router.replace({
-          query: { ...queries, ...{ rubriquesId: undefined } },
-        });
+      const internRubriqueFilterToUpdate = [];
+      for (const filter of this.internRubriqueFilter) {
+        const rubriquageExist = this.rubriquageData.find(
+          (element) => element.rubriquageId === filter.rubriquageId,
+        );
+        if (rubriquageExist) {
+          internRubriqueFilterToUpdate.push(filter);
+        }
       }
-      this.filterUpdateRubrique([]);
+      if (
+        internRubriqueFilterToUpdate.length !== this.internRubriqueFilter.length
+      ) {
+        this.internRubriqueFilter = internRubriqueFilterToUpdate;
+        this.updateInternRubriqueFilter();
+        this.$emit("warning");
+      }
     },
   },
 });

@@ -7,7 +7,10 @@
     <h1 v-if="isHeaderDisplay" v-show="titleDisplay">
       {{ titleDisplay ?? $t("Home") }}
     </h1>
-    <div v-show="isDisplay" class="d-flex flex-column justify-content-end">
+    <div
+      v-show="isDisplay"
+      class="d-flex-low-importance flex-column justify-content-end"
+    >
       <ol
         v-if="filterIab || filterRubrique.length"
         class="octopus-breadcrumb d-flex align-items-center justify-content-center flex-wrap"
@@ -35,7 +38,7 @@
           </div>
           <div class="mx-1">:</div>
           <RubriqueChooser
-            v-if="getRubriques(filter.rubriquageId).length"
+            v-if="getRubriquesLength(filter.rubriquageId)"
             class="ms-2 multiselect-transparent multiselect-white"
             :multiple="false"
             :rubriquage-id="filter.rubriquageId"
@@ -64,12 +67,16 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterParam } from "../../mixins/routeParam/rubriquesFilterParam";
+import { routeParams } from "../../mixins/routeParam/routeParams";
 import { Rubriquage } from "@/stores/class/rubrique/rubriquage";
 import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { Rubrique } from "@/stores/class/rubrique/rubrique";
 import { useFilterStore } from "../../../stores/FilterStore";
+import { useGeneralStore } from "../../../stores/GeneralStore";
 import { mapState, mapActions } from "pinia";
 import { defineComponent, defineAsyncComponent } from "vue";
+import { Category } from "@/stores/class/general/category";
 const CategoryList = defineAsyncComponent(() => import("./CategoryList.vue"));
 const RubriqueList = defineAsyncComponent(
   () => import("./../rubriques/RubriqueList.vue"),
@@ -79,18 +86,19 @@ const RubriqueChooser = defineAsyncComponent(
 );
 export default defineComponent({
   name: "CategoryFilter",
-
   components: {
     CategoryList,
     RubriqueList,
     RubriqueChooser,
   },
+  mixins: [routeParams, rubriquesFilterParam],
   data() {
     return {
       isCategories: false as boolean,
     };
   },
   computed: {
+    ...mapState(useGeneralStore, ["storedCategories"]),
     ...mapState(useFilterStore, [
       "filterIab",
       "filterRubrique",
@@ -153,6 +161,66 @@ export default defineComponent({
       }
       return `background-image: url('/img/header-${imgName}.webp');`;
     },
+    routeFilterIab() {
+      return this.$route.query.iabId;
+    },
+    routeRubriques() {
+      return this.$route.query.rubriquesId;
+    },
+  },
+  watch: {
+    routeFilterIab: {
+      deep: true,
+      immediate: true,
+      async handler() {
+        if (this.routeFilterIab && "string" === typeof this.routeFilterIab) {
+          const iabId = parseInt(this.routeFilterIab, 10);
+          const category = this.storedCategories.filter((c: Category) => {
+            return c.id === iabId;
+          });
+          if (category.length) {
+            this.filterUpdateIab(category[0]);
+          }
+        } else {
+          this.filterUpdateIab();
+        }
+      },
+    },
+    routeRubriques: {
+      deep: true,
+      immediate: true,
+      async handler() {
+        if (0 === this.filterRubriquage.length) {
+          return;
+        }
+        const rubriquesFilter: Array<RubriquageFilter> = [];
+        if (
+          this.$route.query.rubriquesId &&
+          "string" === typeof this.$route.query.rubriquesId
+        ) {
+          const arrayFilter = this.$route.query.rubriquesId.split(",");
+          const filterLength = arrayFilter.length;
+          for (let index = 0; index < filterLength; index++) {
+            const rubriqueFilter = arrayFilter[index].split(":");
+            const rubriquage = this.filterRubriquage.find((x: Rubriquage) => {
+              return x.rubriquageId === parseInt(rubriqueFilter[0]);
+            });
+            if (rubriquage) {
+              const rubrique = rubriquage.rubriques.find((x: Rubrique) => {
+                return x.rubriqueId === parseInt(rubriqueFilter[1]);
+              });
+              rubriquesFilter.push({
+                rubriquageId: rubriquage.rubriquageId,
+                rubriqueId: rubrique.rubriqueId,
+                nameRubriquage: rubriquage.title,
+                nameRubrique: rubrique.name,
+              });
+            }
+          }
+        }
+        this.filterUpdateRubrique(rubriquesFilter);
+      },
+    },
   },
   methods: {
     ...mapActions(useFilterStore, ["filterUpdateIab", "filterUpdateRubrique"]),
@@ -166,14 +234,9 @@ export default defineComponent({
       ) {
         return;
       }
-      const filter = Array.from(this.filterRubrique);
-      filter[index].rubriqueId = rubrique.rubriqueId ?? 0;
-      this.filterUpdateRubrique(filter);
-      const queryString = filter
-        .map((value) => value.rubriquageId + ":" + value.rubriqueId)
-        .join();
-      this.$router.replace({
-        query: { ...this.$route.query, ...{ rubriquesId: queryString } },
+      this.modifyRubriquesFilter((a) => {
+        a[index].rubriqueId = rubrique.rubriqueId ?? 0;
+        return a;
       });
     },
     getRubriques(rubriquageId: number): Array<Rubrique> {
@@ -182,32 +245,22 @@ export default defineComponent({
       });
       return rubriquage ? rubriquage.rubriques : [];
     },
+    getRubriquesLength(rubriquageId: number): number {
+      const rubriquage = this.filterRubriquage.find((x: Rubriquage) => {
+        return x.rubriquageId === rubriquageId;
+      });
+      return rubriquage ? rubriquage.rubriques.length : 0;
+    },
     removeFilter(index: number, event?: { preventDefault: () => void }): void {
       if (this.filterIab) {
         if (this.$route.query.iabId) {
-          this.$router.replace({
-            query: { ...this.$route.query, ...{ iabId: undefined } },
-          });
+          this.updateFiltersParam({ iabId: undefined }, { i: undefined });
         }
-        this.filterUpdateIab();
       } else {
-        const newFilter: Array<RubriquageFilter> = Array.from(
-          this.filterRubrique,
-        );
-        newFilter.splice(index + 1);
-        if (this.$route.query.rubriquesId) {
-          const queryString = newFilter
-            .map((value) => value.rubriquageId + ":" + value.rubriqueId)
-            .join();
-          this.$router.replace({
-            query: {
-              ...this.$route.query,
-              ...{ rubriquesId: "" !== queryString ? queryString : undefined },
-            },
-          });
-        }
-
-        this.filterUpdateRubrique(newFilter);
+        this.modifyRubriquesFilter((a) => {
+          a.splice(index + 1);
+          return a;
+        });
       }
       if (event) {
         event.preventDefault();

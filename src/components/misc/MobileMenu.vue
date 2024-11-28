@@ -56,9 +56,9 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterComputed } from "../mixins/routeParam/rubriquesFilterComputed";
 import { state } from "../../stores/ParamSdkStore";
 import orgaFilter from "../mixins/organisationFilter";
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { defineComponent, defineAsyncComponent } from "vue";
 import { useFilterStore } from "../../stores/FilterStore";
 import { useAuthStore } from "../../stores/AuthStore";
@@ -71,7 +71,7 @@ export default defineComponent({
   components: {
     ClassicPopover,
   },
-  mixins: [orgaFilter],
+  mixins: [orgaFilter, rubriquesFilterComputed],
   props: {
     isEducation: { default: false, type: Boolean },
     show: { default: false, type: Boolean },
@@ -85,12 +85,7 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useAuthStore, ["authOrgaId", "isGarRole"]),
-    ...mapState(useFilterStore, [
-      "filterLive",
-      "filterOrgaId",
-      "filterIab",
-      "filterRubrique",
-    ]),
+    ...mapState(useFilterStore, ["filterLive", "filterOrgaId", "filterIab"]),
     isAuthenticatedWithOrga(): boolean {
       return undefined !== this.authOrgaId;
     },
@@ -144,17 +139,6 @@ export default defineComponent({
     },
     isPodcastmaker(): boolean {
       return state.generalParameters.podcastmaker as boolean;
-    },
-    rubriqueQueryParam(): string | undefined {
-      if (this.filterRubrique?.length) {
-        return this.filterRubrique
-          .map(
-            (value: RubriquageFilter) =>
-              value.rubriquageId + ":" + value.rubriqueId,
-          )
-          .join();
-      }
-      return undefined;
     },
   },
 

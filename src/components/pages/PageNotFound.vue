@@ -23,27 +23,17 @@
 </template>
 
 <script lang="ts">
-import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
+import { rubriquesFilterComputed } from "../mixins/routeParam/rubriquesFilterComputed";
 import { useFilterStore } from "../../stores/FilterStore";
 import { useGeneralStore } from "../../stores/GeneralStore";
 import { mapState } from "pinia";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "PageNotFound",
+  mixins: [rubriquesFilterComputed],
   computed: {
     ...mapState(useGeneralStore, ["metaTitle"]),
-    ...mapState(useFilterStore, ["filterRubrique", "filterIab"]),
-    rubriqueQueryParam(): string | undefined {
-      if (this.filterRubrique?.length) {
-        return this.filterRubrique
-          .map(
-            (value: RubriquageFilter) =>
-              value.rubriquageId + ":" + value.rubriqueId,
-          )
-          .join();
-      }
-      return undefined;
-    },
+    ...mapState(useFilterStore, ["filterIab"]),
     backgroundStyle(): string {
       return "background-image: url('/img/404.svg');";
     },

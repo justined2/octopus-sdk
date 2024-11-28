@@ -16,16 +16,12 @@
 import TopBar from "@/components/misc/TopBar.vue";
 import PlayerComponent from "@/components/misc/player/PlayerComponent.vue";
 import ClassicLazy from "@/components/misc/ClassicLazy.vue";
-import { Rubriquage } from "./stores/class/rubrique/rubriquage";
-import { RubriquageFilter } from "./stores/class/rubrique/rubriquageFilter";
-import { Rubrique } from "./stores/class/rubrique/rubrique";
 import initSDK from "./components/mixins/init";
 import { useAuthStore } from "./stores/AuthStore";
 import { useFilterStore } from "./stores/FilterStore";
 import { useGeneralStore } from "./stores/GeneralStore";
 import { mapState, mapActions } from "pinia";
 import { defineAsyncComponent, defineComponent } from "vue";
-import { Category } from "./stores/class/general/category";
 const FooterOctopus = defineAsyncComponent(
   () => import("@/components/misc/FooterSection.vue"),
 );
@@ -92,12 +88,10 @@ export default defineComponent({
     }, 2000);
   },
   methods: {
-    ...mapActions(useFilterStore, ["filterUpdateIab", "filterUpdateRubrique"]),
+    ...mapActions(useFilterStore, ["filterUpdateRubrique"]),
     async initApp() {
       await this.initSdk();
       await this.handleOrganisationFilter();
-      this.handleIabIdFilter();
-      this.handleRubriquesFilter();
     },
     async handleOrganisationFilter() {
       let orgaId = "";
@@ -113,56 +107,6 @@ export default defineComponent({
         return;
       }
       await this.selectOrganisation(orgaId);
-    },
-    handleIabIdFilter() {
-      if (this.filterOrgaId) {
-        return;
-      }
-      if (
-        this.$route.query.iabId &&
-        "string" === typeof this.$route.query.iabId
-      ) {
-        const iabId = parseInt(this.$route.query.iabId, 10);
-        const category = this.storedCategories.filter((c: Category) => {
-          return c.id === iabId;
-        });
-        if (category.length) {
-          this.filterUpdateIab(category[0]);
-        }
-      }
-    },
-    handleRubriquesFilter() {
-      if (0 === this.filterRubriquage.length) {
-        return;
-      }
-      if (
-        this.$route.query.rubriquesId &&
-        "string" === typeof this.$route.query.rubriquesId
-      ) {
-        const arrayFilter = this.$route.query.rubriquesId.split(",");
-        const rubriquesFilter: Array<RubriquageFilter> = [];
-        const filterLength = arrayFilter.length;
-        for (let index = 0; index < filterLength; index++) {
-          const rubriqueFilter = arrayFilter[index].split(":");
-          const rubriquage = this.filterRubriquage.find((x: Rubriquage) => {
-            return x.rubriquageId === parseInt(rubriqueFilter[0]);
-          });
-          if (rubriquage) {
-            const rubrique = rubriquage.rubriques.find((x: Rubrique) => {
-              return x.rubriqueId === parseInt(rubriqueFilter[1]);
-            });
-            rubriquesFilter.push({
-              rubriquageId: rubriquage.rubriquageId,
-              rubriqueId: rubrique.rubriqueId,
-              nameRubriquage: rubriquage.title,
-              nameRubrique: rubrique.name,
-            });
-          }
-        }
-        if (rubriquesFilter.length) {
-          this.filterUpdateRubrique(rubriquesFilter);
-        }
-      }
     },
   },
 });

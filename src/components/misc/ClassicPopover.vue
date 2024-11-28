@@ -165,7 +165,6 @@ export default defineComponent({
         yGap;
     },
     clearDataBlur(e: FocusEvent) {
-      console.log("FocusOUt");
       if (!e.relatedTarget) {
         return this.clearClick();
       }

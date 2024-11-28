@@ -55,7 +55,7 @@ import { state } from "../../../stores/ParamSdkStore";
 import PaginateParams from "./PaginateParams.vue";
 import PaginateSection from "./PaginateSection.vue";
 import resizePhone from "../../mixins/resizePhone";
-import { paginateParams } from "../../mixins/paginate/paginateParams";
+import { routeParams } from "../../mixins/routeParam/routeParams";
 import { defineComponent } from "vue";
 import { usePlayerStore } from "../../../stores/PlayerStore";
 import { mapState } from "pinia";
@@ -66,7 +66,7 @@ export default defineComponent({
     PaginateParams,
     ClassicLoading,
   },
-  mixins: [resizePhone, paginateParams],
+  mixins: [resizePhone, routeParams],
   props: {
     first: { default: 0, type: Number },
     rowsPerPage: { default: 30, type: Number },

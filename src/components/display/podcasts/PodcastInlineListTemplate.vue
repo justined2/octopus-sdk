@@ -51,16 +51,18 @@
 </template>
 
 <script lang="ts">
+import { rubriquesFilterComputed } from "../../mixins/routeParam/rubriquesFilterComputed";
+import { rubriquesFilterParam } from "../../mixins/routeParam/rubriquesFilterParam";
 import { RubriquageFilter } from "@/stores/class/rubrique/rubriquageFilter";
 import { defineComponent } from "vue";
 import { RouteLocationRaw } from "vue-router";
 import { useFilterStore } from "../../../stores/FilterStore";
-import { mapState, mapActions } from "pinia";
+import { mapState } from "pinia";
 import { Rubrique } from "@/stores/class/rubrique/rubrique";
 export default defineComponent({
   name: "PodcastInlineListTemplate",
 
-  components: {},
+  mixins: [rubriquesFilterParam, rubriquesFilterComputed],
 
   props: {
     displayArrow: { default: true, type: Boolean },
@@ -83,22 +85,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState(useFilterStore, [
-      "filterRubrique",
-      "filterIab",
-      "filterRubriquage",
-    ]),
-    rubriqueQueryParam(): string | undefined {
-      if (this.filterRubrique?.length) {
-        return this.filterRubrique
-          .map(
-            (value: RubriquageFilter) =>
-              value.rubriquageId + ":" + value.rubriqueId,
-          )
-          .join();
-      }
-      return undefined;
-    },
+    ...mapState(useFilterStore, ["filterIab", "filterRubriquage"]),
     refTo(): string | RouteLocationRaw {
       if (this.href) return this.href;
       if (this.iabId) {
@@ -118,7 +105,6 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapActions(useFilterStore, ["filterUpdateRubrique"]),
     sortChrono(): void {
       this.$emit("sortChrono");
     },
@@ -163,18 +149,9 @@ export default defineComponent({
           }
         }
       }
-      const newFilter: Array<RubriquageFilter> = Array.from(
-        this.filterRubrique,
-      );
-      newFilter.push(filterToAdd);
-      this.filterUpdateRubrique(newFilter);
-      const queries = this.$route.query;
-      const queryString = newFilter
-        .map((value) => value.rubriquageId + ":" + value.rubriqueId)
-        .join();
-      this.$router.push({
-        name: "podcasts",
-        query: { ...queries, ...{ rubriquesId: queryString } },
+      this.modifyRubriquesFilter((a) => {
+        a.push(filterToAdd);
+        return a;
       });
     },
   },
