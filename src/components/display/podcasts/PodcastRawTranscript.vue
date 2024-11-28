@@ -133,6 +133,7 @@ export default defineComponent({
     max-height: 250px;
     display: flex;
     justify-content: center;
+    white-space: pre-wrap;
     .transcription-text {
       overflow-y: auto;
       overflow-x: hidden;
