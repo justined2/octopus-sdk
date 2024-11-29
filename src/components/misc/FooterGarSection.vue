@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex flex-column align-items-start">
     <ContractPreviewModal
       v-if="contractToDisplay"
       :selected-contract="contractToDisplay"
