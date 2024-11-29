@@ -70,8 +70,9 @@ export default defineComponent({
     isSeekTo(audioPlayer: HTMLAudioElement, seekTime: number): void {
       if (this.playerPodcast || this.playerLive) {
         this.playerUpdateSeekTime(seekTime);
+      } else {
+        audioPlayer.currentTime = seekTime;
       }
-      audioPlayer.currentTime = seekTime;
     },
   },
 });

@@ -21,6 +21,9 @@ export const playerLive = defineComponent({
       downloadId: null as string | null,
       audioElement: null as HTMLAudioElement | null,
       hls: null as any,
+      hlsRetryTimeout: undefined as ReturnType<typeof setTimeout> | undefined,
+      playPromise: undefined as any,
+      errorHls: false as boolean,
     };
   },
   computed: {
@@ -52,9 +55,11 @@ export const playerLive = defineComponent({
     },
     async playHls(hlsStreamUrl: string): Promise<void> {
       try {
-        this.audioElement = document.getElementById(
-          "audio-player",
-        ) as HTMLAudioElement;
+        if(null===this.audioElement){
+          this.audioElement = document.getElementById(
+            "audio-player",
+          ) as HTMLAudioElement;
+        }
         if (null === this.audioElement) {
           setTimeout(() => {
             this.playHls(hlsStreamUrl);
@@ -76,40 +81,56 @@ export const playerLive = defineComponent({
           await this.initHls(hlsStreamUrl);
         }
       } catch (error) {
-        if("STOPPED"===this.playerStatus){
-          return;
-        }
-        setTimeout(() => {
-          this.playHls(hlsStreamUrl);
-        }, 1000);
+        this.onHlsError(hlsStreamUrl);
       }
     },
-    async initHls(hlsStreamUrl: string): Promise<void> {
-      new Promise<void>(async (resolve, reject) => {
-        if (null === Hls) {
-          await import("hls.js").then((hlsLibrary) => {
-            Hls = hlsLibrary.default;
-          });
+    onHlsError(hlsStreamUrl:string){
+      if("STOPPED"!==this.playerStatus && undefined===this.hlsRetryTimeout){
+        this.hlsRetryTimeout = setTimeout(() => {
+          this.errorHls = false;
+          this.playHls(hlsStreamUrl);
+          this.hlsRetryTimeout = undefined;
+        }, 5000);
+      }
+    },
+    async initHls(hlsStreamUrl: string) {
+      if (null === Hls) {
+        await import("hls.js").then((hlsLibrary) => {
+          Hls = hlsLibrary.default;
+        });
+      }
+      if (!Hls.isSupported()) {
+        throw new Error("Hls is not supported ! ");
+      }
+      this.hls = new Hls();
+      this.hls.on(Hls.Events.MANIFEST_PARSED, async () => {
+        await this.initLiveDownloadId();
+        this.hlsReady = true;
+        if(true===this.errorHls){
+          return;
         }
-        if (!Hls.isSupported()) {
-          reject(new Error("Hls is not supported ! "));
-        }
-        this.hls = new Hls();
-        this.hls.on(Hls.Events.MANIFEST_PARSED, async () => {
-          await this.initLiveDownloadId();
-          this.hlsReady = true;
-          this.hls.attachMedia(this.audioElement as HTMLAudioElement);
-          await (this.audioElement as HTMLAudioElement).play();
+        this.playPromise = (this.audioElement as HTMLAudioElement).play();
+        this.playPromise.then(() =>{
+          this.playPromise = undefined;
           this.onPlay();
-          resolve();
-        });
-        this.hls.on(Hls.Events.ERROR, async (event, data) => {
-          reject(new Error("There is an error while reading media content"+data.details));
-        });
-        this.hls.loadSource(hlsStreamUrl);
+        }).catch(()=>{
+          this.onHlsError(hlsStreamUrl);
+          this.playPromise = undefined;
+        })
       });
+      this.hls.on(Hls.Events.ERROR, async (e, data:any) => {
+        this.errorHls = true;
+        if(undefined===this.playPromise && data.fatal){
+          this.onHlsError(hlsStreamUrl);
+        }
+      });
+      this.hls.loadSource(hlsStreamUrl);
+      this.hls.attachMedia(this.audioElement as HTMLAudioElement);
     },
     async endingLive(): Promise<void> {
+      clearTimeout(this.hlsRetryTimeout);
+      this.hlsRetryTimeout = undefined;
+      this.audioElement = null;
       const audio: HTMLElement | null = document.getElementById("audio-player");
       if (audio && this.hls) {
         this.hls.destroy();

@@ -398,4 +398,5 @@ export default {
   Editing: "Bearbeiten",
   "Live progress bar":"Live-Fortschrittsbalken",
   "Listening progress bar":"Fortschrittsbalken beim Zuhören",
+  "Contract preview": "Vertragsübersicht",
 }

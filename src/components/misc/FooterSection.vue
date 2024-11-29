@@ -8,6 +8,7 @@
       <div class="text-dark my-1 special-select-align-magic-trick">
         &copy; Saooti 2024
       </div>
+      <FooterGarSection v-if="isGarRole" :auth-orga-id="authOrgaId" />
       <router-link
         v-for="link in routerLinkSecondArray"
         :key="link.routeName"
@@ -81,12 +82,16 @@ import { Organisation } from "@/stores/class/general/organisation";
 const OrganisationChooserLight = defineAsyncComponent(
   () => import("../display/organisation/OrganisationChooserLight.vue"),
 );
+const FooterGarSection = defineAsyncComponent(
+  () => import("./FooterGarSection.vue"),
+);
 export default defineComponent({
   name: "FooterSection",
   components: {
     ClassicSelect,
     AcpmImage,
     OrganisationChooserLight,
+    FooterGarSection,
   },
 
   mixins: [cookies, orgaFilter, rubriquesFilterComputed],
@@ -203,8 +208,10 @@ export default defineComponent({
     z-index: 10;
     background: white;
     padding: 0 2rem;
-    a {
-      color: #666;
+    a,
+    .link-hover.btn-transparent {
+      font-weight: 500;
+      color: #666 !important;
     }
     .special-select-align-magic-trick {
       margin-left: 0.16rem;

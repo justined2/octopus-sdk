@@ -399,4 +399,5 @@ export default {
   Editing: "Editar",
   "Live progress bar":"Barra de progreso en vivo",
   "Listening progress bar":"Barra de progreso de escucha",
+  "Contract preview": "Panoramica del contratto",
 }

@@ -6,7 +6,7 @@
   >
     <div
       v-if="secondaryProgress"
-      class="octopus-progress-bar bg-light"
+      class="octopus-progress-bar bg-warning"
       role="progressbar"
       aria-valuenow="0"
       aria-valuemin="0"

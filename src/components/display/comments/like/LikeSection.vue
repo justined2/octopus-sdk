@@ -84,7 +84,7 @@ export default defineComponent({
         {
           name: "dislike",
           counter: this.editRight
-            ? this.comment?.dislikes ?? this.podcastFeeling?.dislikesCount
+            ? (this.comment?.dislikes ?? this.podcastFeeling?.dislikesCount)
             : 0,
           condition: this.configToApply?.dislikeEnabled ?? false,
         },

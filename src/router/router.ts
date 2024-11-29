@@ -5,6 +5,9 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 import { useFilterStore } from "../stores/FilterStore";
+import { useSaveFetchStore } from "@/stores/SaveFetchStore";
+import { Rubriquage } from "@/stores/class/rubrique/rubriquage";
+import classicApi from "@/api/classicApi";
 
 /*--------------------------------------------------------------------------
 Composants publics
@@ -255,13 +258,33 @@ const router = createRouter({
   },
 });
 //Do in frontoffice but not podcastmakers
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   const filterStore = useFilterStore();
   if(to.path===from.path && to.query.productor !== from.query.productor){
     if(undefined===to.query.productor){
       filterStore.filterUpdateOrga({ orgaId: undefined });
-    }else{
-      filterStore.filterUpdateOrga({ orgaId: to.query.productor });
+    }else if(filterStore.filterOrgaId !== to.query.productor){
+      const saveStore = useSaveFetchStore();
+      const response = await saveStore.getOrgaData(to.query.productor);
+      const data = await classicApi.fetchData<Array<Rubriquage>>({
+        api: 0,
+        path:"rubriquage/find/" + to.query.productor,
+        parameters:{
+          sort: "HOMEPAGEORDER",
+          homePageOrder: true,
+        },
+        specialTreatement:true
+      });
+      const isLive = await saveStore.getOrgaLiveEnabled(to.query.productor);
+      filterStore.filterUpdateOrga({ 
+        orgaId: to.query.productor,
+        imgUrl: response.imageUrl,
+        name: response.name,
+        rubriquageArray: data.filter((element: Rubriquage) => {
+          return element.rubriques.length;
+        }),
+        isLive: isLive,
+      });
     }
     return;
   }

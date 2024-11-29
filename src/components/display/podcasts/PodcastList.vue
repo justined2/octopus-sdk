@@ -135,7 +135,7 @@ export default defineComponent({
       return this.filterOrgaId ? [this.filterOrgaId] : [];
     },
     sort(): string {
-      return this.popularSort ? "POPULARITY" : this.sortCriteria ?? "DATE";
+      return this.popularSort ? "POPULARITY" : (this.sortCriteria ?? "DATE");
     },
     sortText(): string {
       if (!this.displaySortText) {

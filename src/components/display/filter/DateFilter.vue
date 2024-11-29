@@ -41,7 +41,10 @@ export default defineComponent({
   data() {
     return {
       isActive: [false, false] as Array<boolean>,
-      internDates: [dayjs().subtract(10, "days").startOf('day').toDate(), dayjs().endOf("day").toDate()],
+      internDates: [
+        dayjs().subtract(10, "days").startOf("day").toDate(),
+        dayjs().endOf("day").toDate(),
+      ],
     };
   },
 

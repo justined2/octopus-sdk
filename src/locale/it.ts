@@ -393,4 +393,5 @@ export default{
   Editing: "Modifica",
   "Live progress bar":"Barra di avanzamento in tempo reale",
   "Listening progress bar":"Barra di avanzamento dell'ascolto",
+  "Contract preview": "Panoramica del contratto",
 };

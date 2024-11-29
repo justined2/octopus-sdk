@@ -406,4 +406,5 @@ export default {
   Editing: "Éditer",
   "Live progress bar":"Barre de progression du live",
   "Listening progress bar":"Barre de progression de l'écoute",
+  "Contract preview": "Aperçu du document",
 };
