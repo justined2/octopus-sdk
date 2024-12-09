@@ -25,6 +25,7 @@
       :only-click="true"
       :is-fixed="true"
       :left-pos="true"
+      class="popover-z-index"
     >
       <button
         v-for="category in hidenCategories"
